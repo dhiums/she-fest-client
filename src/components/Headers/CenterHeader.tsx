@@ -5,5 +5,5 @@ export default function Header() {
         <img src="/img/logo.svg" alt="logo" className="md:h-24 h-16" />
       </div>
     </div>
-  );
+  )
 }
