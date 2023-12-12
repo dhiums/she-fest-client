@@ -10,7 +10,6 @@ import {
 } from "@/gql/graphql";
 import { SERVER_URL } from "@/lib/urql";
 import { withUrqlClient } from "next-urql";
-import Link from "next/link";
 import React, { useState } from "react";
 import { cacheExchange, fetchExchange } from "urql";
 import CreateProgram from "./CreateProgram";
