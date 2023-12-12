@@ -185,7 +185,7 @@ function Programs(props: Props) {
         setPrograms={setPrograms}
         programs={programs}
         selected={selected as Programme}
-        setSelected={setSelected}
+        setSelected={setSelected as any}
         candidates={props.candidates}
         zones={props.zones}
       />
