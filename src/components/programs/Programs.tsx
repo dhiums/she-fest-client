@@ -107,7 +107,7 @@ function Programs(props: Props) {
                 <div className="flex gap-2 flex-wrap">
                   <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
                     {program.category?.name}
-                  </p>{" "}
+                  </p>
                   <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
                     {program.type as string}
                   </p>
