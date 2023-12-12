@@ -39,21 +39,18 @@ const ViewProgram = (props: Props) => {
   const [name, setName] = React.useState<string>('');
   const [chestNo, setChestNo] = React.useState<string>('');
   const [zone, setZone] = React.useState<string>('');
-  const [programCode, setProgramCode] = React.useState<string>(props.selected?.programCode as string);
   const [toDeleteCP, setToDeleteCP] = React.useState<CandidateProgramme>()
   const [candidates, setCandidates] = React.useState<Candidate[]>(
     props.candidates
   );
   const [error, setError] = React.useState<string>('')
   const [zones, setZones] = React.useState<Zone[]>(props.zones);
-  const [selectedCandidateProgramme, setSelectedCandidateProgramme] = React.useState<CandidateProgramme[]>(props.selected.candidateProgramme as CandidateProgramme[])
   let filteredCandidate = candidates?.find((candidate) => {
     return candidate?.chestNO?.toLowerCase() == chestNo.toLowerCase();
   });
   const { data, setData } = useGlobalContext();
 
   useEffect(() => {
-    console.log(selectedCandidateProgramme);
     
   }, [props.selected])
 
@@ -63,7 +60,7 @@ const ViewProgram = (props: Props) => {
       AddCandidateProgrammeMutationVariables
     > = await ViewProgramExecute({
       chestNO: chestNo,
-      programCode: programCode as string,
+      programCode: props.selected?.programCode as string,
     });
     console.log(datas);
 
@@ -120,10 +117,7 @@ const ViewProgram = (props: Props) => {
       id: toDeleteCP?.id as number
     });
 
-    // update the state of candiateProgramme
-    setSelectedCandidateProgramme(selectedCandidateProgramme.filter((cp) => {
-      return cp.id != toDeleteCP?.id
-    }))
+
 
     // update all programs state
 
@@ -216,7 +210,7 @@ const ViewProgram = (props: Props) => {
 
         {data.roles == Roles.TeamManager && (
           <div>
-            {props.selected.candidateProgramme?.map((cp, i) => {
+            {props.selected?.candidateProgramme?.map((cp, i) => {
               if (cp.candidate?.team?.name == data.team?.name) {
                 return (
                   <div

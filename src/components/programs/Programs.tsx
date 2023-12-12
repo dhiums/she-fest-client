@@ -30,7 +30,7 @@ function Programs(props: Props) {
   const [isCreate, setIsCreate] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [selected, setSelected] = useState<Programme>(props.programmes[0]);
+  const [selected, setSelected] = useState<Programme>();
   const [view, setIsView] = useState(false);
 
   const { data } = useGlobalContext();

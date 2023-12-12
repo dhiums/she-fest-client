@@ -2,10 +2,12 @@
 import { useGlobalContext } from "@/context/context";
 import { Roles } from "@/gql/graphql";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 function Header() {
   const { data } = useGlobalContext();
+  const path = usePathname();
   return (
     <>
       <div className="hidden px-10 md:flex w-full bg-h-line bg-cover bg-center items-center justify-between my-6">
@@ -15,21 +17,29 @@ function Header() {
 
         <div className="bg-white flex-col flex py-2 px-8">
           <div className="flex gap-1 text-sm font-semibold justify-center text-center">
-            <Link className="" href="/admin/">
+            <Link className={`${
+              path == "/admin/" ? "text-secondary" : "text-brown"
+            }`} href="/admin/">
               Home
             </Link>
             |
-            <Link className="" href="/admin/programs">
+            <Link className={`${
+              path == "/admin/programs" ? "text-secondary" : "text-brown"
+            }`} href="/admin/programs">
               Programs
             </Link>{" "}
             |
-            <Link className="" href="/admin/candidates/">
+            <Link className={`${
+              path == "/admin/candidates/" ? "text-secondary" : "text-brown"
+            }`} href="/admin/candidates/">
               Candidates
             </Link>
             {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
               <>
                 |{" "}
-                <Link className="" href="/admin/institutions/">
+                <Link className={`${
+                  path == "/admin/institutions/" ? "text-secondary" : "text-brown"
+                }`} href="/admin/institutions/">
                   institutions
                 </Link>
               </>
@@ -41,7 +51,9 @@ function Header() {
           </p>
 
         </div>
+        
       </div>
+
       <div className="flex fixed bottom-0 shadow-lg shadow-black bg-white md:hidden w-full items-center justify-center p-2 ">
         <Link
           className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"

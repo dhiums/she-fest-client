@@ -38,7 +38,7 @@ function Login() {
     } else {
       console.log(datas);
       setError("");
-      setData(datas.data.login);
+      setData(datas.data.login.admin);
       // location.reload();
       router.push("/admin");
     }

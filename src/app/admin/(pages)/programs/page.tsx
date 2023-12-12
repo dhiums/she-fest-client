@@ -13,6 +13,11 @@ export default async function Page() {
     api_key: API_KEY,
   });
 
+  console.log(
+    programmes
+  );
+  
+
   const candidates = await client.query<
   GetAllCandidatesQuery,
   GetAllCandidatesQueryVariables
