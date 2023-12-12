@@ -4,7 +4,6 @@ import {
   Category,
   Programme,
   Roles,
-  Type,
   Types,
   Zone,
 } from "@/gql/graphql";
