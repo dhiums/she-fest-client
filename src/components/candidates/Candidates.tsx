@@ -34,7 +34,7 @@ function Candidates(props: Props) {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-4 p-20">
         {/* <div className="md:w-2/3 flex gap-2">
           <input
             type="text"
@@ -111,7 +111,7 @@ function Candidates(props: Props) {
             </button>
           )}
         </label>
-
+{/* 
         <div className="flex flex-wrap gap-2 justify-center mt-3">
           {filteredData.map((candidate, index) => (
             <div
@@ -182,7 +182,7 @@ function Candidates(props: Props) {
               )}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <CreateCandidate
