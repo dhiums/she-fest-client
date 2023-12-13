@@ -31,10 +31,7 @@ import {
         AddTeamMutationVariables
       > = await CreateTeamExecute({
         name: name,
-        zoneId:zoneId,
-        color : color,
-        description : description,
-        shortName : shortName
+        zoneId:zoneId
       });
       console.log(datas);
   
@@ -58,14 +55,6 @@ import {
             }}
             className={`p-3 text-left`}
             >
-            <p className="text-sm mt-3 font-bold text-brown">Color</p>
-            <input
-              type="text"
-              className="border-2  border-brown rounded-md placeholder:text-sm py-2 px-3"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              placeholder={`color`}
-            />
             <p className="text-sm mt-3 font-bold text-brown">Name</p>
             <input
               type="text"
@@ -74,22 +63,7 @@ import {
               onChange={(e) => setName(e.target.value)}
               placeholder={`Name`}
             />
-              <p className="text-sm mt-3 font-bold text-brown">Description</p>
-            <input
-              type="text"
-              className="border-2  border-brown rounded-md placeholder:text-sm py-2 px-3"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder={`Description`}
-            />  <p className="text-sm mt-3 font-bold text-brown">ShortName</p>
-            <input
-              type="text"
-              className="border-2  border-brown rounded-md placeholder:text-sm py-2 px-3"
-              value={shortName}
-              onChange={(e) => setShortName(e.target.value)}
-              placeholder={`ShortName`}
-            />
-
+             
             <p className="text-sm mt-3 font-bold text-brown">Zone</p>
             <select
               className="border-2  border-brown rounded-md placeholder:text-sm p-2 w-full"
