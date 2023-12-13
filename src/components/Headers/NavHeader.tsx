@@ -10,6 +10,11 @@ function Header() {
   const path = usePathname();
   return (
     <>
+        <div className="px-10 flex md:hidden w-full bg-h-line bg-cover bg-center items-center justify-center my-6">
+      <div className="bg-white px-10">
+        <img src="/img/logo.svg" alt="logo" className="md:h-24 h-16" />
+      </div>
+    </div>
       <div className="hidden px-10 md:flex w-full bg-h-line bg-cover bg-center items-center justify-between my-6">
         <div className="bg-white px-10">
           <Link href="/admin/">
@@ -25,7 +30,7 @@ function Header() {
             }`} href="/admin/programs">
               Programs
             </Link>{" "}
-            |
+            &#x2022;
             <Link className={`${
               path != "/admin/candidates" ? "text-secondary" : "text-brown"
             }`} href="/admin/candidates/">
@@ -33,7 +38,7 @@ function Header() {
             </Link>
             {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
               <>
-                |{" "}
+                &#x2022;{" "}
                 <Link className={`${
                   path != "/admin/institutions" ? "text-secondary" : "text-brown"
                 }`} href="/admin/institutions/">
@@ -53,7 +58,7 @@ function Header() {
 
       </div>
 
-      <div className="flex fixed bottom-0 shadow-lg shadow-black bg-white md:hidden w-full items-center justify-center p-2 ">
+      <div className="flex fixed bottom-0 shadow-lg shadow-black bg-white md:hidden w-full items-center justify-center p-2 z-50">
         <Link
           className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"
           href="/admin/"

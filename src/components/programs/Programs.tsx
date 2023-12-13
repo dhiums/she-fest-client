@@ -82,7 +82,7 @@ function Programs(props: Props) {
             {filteredData?.map((program, index) => (
               <div className="w-72 bg-secondary p-6 rounded-xl flex flex-col gap-2 items-start ">
                 <div className="flex justify-between items-center w-full">
-                  {" "}
+                
                   <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
                     {program.programCode}
                   </p>

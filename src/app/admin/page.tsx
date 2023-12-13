@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/Footer";
 import CenterHeader from "@/components/Headers/CenterHeader";
 import { useGlobalContext } from "@/context/context";
 import { Roles } from "@/gql/graphql";
@@ -17,7 +18,7 @@ export default function Page() {
       <CenterHeader />
       <div className="w-full flex justify-center">
         <h1 className="text-5xl text-center mt-10 mb-16 font-bold relative inline">
-          Controller Dashboard
+          Controller <br/> Dashboard
           <img
             src="/img/flowers/yellow.svg"
             alt="flower"
@@ -30,7 +31,7 @@ export default function Page() {
           onClick={() => {
             roter.push("/admin/candidates");
           }}
-          className="border-2 border-dashed p-4 rounded-xl border-yellow w-1/4 flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
+          className="border-2 border-dashed p-4 rounded-xl border-yellow sm:min-w-1/4 w-full md:w-min flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +54,7 @@ export default function Page() {
           onClick={() => {
             roter.push("/admin/programs");
           }}
-          className="border-2 border-dashed p-4 rounded-xl border-yellow w-1/4 flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
+          className="border-2 border-dashed p-4 rounded-xl border-yellow sm:min-w-1/4 w-full md:w-min flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +75,7 @@ export default function Page() {
             onClick={() => {
               roter.push("/admin/institutions");
             }}
-            className="border-2 border-dashed p-4 rounded-xl border-yellow w-1/4 flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
+            className="border-2 border-dashed p-4 rounded-xl border-yellow sm:min-w-1/4 w-full md:w-min flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,6 +119,7 @@ export default function Page() {
 
         <p className="font-semibold text-lg">Logout</p>
       </div>
+      <Footer />
     </>
   );
 }
