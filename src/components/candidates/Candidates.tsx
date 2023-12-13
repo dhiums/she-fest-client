@@ -111,7 +111,7 @@ function Candidates(props: Props) {
             </button>
           )}
         </label>
-{/* 
+
         <div className="flex flex-wrap gap-2 justify-center mt-3">
           {filteredData.map((candidate, index) => (
             <div
@@ -182,7 +182,7 @@ function Candidates(props: Props) {
               )}
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
 
       <CreateCandidate
