@@ -11,9 +11,11 @@ import {
   DeleteCandidateProgrammeMutationVariables,
   Programme,
   Roles,
+  Types,
   Zone,
 } from '@/gql/graphql';
-import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import { OperationResult, useMutation } from 'urql';
 
 interface Props {
@@ -26,6 +28,10 @@ interface Props {
   setSelected: React.Dispatch<React.SetStateAction<Programme>>;
   candidates: Candidate[];
   zones: Zone[];
+  candidateProgrammes: CandidateProgramme[];
+  setCandidateProgrammes: React.Dispatch<
+    React.SetStateAction<CandidateProgramme[]>
+  >;
 }
 
 const ViewProgram = (props: Props) => {
@@ -43,105 +49,162 @@ const ViewProgram = (props: Props) => {
   const [candidates, setCandidates] = React.useState<Candidate[]>(
     props.candidates
   );
+  const [p, setP] = useState([...Array(props.selected?.candidateCount as number)]);
   const [error, setError] = React.useState<string>('')
   const [zones, setZones] = React.useState<Zone[]>(props.zones);
   let filteredCandidate = candidates?.find((candidate) => {
     return candidate?.chestNO?.toLowerCase() == chestNo.toLowerCase();
   });
+  const router = useRouter();
   const { data, setData } = useGlobalContext();
 
   useEffect(() => {
 
   }, [props.selected])
 
-  const HandleSubmit = async () => {
-    const datas: OperationResult<
-      AddCandidateProgrammeMutation,
-      AddCandidateProgrammeMutationVariables
-    > = await ViewProgramExecute({
-      chestNO: chestNo,
-      programCode: props.selected?.programCode as string,
-    });
-    console.log(datas);
-
-    if (datas.data?.createCandidateProgramme) {
-
-      console.log(datas.data?.createCandidateProgramme);
-
-
-      // update all programs state
-
-      props.setPrograms(props.programs.map((program) => {
-        if (program.id == props.selected.id) {
-          return {
-            ...program,
-            candidateProgramme: [...program.candidateProgramme as CandidateProgramme[], datas.data?.createCandidateProgramme] as CandidateProgramme[]
-          }
-        }
-        return program
-      }))
-
-      // update the state of selected program
-
-      props.setSelected({
-        ...props.selected,
-        candidateProgramme: [...props.selected.candidateProgramme as CandidateProgramme[], datas.data?.createCandidateProgramme] as CandidateProgramme[]
-      })
-
-      console.log(props.selected);
-
-
-      console.log(datas.data?.createCandidateProgramme);
-
-      // set chest no to empty
-      setChestNo("");
-      // props.setIsView(false);
-    } else {
-      setError(datas.error?.message.replace("[GraphQL]", "") as string)
-      setTimeout(() => {
-        setError("")
-      }
-        , 5000)
-    }
-
-
+  const handleInputChange = (index: number, value: any) => {
+    const updatedP = [...p];
+    updatedP[index] = parseFloat(value); // You can parse the input value as needed
+    setP(updatedP);
   };
 
-  const HandleDelete = async (id : number) => {
-
-    // delete candidate from program
-    const datas: OperationResult<
-      DeleteCandidateProgrammeMutation,
-      DeleteCandidateProgrammeMutationVariables
-    > = await deleteCPExicute({
-      id: id as number
-    });
 
 
+  const HandleSubmit = async () => {
+    try {
+      let datas: OperationResult<
+        AddCandidateProgrammeMutation,
+        AddCandidateProgrammeMutationVariables
+      >;
 
-    // update all programs state
-
-    props.setPrograms(props.programs.map((program) => {
-      if (program.id == props.selected.id) {
-        return {
-          ...program,
-          candidateProgramme: program.candidateProgramme?.filter((cp) => {
-            return cp.id != toDeleteCP?.id
+      if (props.selected.type == Types.Group || props.selected.type == Types.House) {
+        datas = await ViewProgramExecute({
+          programCode: props.selected?.programCode as string,
+          chestNO: "CMS" + p[0] as string,
+          candidatesOfProgramme: p.map((chestNO) => {
+            return "CMS" + chestNO as string
           })
-        }
+
+        });
       }
-      return program
-    }))
+      else {
+        datas = await ViewProgramExecute({
+          chestNO: chestNo,
+          programCode: props.selected?.programCode as string,
+        });
+      }
 
-    // update the state of selected program
+      if (datas.data?.createCandidateProgramme) {
 
-    props.setSelected({
-      ...props.selected,
-      candidateProgramme: props.selected.candidateProgramme?.filter((cp) => {
-        return cp.id != toDeleteCP?.id
-      })
-    })
+        // refresh the window
+        window.location.reload();
 
+        // Update candidateProgrammes state
+        setCandidateProgrammes((prevPrograms) => [
+          ...(prevPrograms || []),
+          datas.data?.createCandidateProgramme as CandidateProgramme,
+        ]);
+
+        // set candidateProgrammes to prps.selected
+        props.setSelected((prevProgram) => {
+          return {
+            ...prevProgram,
+            candidateProgramme: [
+              ...(prevProgram?.candidateProgramme || []),
+              datas.data?.createCandidateProgramme as CandidateProgramme,
+            ],
+          };
+        });
+
+        // set candidateProgrammes to prps.candidateProgrammes
+        props.setCandidateProgrammes((prevPrograms) => [
+          ...(prevPrograms || []),
+          datas.data?.createCandidateProgramme as CandidateProgramme,
+        ]);
+
+        // set candidates to prps.programs
+
+        props.setPrograms((prevPrograms) => {
+          return prevPrograms?.map((program) => {
+            if (program.id == props.selected?.id) {
+              return {
+                ...program,
+                candidateProgramme: [
+                  ...(program.candidateProgramme || []),
+                  datas.data?.createCandidateProgramme as CandidateProgramme,
+                ],
+              };
+            }
+            return program;
+          });
+        });
+
+        // Clear the input
+        setChestNo('');
+      } else {
+        setError(datas.error?.message.replace('[GraphQL]', '') as string);
+        setTimeout(() => {
+          setError('');
+        }, 5000);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const HandleDelete = async (id: number) => {  
+    try {
+      // Delete candidate from program
+      const datas: OperationResult<
+        DeleteCandidateProgrammeMutation,
+        DeleteCandidateProgrammeMutationVariables
+      > = await deleteCPExicute({
+        id: id as number,
+      });
+
+      if (datas.data?.removeCandidateProgramme) {
+
+        // refresh the window
+        window.location.reload();
+
+        // Update candidateProgrammes state after deletion
+        setCandidateProgrammes((prevPrograms) =>
+          (prevPrograms || []).filter((cp) => cp.id !== id)
+        );
+
+        // set candidateProgrammes to prps.selected after deletion
+        props.setSelected((prevProgram) => {
+          return {
+            ...prevProgram,
+            candidateProgramme: (prevProgram?.candidateProgramme || []).filter(
+              (cp) => cp.id !== id
+            ),
+          };
+        });
+
+        // set candidateProgrammes to prps.candidateProgrammes after deletion
+        props.setCandidateProgrammes((prevPrograms) =>
+          (prevPrograms || []).filter((cp) => cp.id !== id)
+        );
+
+        // set candidates to prps.programs after deletion
+        props.setPrograms((prevPrograms) => {
+          return (prevPrograms || []).map((program) => {
+            if (program.id == props.selected?.id) {
+              return {
+                ...program,
+                candidateProgramme: (program.candidateProgramme || []).filter(
+                  (cp) => cp.id !== id
+                ),
+              };
+            }
+            return program;
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -149,7 +212,14 @@ const ViewProgram = (props: Props) => {
       className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center  items-center  ${props.isView ? 'block' : 'hidden'
         } `}
     >
+
       <div className="bg-white p-3 rounded-xl flex flex-col items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center ">
+
+        <p className="text-lg mt-3 font-bold text-primary">
+        <span className='text-xl '>
+        {props.selected?.programCode}  
+          </span> {props.selected?.name}
+        </p>
         {(data.admin?.roles == Roles.Admin ||
           data.admin?.roles == Roles.Controller ||
           data?.roles == Roles.Controller) && (
@@ -225,7 +295,7 @@ const ViewProgram = (props: Props) => {
         {data.roles == Roles.TeamManager && (
           <div>
             {
-              
+
               props.selected?.candidateProgramme?.map((cp, i) => {
                 if (cp.candidate?.team?.name == data.team?.name) {
                   return (
@@ -237,7 +307,7 @@ const ViewProgram = (props: Props) => {
                         {cp.candidate?.chestNO}{' '}
                       </p>
                       <p className="text-primary font-bold">
-                        {cp.candidate?.name}
+                        { (props.selected.type == Types.Group || props.selected.type == Types.House) ? cp.candidate?.name + " & Team" : cp.candidate?.name}
                       </p>
                       <p className="text-primary font-semibold">
                         {cp.candidate?.team?.name}
@@ -246,7 +316,7 @@ const ViewProgram = (props: Props) => {
                         setToDeleteCP(cp)
                         await HandleDelete(cp.id as number)
                       }} className="bg-white border border-dashed border-primary rounded-xl px-4 py-2 ">
-  
+
                         {
                           status.fetching ? (
                             <div>
@@ -273,12 +343,12 @@ const ViewProgram = (props: Props) => {
                               />
                             </svg>
                           )
-  
+
                         }
-  
+
                       </button>
                     </div>
-  
+
                   );
                 }
               })
@@ -290,7 +360,7 @@ const ViewProgram = (props: Props) => {
           data.roles == Roles.TeamManager &&
           (props.selected?.candidateProgramme?.filter((cp) => {
             return cp.candidate?.team?.name == data.team?.name;
-          }).length as any) < (props.selected?.candidateCount as any) && (
+          }).length as any) < ((props.selected?.type == Types.Group || props.selected?.type == Types.House) ? (props.selected?.groupCount as any) :(props.selected?.candidateCount as any))  && (
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -302,15 +372,48 @@ const ViewProgram = (props: Props) => {
                 Add Candidates
               </p>
               <p className="text-sm mt-3 font-bold text-primary">Chest No</p>
-              <input
-                type="text"
-                className="w-full border-2  border-primary rounded-md placeholder:text-sm py-2 px-3"
-                value={chestNo}
-                onChange={(e) => {
-                  setChestNo(e.target.value);
-                }}
-                placeholder={`Chest No`}
-              />
+              {
+                (props.selected.type == Types.Group || props.selected.type == Types.House) ? (
+                  // map input as much as props.selected.candidateCount
+
+                  <div className="flex flex-col gap-2">
+                    {
+                      [...Array(props.selected.candidateCount as number)].map((_, index) => {
+                        return (
+                          <>
+                            <input
+                              key={index}
+                              type="number"
+                              className="w-full border-2  border-primary rounded-md placeholder:text-sm py-2 px-3"
+                              value={p[index]}
+                              onChange={(e) => handleInputChange(index, e.target.value)}
+                              placeholder={`Chest No ${index + 1}`}
+                            />
+                            <p>
+                              {
+                                props.candidates?.find((candidate) => {
+                                  return candidate.chestNO == "CMS" + p[index]
+                                }
+                                )?.name
+                              }
+                            </p>
+                          </>
+
+                        )
+                      })
+                    }
+                  </div>
+                ) :
+                  <input
+                    type="text"
+                    className="w-full border-2  border-primary rounded-md placeholder:text-sm py-2 px-3"
+                    value={chestNo}
+                    onChange={(e) => {
+                      setChestNo(e.target.value);
+                    }}
+                    placeholder={`Chest No`}
+                  />
+              }
               <p className="text-sm mt-1 font-bold text-primary">
                 {chestNo.length > 0
                   ? !filteredCandidate
@@ -337,8 +440,9 @@ const ViewProgram = (props: Props) => {
           }}
         >
           Close
-        </button> 
+        </button>
       </div>
+
     </div>
   );
 };

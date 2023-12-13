@@ -2,12 +2,13 @@
 import { Roles, Team, Zone } from "@/gql/graphql";
 import { SERVER_URL } from "@/lib/urql";
 import { withUrqlClient } from "next-urql";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cacheExchange, fetchExchange } from "urql";
 import CreateTeam from "./CreateInstitution";
 import UpdateTeam from "./UpdateInstitution";
 import DeleteTeam from "./DeleteInstitution";
 import { useGlobalContext } from "@/context/context";
+import { useRouter } from "next/navigation";
 interface Props {
   teams: Team[];
   zones : Zone[]
@@ -21,12 +22,23 @@ function Institutions(props: Props) {
   const [selected, setSelected] = useState<Team | null>(null);
 
   const { data } = useGlobalContext();
+  const router = useRouter();
   const filteredData = institutions.filter((institution) => {
     return (
       institution?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       institution?.description?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      if(!(data.roles == Roles.Controller || data.roles == Roles.Admin)){
+        router.push("/login");
+      }
+    }
+    , 2000);
+  }
+  , [data])
   return <>
   <div className="p-12 pt-0 lg:p-20">
         <div className="flex flex-col items-center gap-4">

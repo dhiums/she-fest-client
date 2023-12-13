@@ -2,13 +2,14 @@
 import { Candidate, Category, Roles, Team } from '@/gql/graphql';
 import { SERVER_URL } from '@/lib/urql';
 import { withUrqlClient } from 'next-urql';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cacheExchange, fetchExchange } from 'urql';
 import CreateCandidate from './CreateCandidate';
 import UpdateCandidate from './UpdateCandidate';
 import DeleteCandidate from './DeleteCandidate';
 import { useGlobalContext } from '@/context/context';
 import ViewCandidates from './ViewCandidates';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   candidates: Candidate[];
@@ -23,7 +24,7 @@ function Candidates(props: Props) {
   const [isDelete, setIsDelete] = useState(false);
   const [isView, setIsView] = useState(false);
   const [selected, setSelected] = useState<Candidate | null>(null);
-
+  const router = useRouter();
   const {data , setData } = useGlobalContext()
   const filteredData = candidates.filter((candidate) => {
     return (
@@ -32,6 +33,24 @@ function Candidates(props: Props) {
     );
   });
   
+
+  useEffect(() => {
+
+   if(data.roles == Roles.TeamManager){
+    const teamCandidates = props.candidates.filter((candidate) => {
+      console.log(candidate.team?.name ,  data);
+      
+      return candidate.team?.name == data.team.name
+    }
+    );
+
+    console.log(teamCandidates);
+    
+    setCandidates(teamCandidates)
+   }
+  }
+  , [data , candidates])
+
   return (
     <>
       <div className="p-12 pt-0 lg:p-20">
