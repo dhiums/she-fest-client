@@ -100,7 +100,7 @@ function Programs(props: Props) {
           <div className="md:w-2/3 flex gap-2">
             <input
               type="text"
-              placeholder="Search by name or reg no.."
+              placeholder="Search by name or program code.."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 rounded-xl border-2 border-dashed border-brown"

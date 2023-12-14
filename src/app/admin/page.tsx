@@ -10,15 +10,20 @@ export default function Page() {
 
   const { data, setData } = useGlobalContext();
 
-  if (data === null) {
-    roter.push("/login");
-  }
+ 
   return (
     <>
       <CenterHeader />
       <div className="w-full flex justify-center">
         <h1 className="text-5xl text-center mt-10 mb-16 font-bold relative inline">
-          Controller <br/> Dashboard
+          {
+            (data.roles == Roles.Controller || data.roles == Roles.Admin ) && <>Controller <br/> Dashboard</> 
+            
+          }
+          {
+             data.roles == Roles.TeamManager && <>{data.team.name}</>
+          }
+          
           <img
             src="/img/flowers/yellow.svg"
             alt="flower"
@@ -54,7 +59,7 @@ export default function Page() {
           onClick={() => {
             roter.push("/admin/programs");
           }}
-          className="border-2 border-dashed p-4 rounded-xl border-yellow sm:min-w-1/4 w-full md:w-min flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
+          className="border-2 border-dashed p-4 rounded-xl border-yellow sm:min-w-1/4  flex gap-3 items-center cursor-pointer hover:bg-yellow duration-300  hover:scale-105 transition-all"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +73,13 @@ export default function Page() {
               clipRule="evenodd"
             />
           </svg>
-          <p className="font-semibold text-xl">Programs</p>
+         <div className="flex flex-col">
+         <p className="font-semibold text-xl">Click to Apply</p>
+          <div className="flex">
+          <p className="text-xs font-bold">deadline:</p>
+          <p className="text-xs ">16-12-2023-Saturday</p>
+          </div>
+         </div>
         </div>
         {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
           <div

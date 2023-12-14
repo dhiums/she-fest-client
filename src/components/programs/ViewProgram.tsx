@@ -330,7 +330,7 @@ const ViewProgram = (props: Props) => {
               <p className="text-lg mt-3 font-bold text-primary text-center">
                 Add Candidates
               </p>
-              <p className="text-sm mt-3 font-bold text-primary">Chest No</p>
+              <p className="text-sm mt-3 font-bold text-primary">Reg No</p>
               {props.selected.type == Types.Group ||
               props.selected.type == Types.House ? (
                 // map input as much as props.selected.candidateCount
@@ -348,7 +348,7 @@ const ViewProgram = (props: Props) => {
                             onChange={(e) =>
                               handleInputChange(index, e.target.value)
                             }
-                            placeholder={`Chest No ${index + 1}`}
+                            placeholder={`Reg No ${index + 1}`}
                           />
                           <p>
                             {
@@ -370,7 +370,7 @@ const ViewProgram = (props: Props) => {
                   onChange={(e) => {
                     setChestNo(e.target.value);
                   }}
-                  placeholder={`Chest No`}
+                  placeholder={`Reg No`}
                 />
               )}
               <p className="text-sm mt-1 font-bold text-primary">
