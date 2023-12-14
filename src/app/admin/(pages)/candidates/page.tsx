@@ -25,6 +25,7 @@ export default async function Page() {
     api_key: API_KEY,
   });
 
+  
   const categories = await client.query<
     GetAllCategoriesQuery,
     GetAllCategoriesQueryVariables
