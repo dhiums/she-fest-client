@@ -14,6 +14,7 @@ import {
   Types,
   Zone,
 } from "@/gql/graphql";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { OperationResult, useMutation } from "urql";
@@ -96,23 +97,61 @@ const ViewProgram = (props: Props) => {
       }
 
       if (datas.data?.createCandidateProgramme) {
-        const fetching = await fetch("/api/programs", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const fetchedProgrammes = await fetching.json();
-        props.setPrograms(fetchedProgrammes);
-        props.setSelected(
-          fetchedProgrammes.find(
-            (program: Programme) => program.id === props.selected?.id
-          )
-        );
-        setCandidateProgrammes(
-          props.selected?.candidateProgramme as CandidateProgramme[]
-        );
-
+        // const fetching = await fetch("/api/programs", {
+        //   method: "GET",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+        // const fetchedProgrammes = await fetching.json();
+        // props.setPrograms(fetchedProgrammes);
+        // props.setSelected(
+        //   fetchedProgrammes.find(
+        //     (program: Programme) => program.id === props.selected?.id
+        //   )
+        // );
+        // setCandidateProgrammes(
+        //   props.selected?.candidateProgramme as CandidateProgramme[]
+        // );
+        axios
+          .post("https://she-fest-api.vercel.app/graphql", {
+            query: `{
+          programmes(api_key:"abc"){
+           id
+            name
+            programCode
+            type
+            mode
+            candidateCount
+            groupCount
+            category {
+              name
+            }
+            candidateProgramme{
+              id
+              candidate{
+                chestNO
+                name
+                team{
+                  name
+                }
+              }
+            }
+          }
+        }`,
+          })
+          .then((res) => {
+            console.log(res.data?.data?.programmes);
+            props.setPrograms(res.data?.data?.programmes);
+            props.setSelected(
+              res.data?.data?.programmes.find(
+                (program: Programme) => program.id === props.selected?.id
+              )
+            );
+            setCandidateProgrammes(
+              props.selected?.candidateProgramme as CandidateProgramme[]
+            );
+          });
         // Clear the input
         setChestNo("");
       } else {

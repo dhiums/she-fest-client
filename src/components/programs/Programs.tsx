@@ -17,6 +17,7 @@ import DeleteProgramme from "./DeleteProgram";
 import ViewProgram from "./ViewProgram";
 import { useGlobalContext } from "@/context/context";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface Props {
   programmes: Programme[];
@@ -48,17 +49,51 @@ function Programs(props: Props) {
 
   useEffect(() => {
     (async () => {
-      const fetching = await fetch("/api/programs", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const fetchedProgrammes = await fetching.json();
-      setPrograms(fetchedProgrammes);
-      setCandidateProgrammes(
-        selected?.candidateProgramme as CandidateProgramme[]
-      );
+      // const fetching = await fetch("/api/programs", {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      // const fetchedProgrammes = await fetching.json();
+      // setPrograms(fetchedProgrammes);
+      // setCandidateProgrammes(
+      //   selected?.candidateProgramme as CandidateProgramme[]
+      // );
+      axios
+        .post("https://she-fest-api.vercel.app/graphql", {
+          query: `{
+          programmes(api_key:"abc"){
+           id
+            name
+            programCode
+            type
+            mode
+            candidateCount
+            groupCount
+            category {
+              name
+            }
+            candidateProgramme{
+              id
+              candidate{
+                chestNO
+                name
+                team{
+                  name
+                }
+              }
+            }
+          }
+        }`,
+        })
+        .then((res) => {
+          console.log(res.data?.data?.programmes);
+          setPrograms(res.data?.data?.programmes);
+          setCandidateProgrammes(
+            selected?.candidateProgramme as CandidateProgramme[]
+          );
+        });
     })();
   }, [props.programmes, selected]);
 
@@ -84,7 +119,7 @@ function Programs(props: Props) {
           <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
             <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
               <p className="text-primary text-2xl font-semibold">
-              Registration status
+                Registration status
               </p>
               <p className="text-brown text-4xl font-bold">
                 {totalCompleted + "/" + programs?.length}
