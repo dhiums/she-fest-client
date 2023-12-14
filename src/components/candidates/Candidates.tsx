@@ -1,10 +1,10 @@
 
 'use client';
-import { Candidate, Category, Roles, Team } from '@/gql/graphql';
+import { Candidate, Category, GetSearchCandidatesDocument, GetSearchCandidatesQuery, GetSearchCandidatesQueryVariables, Roles, Team } from '@/gql/graphql';
 import { SERVER_URL } from '@/lib/urql';
 import { withUrqlClient } from 'next-urql';
 import { useEffect, useState } from 'react';
-import { cacheExchange, fetchExchange } from 'urql';
+import { cacheExchange, fetchExchange, useQuery } from 'urql';
 import CreateCandidate from './CreateCandidate';
 import UpdateCandidate from './UpdateCandidate';
 import DeleteCandidate from './DeleteCandidate';
@@ -14,27 +14,51 @@ import { useRouter } from 'next/navigation';
 
 
 interface Props {
-  candidates: Candidate[];
   categories: Category[];
   teams: Team[];
 }
+
+function debounce<T extends unknown[]>(func: (...args: T) => void, delay: number): (...args: T) => void {
+  let timer: NodeJS.Timeout;
+  return function (...args: T) {
+    const context : any = this;
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(context, args), delay);
+  };
+}
+
 function Candidates(props: Props) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [candidates, setCandidates] = useState<Candidate[]>(props.candidates);
+  const [searchTerm, setSearchTerm] = useState("a");
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [isCreate, setIsCreate] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [isView, setIsView] = useState(false);
+  const [teamName, setTeamName] = useState("")
   const [selected, setSelected] = useState<Candidate | null>(null);
+  const [totalCandidates, setTotalCandidates] = useState(0);
 
   const router = useRouter();
   const { data, setData } = useGlobalContext()
 
-  const filteredData = candidates.filter((candidate) => {
-    return (
-      candidate?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      candidate?.chestNO?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  // const filteredData = candidates.filter((candidate) => {
+  //   return (
+  //     candidate?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  // });
+
+  const [{ fetching , data : user }] = useQuery<
+    GetSearchCandidatesQuery,
+    GetSearchCandidatesQueryVariables
+  >({
+    query: GetSearchCandidatesDocument,
+    variables: {
+      chestNo: "",
+      name: searchTerm,
+      limit: 10,
+      teamName: teamName,
+    },
+    pause: searchTerm == "",
   });
 
 
@@ -42,19 +66,22 @@ function Candidates(props: Props) {
   useEffect(() => {
 
     if (data.roles == Roles.TeamManager) {
-      const teamCandidates = props.candidates.filter((candidate) => {
-        console.log(candidate.team?.name, data);
-
-        return candidate.team?.name == data.team.name
-      }
-      );
-
-      console.log(teamCandidates);
-
-      setCandidates(teamCandidates)
+      setTeamName(data.team?.name as string)
     }
-  }
-    , [data, candidates])
+
+    if (user?.searchCandidates) {
+      setCandidates(user.searchCandidates.candidates as Candidate[]);
+      setTotalCandidates(user.searchCandidates.totalCandidates);
+      console.log(user.searchCandidates.candidates);
+      
+    }
+
+  }, [ data.team?.name , user]);
+
+
+  const delayedSearch = debounce((term: string) => {
+    setSearchTerm(term);
+  }, 2000);
 
 
   return (
@@ -68,15 +95,10 @@ function Candidates(props: Props) {
           <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
             <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
               <p className="text-primary text-2xl font-semibold">Total Candidates</p>
-              <p className="text-brown text-4xl font-bold">{candidates.length}</p>
+              <p className="text-brown text-4xl font-bold">{totalCandidates}</p>
             </div>
           </div>
-          <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
-            <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
-              <p className="text-primary text-2xl font-semibold">Filtered Candidates</p>
-              <p className="text-brown text-4xl font-bold">{filteredData.length}</p>
-            </div>
-          </div>
+          
         </div>
         <label className="flex gap-1 justify-center cursor-pointer w-full">
           <input
@@ -84,20 +106,20 @@ function Candidates(props: Props) {
             className="rounded-full px-3 h-10
                border-yellow border-dashed border-2 w-full"
             placeholder="Search Candidates Here"
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => delayedSearch(e.target.value)}
             required
           />{" "}
           {/* institutions dropdown to filter */}
 
-          <select className='
+          {/* <select className='
             rounded-full px-3 h-10
                border-yellow border-dashed border-2 w-full
             '
             onChange={(e) => {
               if (e.target.value == "") {
-                setCandidates(props.candidates)
+                setCandidates(candidates)
               } else {
-                const filteredCandidates = props.candidates.filter((candidate) => {
+                const filteredCandidates = candidates.filter((candidate) => {
                   return candidate.team?.name == e.target.value
                 }
                 );
@@ -113,7 +135,7 @@ function Candidates(props: Props) {
                 {team.name}
               </option>
             ))}
-          </select>
+          </select> */}
 
           <div className="bg-yellow rounded-full w-10 h-10">
             <svg
@@ -152,7 +174,7 @@ function Candidates(props: Props) {
         </label>
 
         <div className="flex flex-wrap gap-2 justify-center mt-3">
-          {filteredData.map((candidate, index) => (
+          {candidates.map((candidate, index) => (
             <div
               className="w-72 bg-secondary p-6 rounded-xl flex flex-col gap-2 items-start "
               key={index}
