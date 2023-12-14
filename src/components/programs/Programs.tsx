@@ -33,7 +33,9 @@ function Programs(props: Props) {
   const [selected, setSelected] = useState<Programme>();
   const [totalCompleted, setTotalCompleted] = useState(0);
   const [view, setIsView] = useState(false);
-  const [candidateProgrammes, setCandidateProgrammes] = useState<CandidateProgramme[]>(selected?.candidateProgramme as CandidateProgramme[])
+  const [candidateProgrammes, setCandidateProgrammes] = useState<
+    CandidateProgramme[]
+  >(selected?.candidateProgramme as CandidateProgramme[]);
   const router = useRouter();
   const { data } = useGlobalContext();
 
@@ -46,36 +48,38 @@ function Programs(props: Props) {
 
   useEffect(() => {
     setPrograms(props.programmes);
-    setCandidateProgrammes(selected?.candidateProgramme as CandidateProgramme[])
+    setCandidateProgrammes(
+      selected?.candidateProgramme as CandidateProgramme[]
+    );
     const completed = props.programmes?.filter((program) => {
       return program?.candidateProgramme?.filter((cp) => {
         return cp?.candidate?.team?.name == data.team?.name;
       }).length;
     });
 
-
     setTotalCompleted(completed?.length);
-  }, [props.programmes , selected]);
-
+  }, [props.programmes, selected]);
 
   return (
     <>
       <div className="p-12 pt-0 lg:p-20">
-
-      {/* card of dashboard to view the status of programs count */}
-      <div className="
+        {/* card of dashboard to view the status of programs count */}
+        <div
+          className="
         w-full flex items-center justify-center gap-4
-      ">
-        
-        <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
-        <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
-          <p className="text-primary text-2xl font-semibold">Total Programs Done</p>
-          <p className="text-brown text-4xl font-bold">{ totalCompleted + "/" + programs.length }</p>
+      "
+        >
+          <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
+            <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
+              <p className="text-primary text-2xl font-semibold">
+                Total Programs Done
+              </p>
+              <p className="text-brown text-4xl font-bold">
+                {totalCompleted + "/" + programs.length}
+              </p>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
-
-
 
         <div className="flex flex-col items-center gap-4">
           <h1 className="text-center font-extrabold text-3xl text-brown mb-3">
@@ -115,40 +119,42 @@ function Programs(props: Props) {
           </div>
           <div className="flex flex-wrap gap-2 justify-center mt-3">
             {filteredData?.map((program, index) => (
-              <div className="w-72 bg-secondary p-6 rounded-xl flex flex-col gap-2 items-start ">
-                <div className="flex justify-between items-center w-full">
-                
-                  <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
-                    {program.programCode}
-                  </p>
-                  <p className="text-primary font-semibold">
-                    {program.type == Types.Single
-                      ? program.candidateProgramme?.filter(cp=>{
-                        return cp.candidate?.team?.name == data.team?.name
-                      }).length + "/" + program.candidateCount
-                      : program.candidateProgramme?.filter(cp=>{
-                        return cp.candidate?.team?.name == data.team?.name
-                      }).length + "/" + program.groupCount}
-                  </p>
-                </div>
+              <div className="w-72 bg-secondary p-6 rounded-xl cursor-pointer border border-brown">
                 <div
                   onClick={() => {
                     setSelected(program);
                     setIsView(true);
                   }}
-                  className="line-clamp-2 border-2 h-16 p-3 my-2 border-primary flex cursor-pointer items-center justify-center rounded-xl border-dashed w-full"
+                  className="items-center justify-center flex flex-col gap-2"
                 >
-                  <p className="line-clamp-2 text-center">{program.name}</p>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                  <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
-                    {program.category?.name}
+                  <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
+                    {program.programCode}
                   </p>
-                  <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
-                    {program.type as string}
-                  </p>
-                  <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
-                    {program.mode as string}
+                    <p className="line-clamp-2 text-center">{program.name}</p>
+
+                  <div className="flex gap-1 flex-wrap justify-center items-center">
+                    <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
+                      {program.category?.name}
+                    </p>
+                    <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
+                      {program.type as string}
+                    </p>
+                    <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
+                      {program.mode as string}
+                    </p>
+                  </div>
+                  <p className="text-primary font-semibold">
+                    {program.type == Types.Single
+                      ? program.candidateProgramme?.filter((cp) => {
+                          return cp.candidate?.team?.name == data.team?.name;
+                        }).length +
+                        "/" +
+                        program.candidateCount
+                      : program.candidateProgramme?.filter((cp) => {
+                          return cp.candidate?.team?.name == data.team?.name;
+                        }).length +
+                        "/" +
+                        program.groupCount}
                   </p>
                 </div>
                 {(data.roles == Roles.Controller ||
