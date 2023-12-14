@@ -19,11 +19,10 @@ interface Props {
 }
 
 function debounce<T extends unknown[]>(func: (...args: T) => void, delay: number): (...args: T) => void {
-  let timer: NodeJS.Timeout;
-  return function (...args: T) {
-    const context : any = this;
+  let timer: ReturnType<typeof setTimeout>;
+  return function (this: any, ...args: T) {
     clearTimeout(timer);
-    timer = setTimeout(() => func.apply(context, args), delay);
+    timer = setTimeout(() => func.apply(this, args), delay);
   };
 }
 
