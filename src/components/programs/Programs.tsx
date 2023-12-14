@@ -84,7 +84,7 @@ function Programs(props: Props) {
           <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
             <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
               <p className="text-primary text-2xl font-semibold">
-                Total Programs Done
+              Registration status
               </p>
               <p className="text-brown text-4xl font-bold">
                 {totalCompleted + "/" + programs?.length}
