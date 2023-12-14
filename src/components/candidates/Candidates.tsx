@@ -81,7 +81,7 @@ function Candidates(props: Props) {
 
   const delayedSearch = debounce((term: string) => {
     setSearchTerm(term);
-  }, 2000);
+  }, 1000);
 
 
   return (
