@@ -47,18 +47,30 @@ function Programs(props: Props) {
   });
 
   useEffect(() => {
-    setPrograms(props.programmes);
-    setCandidateProgrammes(
-      selected?.candidateProgramme as CandidateProgramme[]
-    );
-    const completed = props.programmes?.filter((program) => {
+    (async () => {
+      const fetching = await fetch("/api/programs", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const fetchedProgrammes = await fetching.json();
+      setPrograms(fetchedProgrammes);
+      setCandidateProgrammes(
+        selected?.candidateProgramme as CandidateProgramme[]
+      );
+    })();
+  }, [props.programmes, selected]);
+
+  useEffect(() => {
+    const completed = programs.filter((program) => {
       return program?.candidateProgramme?.filter((cp) => {
         return cp?.candidate?.team?.name == data.team?.name;
       }).length;
     });
 
-    setTotalCompleted(completed?.length);
-  }, [props.programmes, selected]);
+    setTotalCompleted(completed.length);
+  }, [programs, data.team?.name]);
 
   return (
     <>
@@ -75,7 +87,7 @@ function Programs(props: Props) {
                 Total Programs Done
               </p>
               <p className="text-brown text-4xl font-bold">
-                {totalCompleted + "/" + programs.length}
+                {totalCompleted + "/" + programs?.length}
               </p>
             </div>
           </div>
@@ -130,7 +142,7 @@ function Programs(props: Props) {
                   <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
                     {program.programCode}
                   </p>
-                    <p className="line-clamp-2 text-center">{program.name}</p>
+                  <p className="line-clamp-2 text-center">{program.name}</p>
 
                   <div className="flex gap-1 flex-wrap justify-center items-center">
                     <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
