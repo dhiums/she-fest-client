@@ -15,7 +15,7 @@ export default function Page() {
     <>
       <CenterHeader />
       <div className="w-full flex justify-center">
-        <h1 className="text-5xl text-center mt-10 mb-16 font-bold relative inline">
+        <h1 className=" text-2xl md:text-4xl lg:text-5xl text-center mt-10 mb-16 font-bold relative inline">
           {
             (data.roles == Roles.Controller || data.roles == Roles.Admin ) && <>Controller <br/> Dashboard</> 
             

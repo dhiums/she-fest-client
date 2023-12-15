@@ -413,7 +413,7 @@ const ViewProgram = (props: Props) => {
               <p className="text-sm mt-1 font-bold text-primary">
                 {chestNo.length > 0
                   ? !filteredCandidate
-                    ? "No candidates font"
+                    ? "No candidates found"
                     : filteredCandidate?.name
                   : ""}
               </p>
