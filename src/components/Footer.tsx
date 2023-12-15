@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function Footer() {
@@ -17,44 +18,44 @@ function Footer() {
               </span>
               <ul className="list-unstyled opacity-80">
                 <li>
-                  <a
+                  <Link
                     className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="/sheets"
+                    href="/"
                   >
                     Sheets
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="/projects"
+                    href="/"
                   >
                     Projects
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="/organizations"
+                    href="/"
                   >
                     Organizations
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="/docs"
+                    href="/"
                   >
                     Docs
-                  </a>
+                  </Link>
                 </li>
                 {/* <li>
-                <a
+                <Link
                   className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                   href="/tea-stall"
                 >
                   Tea Stall
-                </a>
+                </Link>
               </li> */}
               </ul>
             </div>
@@ -64,28 +65,28 @@ function Footer() {
               </span>
               <ul className="list-unstyled opacity-80 ">
                 <li>
-                  <a
+                  <Link
                     className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                     href="/login"
                   >
                     Login
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="/register"
+                    href="/"
                   >
                     Sign Up
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    href="/profile"
+                    href="/"
                   >
                     Profile
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

@@ -191,17 +191,28 @@ function Programs(props: Props) {
                     </p>
                   </div>
                   <p className="text-primary font-semibold">
-                    {program.type == Types.Single
-                      ? program.candidateProgramme?.filter((cp) => {
-                          return cp.candidate?.team?.name == data.team?.name;
-                        }).length +
-                        "/" +
-                        program.candidateCount
-                      : program.candidateProgramme?.filter((cp) => {
-                          return cp.candidate?.team?.name == data.team?.name;
-                        }).length +
-                        "/" +
-                        program.groupCount}
+                    {
+                      data.roles == Roles.TeamManager ?
+                      (program.type == Types.Single
+                        ? program.candidateProgramme?.filter((cp) => {
+                            return cp.candidate?.team?.name == data.team?.name;
+                          }).length +
+                          "/" +
+                          program.candidateCount
+                        : program.candidateProgramme?.filter((cp) => {
+                            return cp.candidate?.team?.name == data.team?.name;
+                          }).length +
+                          "/" +
+                          program.groupCount) : (program.type == Types.Single
+                        ? program.candidateProgramme?.length +
+                          "/" +
+                          (program.candidateCount as number * 60)
+                        : program.candidateProgramme?.length +
+                          "/" +
+                          (program.groupCount as number * 60)
+
+                            )
+                    }
                   </p>
                 </div>
                 {(data.roles == Roles.Controller ||

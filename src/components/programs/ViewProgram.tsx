@@ -53,7 +53,7 @@ const ViewProgram = (props: Props) => {
     props.candidates
   );
   const [p, setP] = useState([
-    ...Array(props.selected?.candidateCount as number),
+    ...Array(props.selected?.candidateCount+"" as string),
   ]);
   const [error, setError] = React.useState<string>("");
   const [zones, setZones] = React.useState<Zone[]>(props.zones);
@@ -67,7 +67,7 @@ const ViewProgram = (props: Props) => {
 
   const handleInputChange = (index: number, value: any) => {
     const updatedP = [...p];
-    updatedP[index] = parseFloat(value); // You can parse the input value as needed
+    updatedP[index] = value
     setP(updatedP);
   };
 
@@ -84,9 +84,9 @@ const ViewProgram = (props: Props) => {
       ) {
         datas = await ViewProgramExecute({
           programCode: props.selected?.programCode as string,
-          chestNO: ("CMS" + p[0]) as string,
+          chestNO: (p[0]) as string,
           candidatesOfProgramme: p.map((chestNO) => {
-            return ("CMS" + chestNO) as string;
+            return (chestNO) as string;
           }),
         });
       } else {
@@ -148,6 +148,8 @@ const ViewProgram = (props: Props) => {
                 (program: Programme) => program.id === props.selected?.id
               )
             );
+            
+            
             setCandidateProgrammes(
               props.selected?.candidateProgramme as CandidateProgramme[]
             );
@@ -224,18 +226,14 @@ const ViewProgram = (props: Props) => {
                     onChange={(e) => {
                       setName(e.target.value);
 
-                      setCandidateProgrammes(
+                      props.setCandidateProgrammes(
                         props.selected?.candidateProgramme?.filter((cp) => {
-                          return (
-                            cp.candidate?.name
-                              ?.toLowerCase()
-                              .includes(name.toLowerCase()) ||
-                            cp.candidate?.chestNO
-                              ?.toLowerCase()
-                              .includes(name.toLowerCase())
-                          );
+                          return cp.candidate?.name
+                            ?.toLowerCase()
+                            .includes(name.toLowerCase());
                         }) as CandidateProgramme[]
                       );
+
                     }}
                     placeholder={`Search by name or chest number..`}
                   />
@@ -269,7 +267,7 @@ const ViewProgram = (props: Props) => {
                   </select>
                 </div>
                 <div className="w-full   overflow-y-auto">
-                  {candidateProgrammes?.map((cp) => {
+                  {props.candidateProgrammes?.map((cp) => {
                     return (
                       <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
                         <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">
@@ -381,7 +379,7 @@ const ViewProgram = (props: Props) => {
                         <>
                           <input
                             key={index}
-                            type="number"
+                            type="text"
                             className="w-full border-2  border-primary rounded-md placeholder:text-sm py-2 px-3"
                             value={p[index]}
                             onChange={(e) =>
@@ -392,7 +390,7 @@ const ViewProgram = (props: Props) => {
                           <p>
                             {
                               props.candidates?.find((candidate) => {
-                                return candidate.chestNO == "CMS" + p[index];
+                                return candidate.chestNO ==  p[index];
                               })?.name
                             }
                           </p>

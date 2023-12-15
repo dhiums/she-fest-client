@@ -15,6 +15,13 @@ const inter = Inter({ subsets: ['latin'] })
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <title>SHE FEST</title>
+        <meta name="description" content="A site for my programming portfolio" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={inter.className}>
 
       <GlobalContextProvider>{children}</GlobalContextProvider>
