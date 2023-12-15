@@ -23,7 +23,6 @@ export default function Page() {
           {
              data.roles == Roles.TeamManager && <>{data.team.name}</>
           }
-          
           <img
             src="/img/flowers/yellow.svg"
             alt="flower"

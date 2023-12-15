@@ -53,7 +53,7 @@ const ViewProgram = (props: Props) => {
     props.candidates
   );
   const [p, setP] = useState([
-    ...Array(props.selected?.candidateCount+"" as string),
+    ...Array(props.selected?.candidateCount?.toString() as string),
   ]);
   const [error, setError] = React.useState<string>("");
   const [zones, setZones] = React.useState<Zone[]>(props.zones);
@@ -431,6 +431,9 @@ const ViewProgram = (props: Props) => {
             console.log(data);
             // set chest no to empty
             setChestNo("");
+            // set p to empty
+
+            setP([]);
           }}
         >
           Close
