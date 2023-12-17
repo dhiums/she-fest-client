@@ -2,9 +2,9 @@ import Download from "@/components/programs/Download";
 import {
   Candidate,
   Category,
-  GetAllCandidatesDocument,
-  GetAllCandidatesQuery,
-  GetAllCandidatesQueryVariables,
+  GetSearchCandidatesDocument,
+  GetSearchCandidatesQuery,
+  GetSearchCandidatesQueryVariables,
   GetAllCategoriesDocument,
   GetAllCategoriesQuery,
   GetAllCategoriesQueryVariables,
@@ -16,8 +16,11 @@ import {
 import { API_KEY } from "@/lib/env";
 import { getUrqlClient } from "@/lib/urql";
 
-export default async function page() {
+export default async function page({context}: any) {
   const { client } = getUrqlClient();
+
+  const team = context.team;
+
   const programmes = await client.query<
     GetAllProgrammesQuery,
     GetAllProgrammesQueryVariables
@@ -26,10 +29,13 @@ export default async function page() {
   });
 
   const candidates = await client.query<
-    GetAllCandidatesQuery,
-    GetAllCandidatesQueryVariables
-  >(GetAllCandidatesDocument, {
-    api_key: API_KEY,
+    GetSearchCandidatesQuery,
+    GetSearchCandidatesQueryVariables
+  >(GetSearchCandidatesDocument, {
+    chestNo:" ",
+    name:" ",
+    limit: 260,
+    teamName: team,
   });
 
   const categories = await client.query<
@@ -43,7 +49,7 @@ export default async function page() {
     <>
       <Download
         programs={programmes.data?.programmes as Programme[]}
-        candidates={candidates.data?.candidates as Candidate[]}
+        candidates={candidates.data?.searchCandidates?.candidates as Candidate[]}
         categories={categories.data?.categories as Category[]}
       />
     </>

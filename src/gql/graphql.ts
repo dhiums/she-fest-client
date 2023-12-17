@@ -33,6 +33,7 @@ export type Candidate = {
   __typename?: 'Candidate';
   candidateProgrammes?: Maybe<Array<CandidateProgramme>>;
   category?: Maybe<Category>;
+  cgp?: Maybe<Array<CandidateProgramme>>;
   chestNO?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   groupPoint?: Maybe<Scalars['Float']['output']>;
@@ -181,7 +182,7 @@ export type CreateGradeInput = {
   pointSingle: Scalars['Int']['input'];
 };
 
-export type CreateFInput = {
+export type CreateInput = {
   inputs: Array<CreateCandidateInput>;
 };
 
