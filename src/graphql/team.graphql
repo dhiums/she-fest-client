@@ -3,7 +3,6 @@ query GetAllTeams($api_key: String!) {
     id
     name
     totalPoint
-    color
     zone{
       name
     }
@@ -15,7 +14,6 @@ query GetAllTeamsByPoint($api_key: String!) {
     id
     name
     totalPoint
-    color
   }
 }
 
@@ -23,52 +21,34 @@ query GetOneTeam($id: Int!, $api_key: String!) {
   team(id: $id, api_key: $api_key) {
     id
     name
-    description
-    shortName
     totalPoint
-    color
   }
 }
 
 mutation AddTeam(
   $name: String!
-  $description: String!
-  $shortName: String!
-  $color: String!
   $zoneId: Int!
 ) {
   createTeam(
     createTeamInput: {
       name: $name
-      description: $description
-      shortName: $shortName
-      color: $color
       zoneId: $zoneId
     }
   ) {
     id
     name
-    description
-    shortName
-    color
   }
 }
 
 mutation EditTeam(
   $id: Int!
   $name: String!
-  $description: String!
-  $shortName: String!
-  $color: String!
   $zoneId: Int!
 ) {
   updateTeam(
     updateTeamInput: {
       id: $id
       name: $name
-      description: $description
-      shortName: $shortName
-      color: $color
       zoneId: $zoneId
     }
   ) {
