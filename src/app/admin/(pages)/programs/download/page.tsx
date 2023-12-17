@@ -53,7 +53,7 @@ export default async function page({params , searchParams}: any) {
   return (
     <>
       <Download
-        team={team}
+        teamName={team}
         programs={programmes.data?.programmes as Programme[]}
         candidates={candidates.data?.searchCandidates?.candidates as Candidate[]}
         categories={categories.data?.categories as Category[]}
