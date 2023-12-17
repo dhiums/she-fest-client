@@ -97,9 +97,7 @@ export default function Download(props: Props) {
           </div>
           {category === "Kulliyya"
             ? props.candidates
-                ?.filter(
-                  (candidate) => candidate?.team?.name == data?.team?.name
-                )
+                
                 ?.map((candidate, index) => (
                   <div key={index} className="flex w-full ">
                     <p className="w-32 text-center line-clamp-1 font-semibold pl-2 border-[1px] border-black text-base">
@@ -138,9 +136,7 @@ export default function Download(props: Props) {
                   </div>
                 ))
             : props.candidates
-                ?.filter(
-                  (candidate) => candidate?.team?.name == data?.team?.name
-                )
+               
                 ?.filter((candidate) => candidate?.category?.name === category)
                 ?.map((candidate, index) => (
                   <div key={index} className="flex w-full ">

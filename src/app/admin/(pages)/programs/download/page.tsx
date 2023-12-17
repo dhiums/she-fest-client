@@ -16,10 +16,12 @@ import {
 import { API_KEY } from "@/lib/env";
 import { getUrqlClient } from "@/lib/urql";
 
-export default async function page({context}: any) {
+export default async function page({params , searchParams}: any) {
   const { client } = getUrqlClient();
 
-  const team = context.team;
+  const team = searchParams.team;
+  console.log(team);
+  
 
   const programmes = await client.query<
     GetAllProgrammesQuery,
@@ -32,11 +34,14 @@ export default async function page({context}: any) {
     GetSearchCandidatesQuery,
     GetSearchCandidatesQueryVariables
   >(GetSearchCandidatesDocument, {
-    chestNo:" ",
-    name:" ",
-    limit: 260,
+    chestNo:"",
+    name:"",
+    limit: 300,
     teamName: team,
   });
+
+  console.log(candidates);
+  
 
   const categories = await client.query<
     GetAllCategoriesQuery,
