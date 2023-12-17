@@ -10,52 +10,71 @@ function Header() {
   const path = usePathname();
   return (
     <>
-        <div className="px-10 flex md:hidden w-full bg-h-line bg-cover bg-center items-center justify-center my-6">
-      <div className="bg-white px-10">
-        <img src="/img/logo.svg" alt="logo" className="md:h-24 h-16" />
+      <div className="print:hidden">
+      <div className="px-10 flex md:hidden w-full bg-h-line bg-cover bg-center items-center justify-center my-6">
+        <div className="bg-white px-10">
+          <img src="/img/logo.svg" alt="logo" className="md:h-24 h-16" />
+        </div>
       </div>
-    </div>
       <div className="hidden px-10 md:flex w-full bg-h-line bg-cover bg-center items-center justify-between my-6">
         <div className="bg-white px-10">
           <Link href="/admin/">
-              <img src="/img/logo.svg" alt="logo" className="h-24" />
-            </Link>
+            <img src="/img/logo.svg" alt="logo" className="h-24" />
+          </Link>
         </div>
 
         <div className="bg-white flex-col flex py-2 px-8">
           <div className="flex gap-1 text-sm font-semibold justify-center text-center">
-           
-            <Link className={`${
-              path != "/admin/programs" ? "text-secondary" : "text-brown"
-            }`} href="/admin/programs">
+            <Link
+              className={`${
+                path != "/admin/programs" ? "text-secondary" : "text-brown"
+              }`}
+              href="/admin/programs"
+            >
               Programs
             </Link>{" "}
             &#x2022;
-            <Link className={`${
-              path != "/admin/candidates" ? "text-secondary" : "text-brown"
-            }`} href="/admin/candidates/">
+            <Link
+              className={`${
+                path != "/admin/candidates" ? "text-secondary" : "text-brown"
+              }`}
+              href="/admin/candidates/"
+            >
               Candidates
             </Link>
             {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
               <>
                 &#x2022;{" "}
-                <Link className={`${
-                  path != "/admin/institutions" ? "text-secondary" : "text-brown"
-                }`} href="/admin/institutions/">
+                <Link
+                  className={`${
+                    path != "/admin/institutions"
+                      ? "text-secondary"
+                      : "text-brown"
+                  }`}
+                  href="/admin/institutions/"
+                >
                   institutions
                 </Link>
               </>
             )}
           </div>
           <p className="text-5xl text-center mt-1 font-bold relative">
-            {
-              path == "/admin/" ? "Home" : path == "/admin/programs" ? "Programs" : path == "/admin/candidates" ? "Candidates" : path == "/admin/institutions" ? "Institutions" : ""
-            }
-            <img src="/img/flowers/yellow.svg" alt="flower" className="w-8 absolute right-4 -bottom-2" />
+            {path == "/admin/"
+              ? "Home"
+              : path == "/admin/programs"
+              ? "Programs"
+              : path == "/admin/candidates"
+              ? "Candidates"
+              : path == "/admin/institutions"
+              ? "Institutions"
+              : ""}
+            <img
+              src="/img/flowers/yellow.svg"
+              alt="flower"
+              className="w-8 absolute right-4 -bottom-2"
+            />
           </p>
-
         </div>
-
       </div>
 
       <div className="flex fixed bottom-0 shadow-lg shadow-black bg-white md:hidden w-full items-center justify-center p-2 z-50">
@@ -129,6 +148,7 @@ function Header() {
             institutions
           </Link>
         )}
+      </div>
       </div>
     </>
   );

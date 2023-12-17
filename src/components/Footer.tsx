@@ -3,7 +3,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer>
+    <footer className="print:hidden">
       <div className="w-full bg-h-line bg-cover h-12"></div>
       <div className="flex flex-col text-center items-center lg:text-left lg:items-start lg:flex-row justify-between px-16 py-5">
         <div className="flex items-center my-auto">
