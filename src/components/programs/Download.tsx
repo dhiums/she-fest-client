@@ -13,6 +13,7 @@ interface Props {
   programs: Programme[];
   candidates: Candidate[];
   categories: Category[];
+  team : string;
 }
 
 export default function Download(props: Props) {
@@ -76,7 +77,7 @@ export default function Download(props: Props) {
           <div className="flex w-full h-72">
             <div className="flex flex-col items-center justify-center h-72 w-[28rem] text-center font-semibold pl-2 border-[1px] border-black text-base gap-4">
               <p className="text-4xl">{category}</p>
-              <p className="text-3xl">{data?.team?.name}</p>
+              <p className="text-3xl">{props.team}</p>
             </div>
             <div className="">
               <div className="flex h-72">
