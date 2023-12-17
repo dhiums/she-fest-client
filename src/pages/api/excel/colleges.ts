@@ -30513,136 +30513,136 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Create a new workbook
     const workbook = new ExcelJS.Workbook();
 
-    // // Iterate over colleges
-    // data.colleges.forEach((college: any) => {
-    //   // Add a worksheet for each college
-    //   const sheet = workbook.addWorksheet(
-    //     college.name.slice(0, 27) + college.id
-    //   );
+    // Iterate over colleges
+    data.colleges.forEach((college: any) => {
+      // Add a worksheet for each college
+      const sheet = workbook.addWorksheet(
+        college.name.slice(0, 27) + college.id
+      );
 
-    //   // Create a Set to store unique program codes
-    //   const uniqueProgramCodes = new Set();
+      // Create a Set to store unique program codes
+      const uniqueProgramCodes = new Set();
 
-    //   // Create a Map to store program code presence for each candidate
-    //   const programCodeMap = new Map();
+      // Create a Map to store program code presence for each candidate
+      const programCodeMap = new Map();
 
-    //   // Iterate over candidates in the college
-    //   college.candidates.forEach((candidate: any) => {
-    //     // Iterate over programs for each candidate
-    //     candidate.programmes.forEach((program: any) => {
-    //       // Add program code to the Set to ensure uniqueness
-    //       uniqueProgramCodes.add(program.code);
+      // Iterate over candidates in the college
+      college.candidates.forEach((candidate: any) => {
+        // Iterate over programs for each candidate
+        candidate.programmes.forEach((program: any) => {
+          // Add program code to the Set to ensure uniqueness
+          uniqueProgramCodes.add(program.code);
 
-    //       // Initialize the Set for the candidate if not exists
-    //       if (!programCodeMap.has(candidate.name)) {
-    //         programCodeMap.set(candidate.name, new Set());
-    //       }
+          // Initialize the Set for the candidate if not exists
+          if (!programCodeMap.has(candidate.name)) {
+            programCodeMap.set(candidate.name, new Set());
+          }
 
-    //       // Add program code to the Set for the candidate
-    //       programCodeMap.get(candidate.name).add(program.code);
-    //     });
-    //   });
+          // Add program code to the Set for the candidate
+          programCodeMap.get(candidate.name).add(program.code);
+        });
+      });
 
-    //   console.log(uniqueProgramCodes);
+      console.log(uniqueProgramCodes);
 
-    // //   const headers = ["Name", "Chest Number"];
-    // //   programmes.map((program) => {
-    // //     headers.push(`${program.name}-${program.programCode}`);
-    // //   });
+      const headers = ["Name", "Chest Number"];
+      programmes.map((program) => {
+        headers.push(`${program.name}-${program.programCode}`);
+      });
 
-    //   // Add headers to the worksheet
-    //     sheet.addRow(headers);
+      // Add headers to the worksheet
+        sheet.addRow(headers);
 
-    //   // Add headers to the worksheet
-    //   sheet.addRow(["Name", "Chest Number", ...Array.from(uniqueProgramCodes)]);
+      // Add headers to the worksheet
+      // sheet.addRow(["Name", "Chest Number", ...Array.from(uniqueProgramCodes)]);
 
-    //   // Iterate over candidates in the college
-    //   college.candidates.forEach((candidate: any) => {
-    //     // Create a row array with empty placeholders for program codes
-    //     const row = Array.from(uniqueProgramCodes).fill("");
+      // Iterate over candidates in the college
+      college.candidates.forEach((candidate: any) => {
+        // Create a row array with empty placeholders for program codes
+        const row = Array.from(uniqueProgramCodes).fill("");
 
-    //     // Find the index of the candidate's name and chest number in the row array
-    //     const nameIndex = row.findIndex((header) => header === "");
-    //     const chestNumberIndex = row.lastIndexOf("");
+        // Find the index of the candidate's name and chest number in the row array
+        const nameIndex = row.findIndex((header) => header === "");
+        const chestNumberIndex = row.lastIndexOf("");
 
-    //     // Set the candidate's name and chest number in the row array
-    //     row[nameIndex] = candidate.name;
-    //     row[chestNumberIndex] = candidate.chestno;
+        // Set the candidate's name and chest number in the row array
+        row[nameIndex] = candidate.name;
+        row[chestNumberIndex] = candidate.chestno;
 
-    //     // Iterate over unique program codes
-    //     uniqueProgramCodes.forEach((programCode, index: any) => {
-    //       // Check if the candidate has the corresponding program code
-    //       if (
-    //         programCodeMap.has(candidate.name) &&
-    //         programCodeMap.get(candidate.name).has(programCode)
-    //       ) {
-    //         // If yes, mark it with a tick (you can use any symbol or text as per your preference)
-    //         row[index + 2] = "✔";
-    //       }
-    //     });
+        // Iterate over unique program codes
+        uniqueProgramCodes.forEach((programCode, index: any) => {
+          // Check if the candidate has the corresponding program code
+          if (
+            programCodeMap.has(candidate.name) &&
+            programCodeMap.get(candidate.name).has(programCode)
+          ) {
+            // If yes, mark it with a tick (you can use any symbol or text as per your preference)
+            row[index + 2] = "✔";
+          }
+        });
 
-    //     // Add the populated row to the worksheet
-    //     sheet.addRow(row);
-    //   });
-    // });
+        // Add the populated row to the worksheet
+        sheet.addRow(row);
+      });
+    });
 
     // Iterate over colleges
-data.colleges.forEach((college:any) => {
-    // Add a worksheet for each college
-    const sheet = workbook.addWorksheet(college.name);
+// data.colleges.forEach((college:any) => {
+//     // Add a worksheet for each college
+//     const sheet = workbook.addWorksheet(college.name);
   
-    // Create a Set to store unique program codes
-    const uniqueProgramCodes = new Set();
+//     // Create a Set to store unique program codes
+//     const uniqueProgramCodes = new Set();
   
-    // Create a Map to store program code presence for each candidate
-    const programCodeMap = new Map();
+//     // Create a Map to store program code presence for each candidate
+//     const programCodeMap = new Map();
   
-    // Iterate over candidates in the college
-    college.candidates.forEach((candidate:any) => {
-      // Iterate over programs for each candidate
-      candidate.programmes.forEach((program:any) => {
-        // Add program code to the Set to ensure uniqueness
-        uniqueProgramCodes.add(program.code);
+//     // Iterate over candidates in the college
+//     college.candidates.forEach((candidate:any) => {
+//       // Iterate over programs for each candidate
+//       candidate.programmes.forEach((program:any) => {
+//         // Add program code to the Set to ensure uniqueness
+//         uniqueProgramCodes.add(program.code);
   
-        // Initialize the Set for the candidate if not exists
-        if (!programCodeMap.has(candidate.name)) {
-          programCodeMap.set(candidate.name, new Set());
-        }
+//         // Initialize the Set for the candidate if not exists
+//         if (!programCodeMap.has(candidate.name)) {
+//           programCodeMap.set(candidate.name, new Set());
+//         }
   
-        // Add program code to the Set for the candidate
-        programCodeMap.get(candidate.name).add(program.code);
-      });
-    });
+//         // Add program code to the Set for the candidate
+//         programCodeMap.get(candidate.name).add(program.code);
+//       });
+//     });
   
-    // Add headers to the worksheet
-    sheet.addRow(['Name', 'Chest Number', ...Array.from(uniqueProgramCodes)]);
+//     // Add headers to the worksheet
+//     sheet.addRow(['Name', 'Chest Number', ...Array.from(uniqueProgramCodes)]);
   
-    // Iterate over candidates in the college
-    college.candidates.forEach((candidate:any) => {
-      // Create a row array with empty placeholders for program codes
-      const row = Array.from(uniqueProgramCodes).fill('');
+//     // Iterate over candidates in the college
+//     college.candidates.forEach((candidate:any) => {
+//       // Create a row array with empty placeholders for program codes
+//       const row = Array.from(uniqueProgramCodes).fill('');
   
-      // Find the index of the candidate's name and chest number in the row array
-      const nameIndex = row.findIndex(header => header === '');
-      const chestNumberIndex = row.lastIndexOf('');
+//       // Find the index of the candidate's name and chest number in the row array
+//       const nameIndex = row.findIndex(header => header === '');
+//       const chestNumberIndex = row.lastIndexOf('');
   
-      // Set the candidate's name and chest number in the row array
-      row[nameIndex] = candidate.name;
-      row[chestNumberIndex] = candidate.chestno;
+//       // Set the candidate's name and chest number in the row array
+//       row[nameIndex] = candidate.name;
+//       row[chestNumberIndex] = candidate.chestno;
   
-      // Iterate over unique program codes
-      uniqueProgramCodes.forEach((programCode, index:any) => {
-        // Check if the candidate has the corresponding program code
-        if (programCodeMap.has(candidate.name) && programCodeMap.get(candidate.name).has(programCode)) {
-          // If yes, mark it with a tick (you can use any symbol or text as per your preference)
-          row[index + 2] = '✔';
-        }
-      });
+//       // Iterate over unique program codes
+//       uniqueProgramCodes.forEach((programCode, index:any) => {
+//         // Check if the candidate has the corresponding program code
+//         if (programCodeMap.has(candidate.name) && programCodeMap.get(candidate.name).has(programCode)) {
+//           // If yes, mark it with a tick (you can use any symbol or text as per your preference)
+//           row[index + 2] = '✔';
+//         }
+//       });
   
-      // Add the populated row to the worksheet
-      sheet.addRow(row);
-    });
-  });
+//       // Add the populated row to the worksheet
+//       sheet.addRow(row);
+//     });
+//   });
 
     // Generate the Excel file
     const buffer = await workbook.xlsx.writeBuffer();
