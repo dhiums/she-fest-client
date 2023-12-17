@@ -19,7 +19,7 @@ import { getUrqlClient } from "@/lib/urql";
 export default async function page({context}: any) {
   const { client } = getUrqlClient();
 
-  const team = context.team;
+  const team = context?.team;
 
   const programmes = await client.query<
     GetAllProgrammesQuery,
