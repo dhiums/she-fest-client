@@ -98,7 +98,7 @@ function Programs(props: Props) {
   }, [props.programmes, selected]);
 
   useEffect(() => {
-    const completed = programs.filter((program) => {
+    const completed = programs?.filter((program) => {
       return program?.candidateProgramme?.filter((cp) => {
         return cp?.candidate?.team?.name == data.team?.name;
       }).length;
@@ -111,27 +111,34 @@ function Programs(props: Props) {
     <>
       <div className="p-12 pt-0 lg:p-20">
         {/* card of dashboard to view the status of programs count */}
-        <div
-          className="
-        w-full flex items-center justify-center gap-4
-      "
-        >
+        <div className=" w-full flex items-center justify-center gap-4  ">
           <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
-            <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
+            <div className="bg-secondary rounded-xl p-6 flex flex-col gap-2 items-center justify-center">
               <p className="text-primary text-2xl font-semibold">
                 Registration status
               </p>
               <p className="text-brown text-4xl font-bold">
                 {totalCompleted + "/" + programs?.length}
               </p>
+              <div
+              className="flex items-center justify-center gap-1 text-center font-semibold text-lg bg-brown text-white px-2 py-1 rounded-lg cursor-pointer"
+              onClick={() => {
+                router.push("/admin/programs/download");
+              }}
+            >
+              <p> Candidate's List</p>
+            </div>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col items-center gap-4">
-          <h1 className="text-center font-extrabold text-3xl text-brown mb-3">
-            Program Search
-          </h1>
+          <div className="flex flex-col">
+            <p className="text-center font-extrabold text-3xl text-brown mb-2">
+              Program Search
+            </p>
+            
+          </div>
           <div className="md:w-2/3 flex gap-2">
             <input
               type="text"
@@ -187,13 +194,12 @@ function Programs(props: Props) {
                       {program.type as string}
                     </p>
                     <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
-                      {program.mode as string}
+                      {program.mode?.replace("_", " ") as string}
                     </p>
                   </div>
                   <p className="text-primary font-semibold">
-                    {
-                      data.roles == Roles.TeamManager ?
-                      (program.type == Types.Single
+                    {data.roles == Roles.TeamManager
+                      ? program.type == Types.Single
                         ? program.candidateProgramme?.filter((cp) => {
                             return cp.candidate?.team?.name == data.team?.name;
                           }).length +
@@ -203,16 +209,14 @@ function Programs(props: Props) {
                             return cp.candidate?.team?.name == data.team?.name;
                           }).length +
                           "/" +
-                          program.groupCount) : (program.type == Types.Single
-                        ? program.candidateProgramme?.length +
-                          "/" +
-                          (program.candidateCount as number * 60)
-                        : program.candidateProgramme?.length +
-                          "/" +
-                          (program.groupCount as number * 60)
-
-                            )
-                    }
+                          program.groupCount
+                      : program.type == Types.Single
+                      ? program.candidateProgramme?.length +
+                        "/" +
+                        (program.candidateCount as number) * 60
+                      : program.candidateProgramme?.length +
+                        "/" +
+                        (program.groupCount as number) * 60}
                   </p>
                 </div>
                 {(data.roles == Roles.Controller ||
