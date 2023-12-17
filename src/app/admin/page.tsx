@@ -73,11 +73,7 @@ export default function Page() {
             />
           </svg>
          <div className="flex flex-col">
-         <p className="font-semibold text-xl">Click to Apply</p>
-          <div className="flex">
-          <p className="text-xs font-bold">deadline:</p>
-          <p className="text-xs ">16-12-2023-Saturday</p>
-          </div>
+         <p className="font-semibold text-xl">Programs</p>
          </div>
         </div>
         {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
