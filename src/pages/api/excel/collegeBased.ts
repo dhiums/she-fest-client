@@ -30520,163 +30520,100 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         college.name.slice(0, 27) + college.id
       );
 
-      // // Create a Set to store unique program codes
-      // const uniqueProgramCodes = new Set();
-
-      // // Create a Map to store program code presence for each candidate
-      // const programCodeMap = new Map();
-
-      // // Iterate over candidates in the college
-      // college.candidates.forEach((candidate: any) => {
-      //   // Iterate over programs for each candidate
-      //   candidate.programmes.forEach((program: any) => {
-      //     // Add program code to the Set to ensure uniqueness
-      //     uniqueProgramCodes.add(program.code);
-
-      //     // Initialize the Set for the candidate if not exists
-      //     if (!programCodeMap.has(candidate.name)) {
-      //       programCodeMap.set(candidate.name, new Set());
-      //     }
-
-      //     // Add program code to the Set for the candidate
-      //     programCodeMap.get(candidate.name).add(program.code);
-      //   });
-      // });
-
-      // console.log(uniqueProgramCodes);
-
       // Add headers to the worksheet
-      const headers = ["Chest No", "Name"];
+      const headers = ["", ""];
       programmes.map((program) => {
         headers.push(`${program.name}-${program.programCode}`);
       });
       const headerRow = sheet.addRow(headers);
       const headerCellNo: any = {};
       headerRow.eachCell((cell, number) => {
-        // cell.fill = {
-        //   type: "pattern",
-        //   pattern: "solid",
-        //   fgColor: { argb: "FFFFFF00" },
-        //   bgColor: { argb: "FF0000FF" },
-        // };
         headerCellNo[cell.value as any] = cell.address;
+      cell.alignment =  { textRotation: 90 };
+      
+      if (number>2){
+        sheet.getColumn(number).width = 3
+      }
+      cell.border = {
+            top: { style: "thick" },
+            left: { style: "thick" },
+            bottom: { style: "thick" },
+            right: { style: "thick" },
+          };
       });
-      console.log(headerCellNo);
 
+
+      const subRowCellNo: any = {};
       // Iterate over candidates in the college
       college.candidates.forEach((candidate: any) => {
 
         const subRow = sheet.addRow([
           candidate.chestno,
           candidate.name,
-          // candidate.candidate.team.name,
         ]);
-        // subRow.eachCell(
-        //   (row:any)=>{}
-        // )
+
+       
+        
+      subRow.eachCell((cell, number) => {
+        if (candidate.chestno == cell.value){
+          subRowCellNo[cell.value as any] = cell.address;
+        }
+        cell.border = {
+              top: { style: "thick" },
+              left: { style: "thick" },
+              bottom: { style: "thick" },
+              right: { style: "thick" },
+            };
+      });
+
       candidate.programmes.map(
         (program: any) => {
-          // const cell = sheet.getCell(
-          //   subRow.getCell(headerCellNo[`${program.name}-${program.programCode}`])
-          //     .address
-          // )
           for (let key of Object.keys(headerCellNo)) {
            if (key.includes(program.code)) {
-      // console.log(candidate.chestno,key)
-      // console.log(key);
-      
-      // const cell = subRow.getCell(candidate.chestno).col;
-      
-      
-
+            var newCell = headerCellNo[key].replace('1','')+subRowCellNo[candidate.chestno].replace('A','')
+            sheet.getCell(newCell).value = "✔";
         }
         }}
       )
-        // Create a row array with empty placeholders for program codes
-        // const row = Array.from(uniqueProgramCodes).fill("");
-
-        // // Find the index of the candidate's name and chest number in the row array
-        // const nameIndex = row.findIndex((header) => header === "");
-        // const chestNumberIndex = row.lastIndexOf("");
-
-        // // Set the candidate's name and chest number in the row array
-        // row[nameIndex] = candidate.name;
-        // row[chestNumberIndex] = candidate.chestno;
-
-        // // Iterate over unique program codes
-        // uniqueProgramCodes.forEach((programCode, index: any) => {
-        //   // Check if the candidate has the corresponding program code
-        //   if (
-        //     programCodeMap.has(candidate.name) &&
-        //     programCodeMap.get(candidate.name).has(programCode)
-        //   ) {
-        //     // If yes, mark it with a tick (you can use any symbol or text as per your preference)
-        //     row[index + 2] = "✔";
-        //   }
-        // });
-
-        // Add the populated row to the worksheet
-        // sheet.addRow(subRow);
       });
+
+      // setting value and styling main header
+      sheet.mergeCells("A1:B1");
+      const collegeNameCell = sheet.getCell("A1")
+      collegeNameCell.value = college.name
+      collegeNameCell.font = {
+          size: 36,
+          bold: true,
+        };
+        collegeNameCell.alignment = { textRotation: 0, vertical: 'middle', wrapText: true, horizontal:"center" };
+        sheet.getColumn(2).width = 50
+      // console.log(headerCellNo, subRowCellNo)
+
+      // bordering remaining all cells 
+      function cellToIndices(cell:any) {
+        const match = cell.match(/([A-Z]+)(\d+)/);
+        if (!match) {
+          throw new Error(`Invalid cell reference: ${cell}`);
+        }
+
+        const [, col, row] = match;
+        const colIndex = col.split('').reduce((acc:any, char:any) => acc * 26 + char.charCodeAt(0) - 'A'.charCodeAt(0) + 1, 0);
+      
+        return [colIndex, parseInt(row, 10)];
+      }
+
+      const startCell = 'C2';
+      const endCell = (Object as any).values(headerCellNo).pop().replace('1','')+(Object as any).values(subRowCellNo).pop().replace('A','');
+      const [startCol, startRow] = cellToIndices(startCell);
+      const [endCol, endRow] = cellToIndices(endCell);
+    
+      for (let row = startRow; row <= endRow; row++) {
+        for (let col = startCol; col <= endCol; col++) {
+          const cell = sheet.getCell(row, col);
+          cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+        }
+      }
     });
-
-    // Iterate over colleges
-    // data.colleges.forEach((college:any) => {
-    //     // Add a worksheet for each college
-    //     const sheet = workbook.addWorksheet(college.name);
-
-    //     // Create a Set to store unique program codes
-    //     const uniqueProgramCodes = new Set();
-
-    //     // Create a Map to store program code presence for each candidate
-    //     const programCodeMap = new Map();
-
-    //     // Iterate over candidates in the college
-    //     college.candidates.forEach((candidate:any) => {
-    //       // Iterate over programs for each candidate
-    //       candidate.programmes.forEach((program:any) => {
-    //         // Add program code to the Set to ensure uniqueness
-    //         uniqueProgramCodes.add(program.code);
-
-    //         // Initialize the Set for the candidate if not exists
-    //         if (!programCodeMap.has(candidate.name)) {
-    //           programCodeMap.set(candidate.name, new Set());
-    //         }
-
-    //         // Add program code to the Set for the candidate
-    //         programCodeMap.get(candidate.name).add(program.code);
-    //       });
-    //     });
-
-    //     // Add headers to the worksheet
-    //     sheet.addRow(['Name', 'Chest Number', ...Array.from(uniqueProgramCodes)]);
-
-    //     // Iterate over candidates in the college
-    //     college.candidates.forEach((candidate:any) => {
-    //       // Create a row array with empty placeholders for program codes
-    //       const row = Array.from(uniqueProgramCodes).fill('');
-
-    //       // Find the index of the candidate's name and chest number in the row array
-    //       const nameIndex = row.findIndex(header => header === '');
-    //       const chestNumberIndex = row.lastIndexOf('');
-
-    //       // Set the candidate's name and chest number in the row array
-    //       row[nameIndex] = candidate.name;
-    //       row[chestNumberIndex] = candidate.chestno;
-
-    //       // Iterate over unique program codes
-    //       uniqueProgramCodes.forEach((programCode, index:any) => {
-    //         // Check if the candidate has the corresponding program code
-    //         if (programCodeMap.has(candidate.name) && programCodeMap.get(candidate.name).has(programCode)) {
-    //           // If yes, mark it with a tick (you can use any symbol or text as per your preference)
-    //           row[index + 2] = '✔';
-    //         }
-    //       });
-
-    //       // Add the populated row to the worksheet
-    //       sheet.addRow(row);
-    //     });
-    //   });
 
     // Generate the Excel file
     const buffer = await workbook.xlsx.writeBuffer();
