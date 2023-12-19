@@ -30538,88 +30538,99 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const headerCellNo: any = {};
       headerRow.eachCell((cell, number) => {
         headerCellNo[cell.value as any] = cell.address;
-      cell.alignment =  { textRotation: 90 };
-      
-      if (number>2){
-        sheet.getColumn(number).width = 3
-      }
-      cell.border = {
+        cell.alignment = { textRotation: 90 };
+
+        if (number > 2) {
+          sheet.getColumn(number).width = 3;
+        }
+        cell.border = {
+          top: { style: "thick" },
+          left: { style: "thick" },
+          bottom: { style: "thick" },
+          right: { style: "thick" },
+        };
+      });
+
+      const subRowCellNo: any = {};
+      // Iterate over candidates in the college
+      college.candidates.forEach((candidate: any) => {
+        const subRow = sheet.addRow([candidate.chestno, candidate.name]);
+
+        subRow.eachCell((cell, number) => {
+          if (candidate.chestno == cell.value) {
+            subRowCellNo[cell.value as any] = cell.address;
+          }
+          cell.border = {
             top: { style: "thick" },
             left: { style: "thick" },
             bottom: { style: "thick" },
             right: { style: "thick" },
           };
-      });
+        });
 
-
-      const subRowCellNo: any = {};
-      // Iterate over candidates in the college
-      college.candidates.forEach((candidate: any) => {
-
-        const subRow = sheet.addRow([
-          candidate.chestno,
-          candidate.name,
-        ]);
-
-       
-        
-      subRow.eachCell((cell, number) => {
-        if (candidate.chestno == cell.value){
-          subRowCellNo[cell.value as any] = cell.address;
-        }
-        cell.border = {
-              top: { style: "thick" },
-              left: { style: "thick" },
-              bottom: { style: "thick" },
-              right: { style: "thick" },
-            };
-      });
-
-      candidate.programmes.map(
-        (program: any) => {
+        candidate.programmes.map((program: any) => {
           for (let key of Object.keys(headerCellNo)) {
-           if (key.includes(program.code)) {
-            var newCell = headerCellNo[key].replace('1','')+subRowCellNo[candidate.chestno].replace('A','')
-            sheet.getCell(newCell).value = "✔";
-        }
-        }}
-      )
+            if (key.includes(program.code)) {
+              var newCell =
+                headerCellNo[key].replace("1", "") +
+                subRowCellNo[candidate.chestno].replace("A", "");
+              sheet.getCell(newCell).value = "✔";
+            }
+          }
+        });
       });
 
       // setting value and styling main header
       sheet.mergeCells("A1:B1");
-      const collegeNameCell = sheet.getCell("A1")
-      collegeNameCell.value = college.name
+      const collegeNameCell = sheet.getCell("A1");
+      collegeNameCell.value = college.name;
       collegeNameCell.font = {
-          size: 36,
-          bold: true,
-        };
-        collegeNameCell.alignment = { textRotation: 0, vertical: 'middle', wrapText: true, horizontal:"center" };
-        sheet.getColumn(2).width = 50
+        size: 36,
+        bold: true,
+      };
+      collegeNameCell.alignment = {
+        textRotation: 0,
+        vertical: "middle",
+        wrapText: true,
+        horizontal: "center",
+      };
+      sheet.getColumn(1).width = 12;
+      sheet.getColumn(2).width = 50;
       // console.log(headerCellNo, subRowCellNo)
 
-      // bordering remaining all cells 
-      function cellToIndices(cell:any) {
+      // bordering remaining all cells
+      function cellToIndices(cell: any) {
         const match = cell.match(/([A-Z]+)(\d+)/);
         if (!match) {
           throw new Error(`Invalid cell reference: ${cell}`);
         }
-
         const [, col, row] = match;
-        const colIndex = col.split('').reduce((acc:any, char:any) => acc * 26 + char.charCodeAt(0) - 'A'.charCodeAt(0) + 1, 0);
-      
+        const colIndex = col
+          .split("")
+          .reduce(
+            (acc: any, char: any) =>
+              acc * 26 + char.charCodeAt(0) - "A".charCodeAt(0) + 1,
+            0
+          );
         return [colIndex, parseInt(row, 10)];
       }
 
-      const startCell = 'C2';
-      const endCell = (Object as any).values(headerCellNo).pop().replace('1','')+(Object as any).values(subRowCellNo).pop().replace('A','');
+      const startCell = "C2";
+      const endCell =
+        (Object as any).values(headerCellNo).pop().replace("1", "") +
+        (Object as any).values(subRowCellNo).pop().replace("A", "");
       const [startCol, startRow] = cellToIndices(startCell);
       const [endCol, endRow] = cellToIndices(endCell);
-    
+
       for (let row = startRow; row <= endRow; row++) {
         for (let col = startCol; col <= endCol; col++) {
           const cell = sheet.getCell(row, col);
-          cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+          cell.border = {
+            top: { style: "thin" },
+            left: { style: "thin" },
+            bottom: { style: "thin" },
+            right: { style: "thin" },
+          };
         }
       }
     });
