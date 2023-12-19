@@ -289,7 +289,7 @@ function Programs(props: Props) {
                 </div>
                 {(data.roles == Roles.Controller ||
                   data.roles == Roles.Admin) && (
-                  <div className="flex w-full justify-between">
+                  <div className="flex w-full justify-between mt-3">
                     {/* <button
                       onClick={() => {
                         setIsUpdate(true);
