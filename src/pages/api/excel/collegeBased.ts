@@ -30506,9 +30506,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     },
   ];
 
+//   const dataForExcel = {
+//     colleges: data.candidates.reduce((colleges:any, candidate:any) => {
+//         var collegeEntry = colleges.find(college:any => college.name === candidate.team.name) || colleges[colleges.push({ name: candidate.team.name, id: candidate.team.id, candidates: [] }) - 1];
+//         collegeEntry.candidates.push({ name: candidate.name, chestno: candidate.chestNO, programmes: candidate.candidateProgrammes.map(program:any => ({ name: program.programme.name, code: program.programme.programCode })) });
+//         return colleges;
+//     }, [])
+// };
+
+
   //   const data: any = req.body.data;
   const data: any = condata;
-  // const SelectedProgrammes: any = req.body.SelectedProgrammes;
+  // const programmes: any = req.body.programmes;
   try {
     // Create a new workbook
     const workbook = new ExcelJS.Workbook();
