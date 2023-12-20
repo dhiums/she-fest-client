@@ -749,6 +749,9 @@ export type Query = {
   feed: Feed;
   feeds: Array<Feed>;
   findOverallToppers: Array<Candidate>;
+  findProgrammesByZone: Array<Programme>;
+  findResultEnteredProgrammesByZone: Array<Programme>;
+  findResultPublishedProgrammesByZone: Array<Programme>;
   getCategoryBasedToppers: Array<Category>;
   getCookieValue: Scalars['String']['output'];
   getPublishedCategoryBasedToppers: Array<Category>;
@@ -877,6 +880,21 @@ export type QueryFeedsArgs = {
 
 export type QueryFindOverallToppersArgs = {
   api_key: Scalars['String']['input'];
+};
+
+
+export type QueryFindProgrammesByZoneArgs = {
+  zone: Scalars['String']['input'];
+};
+
+
+export type QueryFindResultEnteredProgrammesByZoneArgs = {
+  zone: Scalars['String']['input'];
+};
+
+
+export type QueryFindResultPublishedProgrammesByZoneArgs = {
+  zone: Scalars['String']['input'];
 };
 
 
