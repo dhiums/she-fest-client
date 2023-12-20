@@ -3,23 +3,23 @@ query GetAllProgrammes($api_key: String!) {
     id
     name
     programCode
-    # resultEntered
+    resultEntered
     type
     mode
-    # resultPublished
+    resultPublished
     candidateCount
     groupCount
     category {
       name
     }
-    candidateProgramme{
+    candidateProgramme {
       id
-      candidate{
+      candidate {
         chestNO
         name
-        team{
+        team {
           name
-          zone{
+          zone {
             name
           }
         }
@@ -182,6 +182,62 @@ query GetPublishedProgrammes($api_key: String!) {
 
 query GetEnteredProgrammes($api_key: String!) {
   resultEnteredProgrammes(api_key: $api_key) {
+    id
+    name
+    mode
+    type
+    programCode
+    resultEntered
+    resultPublished
+    candidateCount
+    category {
+      name
+    }
+    anyIssue
+    candidateProgramme {
+      id
+      zonalpoint
+      finalpoint
+      finalgrade {
+        name
+        pointGroup
+        pointSingle
+        pointHouse
+      }
+      finalposition {
+        name
+        value
+        pointGroup
+        pointSingle
+        pointHouse
+      }
+      zonalgrade {
+        name
+        pointGroup
+        pointSingle
+        pointHouse
+      }
+      zonalposition {
+        name
+        value
+        pointGroup
+        pointSingle
+        pointHouse
+      }
+      candidate {
+        name
+        chestNO
+        team {
+          name
+          id
+        }
+      }
+    }
+  }
+}
+
+query findResultEnteredProgrammesByZone($zone: String!) {
+  findResultEnteredProgrammesByZone(zone: $zone) {
     id
     name
     mode
