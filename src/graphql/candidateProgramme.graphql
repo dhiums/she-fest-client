@@ -4,6 +4,11 @@ query GetAllCandidateProgrammes($api_key: String!) {
     candidate {
       name
       chestNO
+      team{
+        zone{
+          name
+        }
+      }
     }
     programme {
       name

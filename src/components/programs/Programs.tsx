@@ -19,6 +19,7 @@ import ViewProgram from "./ViewProgram";
 import { useGlobalContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import ResultUpload from "./ResultUpload";
 
 interface Props {
   programmes: Programme[];
@@ -30,10 +31,12 @@ interface Props {
 function Programs(props: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [programs, setPrograms] = useState<Programme[]>(props.programmes);
+  const [zone, setZone] = useState<string>(props.zones[0]?.name as string);
   const [isCreate, setIsCreate] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [team, setTeam] = useState<string>("" as string);
+  const [isResult, setIsResult] = useState(false);
+  const [team, setTeam] = useState<string>("");
   const [selected, setSelected] = useState<Programme>();
   const [totalCompleted, setTotalCompleted] = useState(0);
   const [view, setIsView] = useState(false);
@@ -110,93 +113,120 @@ function Programs(props: Props) {
     setTotalCompleted(completed.length);
   }, [programs, data.team?.name]);
 
+  // useEffect(() => {
+  //   setCandidateProgrammes(
+  //     candidateProgrammes?.filter(
+  //       (cp) => cp.candidate?.team?.zone?.name === zone
+  //     )
+  //   );
+  // }, [programs]);
+
   return (
     <>
       <div className="p-12 pt-0 lg:p-20">
         {/* card of dashboard to view the status of programs count */}
         <div className=" w-full flex items-center justify-center gap-4  ">
-          <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
-            <div className="bg-secondary rounded-xl p-6 flex flex-col gap-2 items-center justify-center">
-              <p className="text-primary text-2xl font-semibold">
-                Registration status
-              </p>
-              <p className="text-brown text-4xl font-bold">
-                {totalCompleted + "/" + programs?.length}
-              </p>
+          <div className="flex flex-col">
+            <select
+              className="w-full border-2  border-brown  border-dashed rounded-md placeholder:text-sm py-2 px-3 my-2 remove-arrow"
+              value={zone}
+              onChange={(e) => {
+                setZone(e.target.value);
+              }}
+            >
+              {props?.zones?.map((zone, index) => (
+                <option
+                  className="text-center"
+                  key={index}
+                  value={zone.name as string}
+                >
+                  {zone.name}
+                </option>
+              ))}
+            </select>
+            <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
+              <div className="bg-secondary rounded-xl p-6 flex flex-col gap-2 items-center justify-center">
+                <p className="text-primary text-2xl font-semibold">
+                  Registration status
+                </p>
+                <p className="text-brown text-4xl font-bold">
+                  {totalCompleted + "/" + programs?.length}
+                </p>
 
-              {/* drop down to select team */}
+                {/* drop down to select team */}
 
-              {(data.roles == Roles.Controller ||
-                data.roles == Roles.Admin) && (
-                <div className="flex flex-col gap-2">
-                  <p className="text-primary text-xl font-semibold text-center">
-                    Select Team
-                  </p>
-                  <select
-                    className="w-72 px-4 py-2 rounded-xl border-2 border-dashed border-brown"
-                    onChange={(e) => {
-                      setTeam(e.target.value);
+                {(data.roles == Roles.Controller ||
+                  data.roles == Roles.Admin) && (
+                  <div className="flex flex-col gap-2">
+                    <p className="text-primary text-xl font-semibold text-center">
+                      Select Team
+                    </p>
+                    <select
+                      className="w-72 px-4 py-2 rounded-xl border-2 border-dashed border-brown"
+                      onChange={(e) => {
+                        setTeam(e.target.value);
+                      }}
+                    >
+                      <option value="">Select Team</option>
+                      {props.team?.map((team, index) => (
+                        <option key={index} value={team?.name as string}>
+                          {team.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                {data.roles == Roles.TeamManager && (
+                  <div
+                    className="flex items-center justify-center gap-1 text-center font-semibold text-lg bg-brown text-white px-2 py-1 rounded-lg cursor-pointer"
+                    onClick={() => {
+                      router.push(
+                        `/admin/programs/download?team=${data.team?.name}`
+                      );
                     }}
                   >
-                    <option value="">Select Team</option>
-                    {props.team?.map((team, index) => (
-                      <option key={index} value={team?.name as string}>
-                        {team.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-.53 14.03a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V8.25a.75.75 0 00-1.5 0v5.69l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
 
-              {data.roles == Roles.TeamManager && (
-                <div
-                  className="flex items-center justify-center gap-1 text-center font-semibold text-lg bg-brown text-white px-2 py-1 rounded-lg cursor-pointer"
-                  onClick={() => {
-                    router.push(
-                      `/admin/programs/download?team=${data.team?.name}`
-                    );
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-6 h-6"
+                    <p> Candidate's List</p>
+                  </div>
+                )}
+
+                {data.roles != Roles.TeamManager && (
+                  <div
+                    className="flex items-center justify-center gap-1 text-center font-semibold text-lg bg-brown text-white px-2 py-1 rounded-lg cursor-pointer"
+                    onClick={() => {
+                      router.push(`/admin/programs/download?team=${team}`);
+                    }}
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-.53 14.03a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V8.25a.75.75 0 00-1.5 0v5.69l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-.53 14.03a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V8.25a.75.75 0 00-1.5 0v5.69l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
 
-                  <p> Candidate's List</p>
-                </div>
-              )}
-
-              {data.roles != Roles.TeamManager && (
-                <div
-                  className="flex items-center justify-center gap-1 text-center font-semibold text-lg bg-brown text-white px-2 py-1 rounded-lg cursor-pointer"
-                  onClick={() => {
-                    router.push(`/admin/programs/download?team=${team}`);
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-.53 14.03a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V8.25a.75.75 0 00-1.5 0v5.69l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-
-                  <p> Candidate's List</p>
-                </div>
-              )}
+                    <p> Candidate's List</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -366,7 +396,13 @@ function Programs(props: Props) {
                         />
                       </svg>
                     </button>
-                    <button className="bg-white border border-dashed border-primary rounded-xl px-4 py-2">
+                    <button
+                      className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
+                      onClick={() => {
+                        setIsResult(true);
+                        setSelected(program);
+                      }}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -389,6 +425,16 @@ function Programs(props: Props) {
           </div>
         </div>
       </div>
+      <ResultUpload
+        isResult={isResult}
+        setIsResult={setIsResult}
+        selected={selected as Programme}
+        setSelected={setSelected as any}
+        programmes={programs}
+        setProgrammes={setPrograms}
+        candidateProgrammes={candidateProgrammes}
+        setCandidateProgrammes={setCandidateProgrammes}
+      />
       <CreateProgram
         isCreate={isCreate}
         setIsCreate={setIsCreate}

@@ -47,7 +47,7 @@ const ViewProgram = (props: Props) => {
   >(props.selected?.candidateProgramme as CandidateProgramme[]);
   const [name, setName] = React.useState<string>("");
   const [chestNo, setChestNo] = React.useState<string>("");
-  const [zone, setZone] = React.useState<string>("");
+  const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [toDeleteCP, setToDeleteCP] = React.useState<CandidateProgramme>();
   const [candidates, setCandidates] = React.useState<Candidate[]>(
     props.candidates
@@ -57,6 +57,7 @@ const ViewProgram = (props: Props) => {
   ]);
   const [error, setError] = React.useState<string>("");
   const [zones, setZones] = React.useState<Zone[]>(props.zones);
+  const [zone, setZone] = React.useState<string>(zones[0]?.name as string);
   let filteredCandidate = candidates?.find((candidate) => {
     return candidate?.chestNO?.toLowerCase() == chestNo.toLowerCase();
   });
@@ -67,7 +68,7 @@ const ViewProgram = (props: Props) => {
 
   const handleInputChange = (index: number, value: any) => {
     const updatedP = [...p];
-    updatedP[index] = value
+    updatedP[index] = value;
     setP(updatedP);
   };
 
@@ -84,9 +85,9 @@ const ViewProgram = (props: Props) => {
       ) {
         datas = await ViewProgramExecute({
           programCode: props.selected?.programCode as string,
-          chestNO: (p[0]) as string,
+          chestNO: p[0] as string,
           candidatesOfProgramme: p.map((chestNO) => {
-            return (chestNO) as string;
+            return chestNO as string;
           }),
         });
       } else {
@@ -148,8 +149,7 @@ const ViewProgram = (props: Props) => {
                 (program: Programme) => program.id === props.selected?.id
               )
             );
-            
-            
+
             setCandidateProgrammes(
               props.selected?.candidateProgramme as CandidateProgramme[]
             );
@@ -218,60 +218,35 @@ const ViewProgram = (props: Props) => {
             {
               <>
                 <p className="text-lg mt-3 font-bold text-brown">Candidates</p>
-                <div className="flex w-full gap-1">
-                  <input
-                    type="text"
-                    className="w-3/5 border-2  border-brown rounded-md placeholder:text-sm py-2 px-3 my-2"
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
+                <input
+                  type="text"
+                  className="w-full border-2  border-brown rounded-md placeholder:text-sm py-2 px-3 my-2"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
 
-                      props.setCandidateProgrammes(
-                        props.selected?.candidateProgramme?.filter((cp) => {
-                          return cp.candidate?.name
+                    props.setCandidateProgrammes(
+                      props.selected?.candidateProgramme?.filter((cp) => {
+                        return (
+                          cp.candidate?.name
                             ?.toLowerCase()
-                            .includes(name.toLowerCase());
-                        }) as CandidateProgramme[]
-                      );
-
-                    }}
-                    placeholder={`Search by name or chest number..`}
-                  />
-                  <select
-                    className="w-2/5 border-2  border-brown rounded-md placeholder:text-sm py-2 px-3 my-2"
-                    value={zone}
-                    onChange={(e) => {
-                      setZone(e.target.value);
-
-                      setCandidateProgrammes(
-                        props.selected?.candidateProgramme?.filter((cp) => {
-                          return cp.candidate?.team?.zone?.name
+                            .includes(searchQuery.toLowerCase()) ||
+                          cp.candidate?.chestNO
                             ?.toLowerCase()
-                            .includes(zone.toLowerCase());
-                        }) as CandidateProgramme[]
-                      );
-                    }}
-                  >
-                    <option value="" className="text-center">
-                      Select Zone
-                    </option>
-                    {zones?.map((zone, index) => (
-                      <option
-                        className="text-center"
-                        key={index}
-                        value={zone.name as string}
-                      >
-                        {zone.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                            .includes(searchQuery.toLowerCase())
+                        );
+                      }) as CandidateProgramme[]
+                    );
+                  }}
+                  placeholder={`Search by name or chest number..`}
+                />
                 <div className="w-full   overflow-y-auto">
-                  {props.candidateProgrammes?.map((cp) => {
-                    return (
+                  {props.candidateProgrammes
+                    // ?.filter((cp) => cp.candidate?.team?.zone?.name === zone)
+                    ?.map((cp) => (
                       <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
                         <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">
-                          {cp.candidate?.chestNO}{" "}
+                          {cp.candidate?.chestNO}
                         </p>
                         <p className="text-primary font-bold">
                           {cp.candidate?.name}
@@ -280,8 +255,7 @@ const ViewProgram = (props: Props) => {
                           {cp.candidate?.team?.name}
                         </p>
                       </div>
-                    );
-                  })}
+                    ))}
                 </div>
               </>
             }
@@ -390,7 +364,7 @@ const ViewProgram = (props: Props) => {
                           <p>
                             {
                               props.candidates?.find((candidate) => {
-                                return candidate.chestNO ==  p[index];
+                                return candidate.chestNO == p[index];
                               })?.name
                             }
                           </p>
@@ -432,6 +406,7 @@ const ViewProgram = (props: Props) => {
             // set chest no to empty
             setChestNo("");
             // set p to empty
+            setSearchQuery("");
 
             setP([]);
           }}

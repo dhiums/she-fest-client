@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.remove-arrow{
+    -webkit-appearance: inherit;
+    -moz-appearance: inherit;
+    text-indent: 1px;
+    text-overflow: "";
+  }
