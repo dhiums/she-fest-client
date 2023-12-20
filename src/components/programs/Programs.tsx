@@ -54,6 +54,7 @@ function Programs(props: Props) {
   });
 
   useEffect(() => {
+    console.log(props.programmes);            
     (async () => {
       // const fetching = await fetch("/api/programs", {
       //   method: "GET",
@@ -87,6 +88,9 @@ function Programs(props: Props) {
                 name
                 team{
                   name
+                  zone{
+                    name
+                  }
                 }
               }
             }
@@ -112,14 +116,6 @@ function Programs(props: Props) {
 
     setTotalCompleted(completed.length);
   }, [programs, data.team?.name]);
-
-  // useEffect(() => {
-  //   setCandidateProgrammes(
-  //     candidateProgrammes?.filter(
-  //       (cp) => cp.candidate?.team?.zone?.name === zone
-  //     )
-  //   );
-  // }, [programs]);
 
   return (
     <>
@@ -434,6 +430,7 @@ function Programs(props: Props) {
         setProgrammes={setPrograms}
         candidateProgrammes={candidateProgrammes}
         setCandidateProgrammes={setCandidateProgrammes}
+        zone= {zone as string}
       />
       <CreateProgram
         isCreate={isCreate}
@@ -454,6 +451,7 @@ function Programs(props: Props) {
         zones={props.zones}
         candidateProgrammes={candidateProgrammes} // Pass updated state
         setCandidateProgrammes={setCandidateProgrammes} // Pass update function
+        zone= {zone as string}
       />
       <DeleteProgramme
         programmes={programs}

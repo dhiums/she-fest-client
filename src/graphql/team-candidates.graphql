@@ -70,7 +70,8 @@ query GetDetailedTeamCandidate($id: Int!, $api_key: String!) {
         name
         chestNO
       }
-      point
+      zonalpoint
+      finalpoint
     }
   }
 }

@@ -19,6 +19,9 @@ query GetAllProgrammes($api_key: String!) {
         name
         team{
           name
+          zone{
+            name
+          }
         }
       }
     }
@@ -55,7 +58,8 @@ query GetProgrammeByCode($api_key: String!, $programCode: String!) {
         name
         chestNO
       }
-      point
+      zonalpoint
+      finalpoint
     }
     resultEntered
     resultPublished
@@ -136,7 +140,8 @@ query GetPublishedProgrammes($api_key: String!) {
     anyIssue
     candidateProgramme {
       id
-      point
+      zonalpoint
+      finalpoint
       finalgrade {
         name
         pointGroup
@@ -191,7 +196,8 @@ query GetEnteredProgrammes($api_key: String!) {
     anyIssue
     candidateProgramme {
       id
-      point
+      zonalpoint
+      finalpoint
       finalgrade {
         name
         pointGroup

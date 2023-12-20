@@ -33,6 +33,7 @@ interface Props {
   setCandidateProgrammes: React.Dispatch<
     React.SetStateAction<CandidateProgramme[]>
   >;
+  zone: string;
 }
 
 const ViewProgram = (props: Props) => {
@@ -57,7 +58,6 @@ const ViewProgram = (props: Props) => {
   ]);
   const [error, setError] = React.useState<string>("");
   const [zones, setZones] = React.useState<Zone[]>(props.zones);
-  const [zone, setZone] = React.useState<string>(zones[0]?.name as string);
   let filteredCandidate = candidates?.find((candidate) => {
     return candidate?.chestNO?.toLowerCase() == chestNo.toLowerCase();
   });
@@ -242,7 +242,7 @@ const ViewProgram = (props: Props) => {
                 />
                 <div className="w-full   overflow-y-auto">
                   {props.candidateProgrammes
-                    // ?.filter((cp) => cp.candidate?.team?.zone?.name === zone)
+                    ?.filter((cp) => cp.candidate?.team?.zone?.name === props.zone)
                     ?.map((cp) => (
                       <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
                         <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">

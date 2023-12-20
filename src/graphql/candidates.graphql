@@ -62,7 +62,8 @@ query GetAllDetailedCandidates($api_key: String!) {
     id
     candidateProgrammes {
       mark
-      point
+      zonalpoint
+      finalpoint
       id
       programme {
         name
@@ -141,7 +142,8 @@ query GetCandidateByChestNo($api_key: String!, $chestNO: String!) {
         name
         chestNO
       }
-      point
+      zonalpoint
+      finalpoint
     }
   }
 }
@@ -179,7 +181,8 @@ query GetDetailedCandidate($id: Int!, $api_key: String!) {
         name
         chestNO
       }
-      point
+      zonalpoint
+      finalpoint
     }
   }
 }

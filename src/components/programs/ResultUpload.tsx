@@ -13,6 +13,7 @@ interface Props {
   setCandidateProgrammes: React.Dispatch<
     React.SetStateAction<CandidateProgramme[]>
   >;
+  zone: string;
 }
 export default function ResultUpload(props: Props) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,38 +52,40 @@ export default function ResultUpload(props: Props) {
           placeholder={`Search by name or chest number..`}
         />
         <div className="overflow-y-auto">
-          {props?.candidateProgrammes?.map((candidateProgramme) => (
-            <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
-              <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">
-                {candidateProgramme?.candidate?.chestNO}
-              </p>
-              <p className="text-primary font-bold">
-                {candidateProgramme?.candidate?.name}
-              </p>
-              <p className="text-primary font-semibold">
-                {candidateProgramme?.candidate?.team?.name}
-              </p>
-              <div className="flex justify-center gap-3 mt-3">
-                <select
-                  className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
-                  onClick={() => {}}
-                >
-                  <option value="null">NIL</option>
-                  <option value="First">1st</option>
-                  <option value="Second">2nd</option>
-                  <option value="Third">3rd </option>
-                </select>
-                <select
-                  className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
-                  onClick={() => {}}
-                >
-                  <option value="null">NIL</option>
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                </select>
+          {props?.candidateProgrammes
+            ?.filter((cp) => cp.candidate?.team?.zone?.name === props.zone)
+            ?.map((candidateProgramme) => (
+              <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
+                <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">
+                  {candidateProgramme?.candidate?.chestNO}
+                </p>
+                <p className="text-primary font-bold">
+                  {candidateProgramme?.candidate?.name}
+                </p>
+                <p className="text-primary font-semibold">
+                  {candidateProgramme?.candidate?.team?.name}
+                </p>
+                <div className="flex justify-center gap-3 mt-3">
+                  <select
+                    className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
+                    onClick={() => {}}
+                  >
+                    <option value="null">NIL</option>
+                    <option value="First">1st</option>
+                    <option value="Second">2nd</option>
+                    <option value="Third">3rd </option>
+                  </select>
+                  <select
+                    className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
+                    onClick={() => {}}
+                  >
+                    <option value="null">NIL</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
         <button
           className="bg-red-700 text-white font-bold px-3 py-2 rounded-lg mt-3"
