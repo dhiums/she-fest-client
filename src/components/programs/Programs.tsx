@@ -92,6 +92,12 @@ function Programs(props: Props) {
                   }
                 }
               }
+              zonalposition{
+                name
+              }
+              zonalgrade{
+                name
+              }
             }
           }
         }`,
