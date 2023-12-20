@@ -30,12 +30,20 @@ export default async function page({ params, searchParams }: any) {
     zone: searchParams.zone,
   });
 
+  const programmes = await client.query<
+    GetAllProgrammesQuery,
+    GetAllProgrammesQueryVariables
+  >(GetAllProgrammesDocument, {
+    api_key: API_KEY,
+  });
+
   return (
     <Result
       zones={zones.data?.zones as Zone[]}
       enteredPrograms={
         enteredProgrammes.data?.findResultEnteredProgrammesByZone as Programme[]
       }
+      programs={programmes.data?.programmes as Programme[]}
       zone={searchParams.zone}
     />
   );
