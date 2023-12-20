@@ -135,6 +135,9 @@ const ViewProgram = (props: Props) => {
                 name
                 team{
                   name
+                  zone{
+                    name
+                  }
                 }
               }
             }
