@@ -54,7 +54,6 @@ function Programs(props: Props) {
   });
 
   useEffect(() => {
-    console.log(props.programmes);            
     (async () => {
       // const fetching = await fetch("/api/programs", {
       //   method: "GET",
