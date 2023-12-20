@@ -1,6 +1,7 @@
 "use client";
-import { CandidateProgramme, Programme } from "@/gql/graphql";
-import React, { useState } from "react";
+import { AddManualUploadDocument, AddManualUploadMutation, AddManualUploadMutationVariables, CandidateProgramme, Programme } from "@/gql/graphql";
+import React, { useEffect, useState } from "react";
+import { OperationResult, useMutation } from "urql";
 
 interface Props {
   isResult: boolean;
@@ -15,8 +16,72 @@ interface Props {
   >;
   zone: string;
 }
+
+interface toUploadFormModal {
+  chestNo: string
+  grade: string | null
+  position: string | null
+  zonal: boolean
+}
+
 export default function ResultUpload(props: Props) {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [toUploadForm, setToUploadForm] = useState<[toUploadFormModal]>([] as unknown as [toUploadFormModal])
+  const [zonalCandidates, setZonalCandidates] = useState<CandidateProgramme[]>(props?.candidateProgrammes
+    ?.filter((cp) => cp.candidate?.team?.zone?.name === props.zone) as CandidateProgramme[])
+  const [error , setError] = useState("")
+
+  const [state, addManualUploadExecute] = useMutation(AddManualUploadDocument);
+
+  useEffect(() => {
+  if (props?.candidateProgrammes && props.zone) {
+    const updatedForm = props.candidateProgrammes
+      .filter(cp => cp.candidate?.team?.zone?.name === props.zone)
+      .map(item => ({
+        chestNo: item.candidate?.chestNO || '', // Ensure proper default value if chestNo is undefined
+        grade: null,
+        position: null,
+        zonal: true
+      }));
+
+    // Update the state once after all transformations
+    setToUploadForm(updatedForm as unknown as [toUploadFormModal]);
+  }
+}, [props.isResult, props.candidateProgrammes, props.zone]);
+
+
+  const uploadResult = async () => {
+    const data: OperationResult<AddManualUploadMutation, AddManualUploadMutationVariables> =
+      await addManualUploadExecute({
+        programmeCode: props.selected.programCode as string,
+        input: toUploadForm,
+        zone: props.zone
+      });
+    console.log(data);
+    if (data.data?.uploadResultManually) {
+      let finalData = data.data?.uploadResultManually;
+      let editedDate = props.programmes.map((data, i) => {
+        if (data.id == props.selected.id) {
+          return {
+            ...data,
+            resultEntered: true,
+            anyIssue: finalData.anyIssue
+          }
+        }
+        return data
+      })
+
+      props.setProgrammes(editedDate)
+      props.setIsResult(false);
+    } else {
+      setError(data.error?.message as string)
+      setTimeout(() => {
+        setError("")
+      }
+        , 5000)
+    }
+  };
 
   return (
     <div
@@ -51,51 +116,112 @@ export default function ResultUpload(props: Props) {
           }}
           placeholder={`Search by name or chest number..`}
         />
+        <p className="text-red-500 text-sm">{error}</p>
         <div className="overflow-y-auto">
           {props?.candidateProgrammes
             ?.filter((cp) => cp.candidate?.team?.zone?.name === props.zone)
-            ?.map((candidateProgramme) => (
-              <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
-                <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">
-                  {candidateProgramme?.candidate?.chestNO}
-                </p>
-                <p className="text-primary font-bold">
-                  {candidateProgramme?.candidate?.name}
-                </p>
-                <p className="text-primary font-semibold">
-                  {candidateProgramme?.candidate?.team?.name}
-                </p>
-                <div className="flex justify-center gap-3 mt-3">
-                  <select
-                    className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
-                    onClick={() => {}}
-                  >
-                    <option value="null">NIL</option>
-                    <option value="First">1st</option>
-                    <option value="Second">2nd</option>
-                    <option value="Third">3rd </option>
-                  </select>
-                  <select
-                    className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
-                    onClick={() => {}}
-                  >
-                    <option value="null">NIL</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                  </select>
-                </div>
-              </div>
-            ))}
+            ?.map((candidateProgramme) => {
+                const uploadData = toUploadForm.find((data) => data.chestNo == candidateProgramme.candidate?.chestNO)
+              return (
+                (
+                  <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
+                    <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">
+                      {candidateProgramme?.candidate?.chestNO}
+                    </p>
+                    <p className="text-primary font-bold">
+                      {candidateProgramme?.candidate?.name}
+                    </p>
+                    <p className="text-primary font-semibold">
+                      {candidateProgramme?.candidate?.team?.name}
+                    </p>
+                    <div className="flex justify-center gap-3 mt-3">
+                      <select
+                      value={uploadData?.position || "null"}
+                        className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
+                        onChange={(e) => {
+                          let editedToUploadForm: any = toUploadForm.map((data) => {
+                            if (data.chestNo == candidateProgramme.candidate?.chestNO) {
+                              let target: string | null = e.target.value
+                              if (target == "null") {
+                                target = null
+                              }
+                              return {
+                                ...data,
+                                position: target
+                              }
+                            }
+                            return data
+                          })
+                          // editedToUploadForm.position = e.target.value ;
+                          setToUploadForm(editedToUploadForm)
+    
+                          console.log(editedToUploadForm, toUploadForm);
+    
+                        }}
+                      >
+                        <option value="null">NIL</option>
+                        <option value="First">1st</option>
+                        <option value="Second">2nd</option>
+                        <option value="Third">3rd </option>
+                      </select>
+                      <select
+                        className="border-primary border-2 border-dashed rounded-xl px-4 py-2 text-primary font-semibold remove-arrow"
+                       value={uploadData?.grade || "null"}
+                        onChange={(e) => {
+                          let editedToUploadForm: any = toUploadForm.map((data) => {
+                            if (data.chestNo == candidateProgramme.candidate?.chestNO) {
+                              let target: string | null = e.target.value
+                              if (target == "null") {
+                                target = null
+                              }
+                              return {
+                                ...data,
+                                grade: target
+                              }
+                            }
+                            return data
+                          })
+                          // editedToUploadForm.position = e.target.value ;
+                          setToUploadForm(editedToUploadForm)
+    
+                          console.log(editedToUploadForm, toUploadForm);
+    
+                        }}
+                      >
+                        <option value="null">NIL</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                      </select>
+                    </div>
+                  </div>
+                )
+              )
+            }
+            )}
         </div>
+        <div className="flex gap-4">
         <button
           className="bg-red-700 text-white font-bold px-3 py-2 rounded-lg mt-3"
           onClick={() => {
             props.setIsResult(false);
             setSearchQuery("");
+            setZonalCandidates([]);
+            setToUploadForm([] as unknown as [toUploadFormModal])
           }}
         >
           Close
         </button>
+        <button
+          className="bg-green-700 text-white font-bold px-3 py-2 rounded-lg mt-3"
+          onClick={() => {
+            uploadResult()
+          }}
+        >
+          {
+            state.fetching ? "Uploading..." : "Upload"
+          }
+        </button>
+        </div>
       </div>
     </div>
   );

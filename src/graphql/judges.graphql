@@ -1,0 +1,6 @@
+mutation addManualUpload($input: [AddManual!]!, $programmeCode: String! , $zone: String!) {
+  uploadResultManually(addManual: $input, programmeCode: $programmeCode zone:$zone ) {
+    id
+    anyIssue
+  }
+}

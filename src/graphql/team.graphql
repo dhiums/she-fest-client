@@ -9,6 +9,27 @@ query GetAllTeams($api_key: String!) {
   }
 }
 
+query GetAllTeamsWithCandidates($api_key: String!) {
+  teams(api_key: $api_key) {
+    id
+    name
+    totalPoint
+    zone{
+      name
+    }
+    candidates{
+      name
+      chestNO
+      candidateProgrammes{
+        programme{
+          name
+          programCode
+        }
+      }
+    }
+  }
+}
+
 query GetAllTeamsByPoint($api_key: String!) {
   teams(api_key: $api_key) {
     id
