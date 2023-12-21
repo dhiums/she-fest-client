@@ -2,7 +2,6 @@
 import { CandidateProgramme, Programme, Zone } from "@/gql/graphql";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
-import ViewProgram from "../programs/ViewProgram";
 import ViewResult from "./ViewResult";
 
 interface Props {

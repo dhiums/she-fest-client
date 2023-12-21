@@ -1,4 +1,6 @@
+"use client";
 import { Programme } from "@/gql/graphql";
+import { useEffect } from "react";
 
 interface Props {
   selectedProgram: Programme;
@@ -6,6 +8,9 @@ interface Props {
   setIsView: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function ViewResult(props: Props) {
+  useEffect(() => {
+    console.log(props.isView);
+  }, [props.isView]);
   return (
     <>
       <div
@@ -29,6 +34,7 @@ export default function ViewResult(props: Props) {
             className="bg-primary text-white rounded-lg p-2"
             onClick={() => {
               props.setIsView(false);
+              console.log(props.isView);
             }}
           >
             Close
