@@ -93,7 +93,7 @@ function Candidates(props: Props) {
       //   SelectedProgrammes,
       // };
       // Make a POST request to the Excel API route
-      const response = await fetch("/api/excel/institutionBased", {
+      const response = await fetch("/api/excel/programBased", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // Specify the content type if sending JSON data
