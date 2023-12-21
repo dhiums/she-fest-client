@@ -2,10 +2,13 @@
 import { CandidateProgramme, Programme, Zone } from "@/gql/graphql";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
+import ViewProgram from "../programs/ViewProgram";
+import ViewResult from "./ViewResult";
 
 interface Props {
   zones: Zone[];
   enteredPrograms: Programme[];
+  programs: Programme[];
   zone: string;
 }
 export default function Result(props: Props) {
@@ -13,11 +16,13 @@ export default function Result(props: Props) {
   const [selectedZone, setSelectedZone] = useState<string>(
     props.zones[0]?.name as string
   );
+  const [selectedProgram, setSelectedProgram] = useState<Programme>();
+  const [isView, setIsView] = useState<boolean>(false);
   const array = [1, 1, 1, 1];
 
   useEffect(() => {
     console.log(props.zone);
-    
+
     localStorage.getItem("selectedZone")
       ? (setSelectedZone(localStorage.getItem("selectedZone") as string),
         router.push(`/result?zone=${selectedZone}`))
@@ -71,7 +76,9 @@ export default function Result(props: Props) {
               <div className="flex flex-col w-3/6 gap-1">
                 <p className="font-bold text-lg">#01</p>
                 <p className="font-bold text-4xl">1456</p>
-                <p className="font-semibold text-xs">VALAPATTANAM VALAPATTANAM</p>
+                <p className="font-semibold text-xs">
+                  VALAPATTANAM VALAPATTANAM
+                </p>
               </div>
               <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
                 <p>
@@ -97,15 +104,31 @@ export default function Result(props: Props) {
           ))}
         </div>
       </div>
-      <div className="flex w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
-        <div className="flex flex-wrap justify-evenly">
-          {
-            props.enteredPrograms.map((program) => (program?.candidateProgramme as CandidateProgramme[]).map((cp)=>(
-                <p>{cp.candidate?.name}</p> 
-            )))
-          }
+      <div className="flex flex-col w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
+          {/* {props.enteredPrograms.map((program) =>
+            (program?.candidateProgramme as CandidateProgramme[]).map((cp) => (
+              <p>{cp.candidate?.name}</p>
+            ))
+          )} */}
+          {props.enteredPrograms?.map((program) => (
+            <div
+              className="border-2 border-primary cursor-pointer"
+              onClick={() => {
+                setSelectedProgram(program);
+                setIsView(true);
+              }}
+            >
+              <p>{program.programCode}</p>
+              <p>{program.name}</p>
+              <p>------------</p>
+              <ViewResult
+                selectedProgram={selectedProgram as Programme}
+                setIsView={setIsView}
+                isView={isView}
+              />
+            </div>
+          ))}
         </div>
       </div>
-    </div>
   );
 }
