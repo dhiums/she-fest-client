@@ -2,6 +2,8 @@
 import { CandidateProgramme, Programme, Zone } from "@/gql/graphql";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
+import ViewProgram from "../programs/ViewProgram";
+import ViewResult from "./ViewResult";
 
 interface Props {
   zones: Zone[];
@@ -14,6 +16,8 @@ export default function Result(props: Props) {
   const [selectedZone, setSelectedZone] = useState<string>(
     props.zones[0]?.name as string
   );
+  const [selectedProgram, setSelectedProgram] = useState<Programme>();
+  const [isView, setIsView] = useState<boolean>(false);
   const array = [1, 1, 1, 1];
 
   useEffect(() => {
@@ -100,33 +104,31 @@ export default function Result(props: Props) {
           ))}
         </div>
       </div>
-      <div className="flex w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
-        <div className="flex flex-wrap justify-evenly">
+      <div className="flex flex-col w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
           {/* {props.enteredPrograms.map((program) =>
             (program?.candidateProgramme as CandidateProgramme[]).map((cp) => (
               <p>{cp.candidate?.name}</p>
             ))
           )} */}
-          {props.enteredPrograms.map((program) => (
-            <div className="border-2 border-primary">
+          {props.enteredPrograms?.map((program) => (
+            <div
+              className="border-2 border-primary cursor-pointer"
+              onClick={() => {
+                setSelectedProgram(program);
+                setIsView(true);
+              }}
+            >
               <p>{program.programCode}</p>
               <p>{program.name}</p>
               <p>------------</p>
-              {program.candidateProgramme?.map((cp) => {
-                return (
-                  <div>
-                    <p>{cp.candidate?.chestNO}</p>
-                    <p>{cp.candidate?.name}</p>
-                    <p>{cp.zonalposition?.name}</p>
-                    <p>{cp.zonalgrade?.name}</p>
-                    <p>-------------------</p>
-                  </div>
-                );
-              })}
+              <ViewResult
+                selectedProgram={selectedProgram as Programme}
+                setIsView={setIsView}
+                isView={isView}
+              />
             </div>
           ))}
         </div>
       </div>
-    </div>
   );
 }
