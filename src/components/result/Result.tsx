@@ -16,10 +16,12 @@ export default function Result(props: Props) {
     props.zones[0]?.name as string
   );
   const [selectedProgram, setSelectedProgram] = useState<Programme>();
-  const [isView, setIsView] = useState<boolean>(false);
+  const [resultView, setResultView] = useState<boolean>(false);
   const array = [1, 1, 1, 1];
 
   useEffect(() => {
+    console.log(props.enteredPrograms);
+
     console.log(props.zone);
 
     localStorage.getItem("selectedZone")
@@ -31,8 +33,9 @@ export default function Result(props: Props) {
   }, [selectedZone]);
 
   return (
-    <div className="flex w-full h-screen items-center p-5">
-      {/* <div className="fixed inset-2">
+    <>
+      <div className="flex w-full h-screen items-center p-5">
+        {/* <div className="fixed inset-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -48,86 +51,82 @@ export default function Result(props: Props) {
           />
         </svg>
       </div> */}
-      <div className="flex flex-col h-[90vh] bg-primary min-w-[300px] rounded-3xl gap-4 p-3 ">
-        <div className="flex justify-center mt-4">
-          <p className="text-white text-2xl font-semibold">Results</p>
-        </div>
-        <div className="flex w-full justify-evenly">
-          {props.zones.map((zone) => (
-            <button
-              onClick={() => {
-                setSelectedZone(zone?.name as string);
-                localStorage.setItem("selectedZone", zone?.name as string);
-              }}
-              className={`w-10 h-10 rounded-full ${
-                selectedZone === zone?.name
-                  ? `bg-white text-primary`
-                  : `bg-primary text-white border-2 border-white border-dashed`
-              }`}
-            >
-              {zone?.name}
-            </button>
-          ))}
-        </div>
-        <div className="flex flex-col gap-2 justify-evenly items-center h-full">
-          {array.map((item) => (
-            <div className="flex text-white w-full p-2  border-2 border-white border-dashed rounded-lg">
-              <div className="flex flex-col w-3/6 gap-1">
-                <p className="font-bold text-lg">#01</p>
-                <p className="font-bold text-4xl">1456</p>
-                <p className="font-semibold text-xs">
-                  VALAPATTANAM VALAPATTANAM
-                </p>
+        <div className="flex flex-col h-[90vh] bg-primary min-w-[300px] rounded-3xl gap-4 p-3 ">
+          <div className="flex justify-center mt-4">
+            <p className="text-white text-2xl font-semibold">Results</p>
+          </div>
+          <div className="flex w-full justify-evenly">
+            {props.zones.map((zone) => (
+              <button
+                onClick={() => {
+                  setSelectedZone(zone?.name as string);
+                  localStorage.setItem("selectedZone", zone?.name as string);
+                }}
+                className={`w-10 h-10 rounded-full ${
+                  selectedZone === zone?.name
+                    ? `bg-white text-primary`
+                    : `bg-primary text-white border-2 border-white border-dashed`
+                }`}
+              >
+                {zone?.name}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-col gap-2 justify-evenly items-center h-full">
+            {array.map((item) => (
+              <div className="flex text-white w-full p-2  border-2 border-white border-dashed rounded-lg">
+                <div className="flex flex-col w-3/6 gap-1">
+                  <p className="font-bold text-lg">#01</p>
+                  <p className="font-bold text-4xl">1456</p>
+                  <p className="font-semibold text-xs">
+                    VALAPATTANAM VALAPATTANAM
+                  </p>
+                </div>
+                <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
+                  <p>
+                    <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
+                      ㅤ
+                    </span>
+                    Thanawiyya : 400
+                  </p>
+                  <p>
+                    <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
+                      ㅤ
+                    </span>
+                    Aliya : 400
+                  </p>
+                  <p>
+                    <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
+                      ㅤ
+                    </span>
+                    Kulliyya : 400
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
-                <p>
-                  <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
-                    ㅤ
-                  </span>
-                  Thanawiyya : 400
-                </p>
-                <p>
-                  <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
-                    ㅤ
-                  </span>
-                  Aliya : 400
-                </p>
-                <p>
-                  <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
-                    ㅤ
-                  </span>
-                  Kulliyya : 400
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
-          {/* {props.enteredPrograms.map((program) =>
-            (program?.candidateProgramme as CandidateProgramme[]).map((cp) => (
-              <p>{cp.candidate?.name}</p>
-            ))
-          )} */}
+        <div className="flex flex-col w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
           {props.enteredPrograms?.map((program) => (
             <div
               className="border-2 border-primary cursor-pointer"
               onClick={() => {
                 setSelectedProgram(program);
-                setIsView(true);
+                setResultView(true);
               }}
             >
               <p>{program.programCode}</p>
               <p>{program.name}</p>
               <p>------------</p>
-              <ViewResult
-                selectedProgram={selectedProgram as Programme}
-                setIsView={setIsView}
-                isView={isView}
-              />
             </div>
           ))}
         </div>
       </div>
+      <ViewResult
+        selectedProgram={selectedProgram as Programme}
+        resultView={resultView}
+        setResultView={setResultView}
+      />
+    </>
   );
 }
