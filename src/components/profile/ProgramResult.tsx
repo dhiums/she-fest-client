@@ -31,7 +31,12 @@ export default function ProgramResult(props: Props) {
               <p>{props?.selectedCP?.zonalposition?.name}</p>
               <p>{props?.selectedCP?.zonalgrade?.name}</p>
             </>
-        ) : (
+        ) : props.selectedCP?.zonalpoint as number == 0 ? (
+          <>
+          <p>NIL</p>
+          <p>NIL</p>
+        </>
+        ):(
           <p>Result Not Published</p>
         )}
         <button

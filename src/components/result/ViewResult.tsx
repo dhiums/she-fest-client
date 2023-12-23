@@ -1,3 +1,4 @@
+"use client"
 import { CandidateProgramme, Programme } from "@/gql/graphql";
 import React, { useEffect, useState } from "react";
 
@@ -12,7 +13,13 @@ export default function ViewResult(props: Props) {
     props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.zonalpoint as number - ( a?.zonalpoint  as number)
   ) as CandidateProgramme[])
 
-
+  useEffect(()=>{
+    setSorted(
+    props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.zonalpoint as number - ( a?.zonalpoint  as number) ) as CandidateProgramme[]
+    )
+  },[
+    props.selectedProgram
+  ])
 
   return (
     <div
@@ -23,7 +30,7 @@ export default function ViewResult(props: Props) {
 
      
 
-      <div className="bg-white p-3 rounded-xl flex flex-col items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center ">
+      <div className="bg-white p-3 rounded-xl flex flex-col items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center  overflow-auto">
       
       {
         sorted?.length > 0 ? sorted?.map((cp : CandidateProgramme)=>(
