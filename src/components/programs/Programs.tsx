@@ -115,12 +115,12 @@ function Programs(props: Props) {
   useEffect(() => {
     const completed = programs?.filter((program) => {
       return program?.candidateProgramme?.filter((cp) => {
-        return cp?.candidate?.team?.name == data.team?.name;
+        return cp?.candidate?.team?.name == data?.team?.name;
       }).length;
     });
 
-    setTotalCompleted(completed.length);
-  }, [programs, data.team?.name]);
+    setTotalCompleted(completed?.length);
+  }, [programs, data?.team?.name]);
 
   return (
     <>

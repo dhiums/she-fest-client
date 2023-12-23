@@ -1,15 +1,17 @@
 import Result from "@/components/result/Result";
 import {
+  CandidateWithPoint,
   GetAllProgrammesDocument,
   GetAllProgrammesQuery,
   GetAllProgrammesQueryVariables,
   GetAllZonesDocument,
   GetAllZonesQuery,
   GetAllZonesQueryVariables,
-  FindResultEnteredProgrammesByZoneDocument,
-  FindResultEnteredProgrammesByZoneQuery,
-  FindResultEnteredProgrammesByZoneQueryVariables,
+  GetEnteredProgrammesDocument,
+  GetEnteredProgrammesQuery,
+  GetEnteredProgrammesQueryVariables,
   Programme,
+  TeamWithPoint,
   Zone,
 } from "@/gql/graphql";
 import { API_KEY } from "@/lib/env";
@@ -24,27 +26,27 @@ export default async function page({ params, searchParams }: any) {
   );
 
   const enteredProgrammes = await client.query<
-    FindResultEnteredProgrammesByZoneQuery,
-    FindResultEnteredProgrammesByZoneQueryVariables
-  >(FindResultEnteredProgrammesByZoneDocument, {
+    GetEnteredProgrammesQuery,
+    GetEnteredProgrammesQueryVariables
+  >(GetEnteredProgrammesDocument, {
     zone: searchParams.zone,
   });
 
-  const programmes = await client.query<
-    GetAllProgrammesQuery,
-    GetAllProgrammesQueryVariables
-  >(GetAllProgrammesDocument, {
-    api_key: API_KEY,
-  });
+  console.log('====================================');
+  console.log(        enteredProgrammes.error
+    );
+  console.log('====================================');
+
 
   return (
     <Result
       zones={zones.data?.zones as Zone[]}
-      enteredPrograms={
-        enteredProgrammes.data?.findResultEnteredProgrammesByZone as Programme[]
+      results={
+        enteredProgrammes.data?.findResultEnteredProgrammesByZone?.programmes as Programme[]
       }
-      programs={programmes.data?.programmes as Programme[]}
       zone={searchParams.zone}
+      topCandidates={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topCandidates as CandidateWithPoint[]}
+      topTeams={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topTeams as TeamWithPoint[]}
     />
   );
 }

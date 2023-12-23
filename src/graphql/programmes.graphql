@@ -28,6 +28,23 @@ query GetAllProgrammes($api_key: String!) {
   }
 }
 
+query GetSimplifiedAllProgrammes($api_key: String!) {
+  programmes(api_key: $api_key) {
+    id
+    name
+    programCode
+    resultEntered
+    type
+    mode
+    resultPublished
+    candidateCount
+    groupCount
+    category {
+      name
+    }
+  }
+}
+
 query GetProgrammeByCode($api_key: String!, $programCode: String!) {
   programmeByCode(api_key: $api_key, code: $programCode) {
     candidateProgramme {
@@ -124,49 +141,34 @@ query totalProgramsCount($api_key: String!) {
   }
 }
 
-query GetPublishedProgrammes($api_key: String!) {
-  resultPublishedProgrammes(api_key: $api_key) {
-    id
+query GetPublishedProgrammes($zone:String! ) {
+  findResultPublishedProgrammesByZone( zone:$zone) {
+    programmes {  id
     name
-    mode
     type
     programCode
-    resultEntered
-    resultPublished
-    candidateCount
     category {
       name
     }
-    anyIssue
     candidateProgramme {
       id
       zonalpoint
       finalpoint
       finalgrade {
+        id
         name
-        pointGroup
-        pointSingle
-        pointHouse
       }
       finalposition {
+        id
         name
-        value
-        pointGroup
-        pointSingle
-        pointHouse
       }
       zonalgrade {
+        id
         name
-        pointGroup
-        pointSingle
-        pointHouse
       }
       zonalposition {
+        id
         name
-        value
-        pointGroup
-        pointSingle
-        pointHouse
       }
       candidate {
         name
@@ -174,111 +176,65 @@ query GetPublishedProgrammes($api_key: String!) {
         team {
           name
           id
+          zone{
+            name
+            id
+          }
         }
+        
       }
+
+    }}
+
+    topTeams {
+      teamName
+      zoneName
+      totalPoint
+      totalPercentage
+      categoryWisePoint{
+        categoryName
+        categoryPoint
+      }
+    }
+    topCandidates{
+      candidateName
+      chestNo
+      teamName
+      zoneName
+      totalPoint
+      categoryName
     }
   }
 }
 
-query GetEnteredProgrammes($api_key: String!) {
-  resultEnteredProgrammes(api_key: $api_key) {
-    id
-    name
-    mode
-    type
-    programCode
-    resultEntered
-    resultPublished
-    candidateCount
-    category {
-      name
-    }
-    anyIssue
-    candidateProgramme {
-      id
-      zonalpoint
-      finalpoint
-      finalgrade {
-        name
-        pointGroup
-        pointSingle
-        pointHouse
-      }
-      finalposition {
-        name
-        value
-        pointGroup
-        pointSingle
-        pointHouse
-      }
-      zonalgrade {
-        name
-        pointGroup
-        pointSingle
-        pointHouse
-      }
-      zonalposition {
-        name
-        value
-        pointGroup
-        pointSingle
-        pointHouse
-      }
-      candidate {
-        name
-        chestNO
-        team {
-          name
-          id
-        }
-      }
-    }
-  }
-}
-
-query findResultEnteredProgrammesByZone($zone: String!) {
+query GetEnteredProgrammes($zone: String!) {
   findResultEnteredProgrammesByZone(zone: $zone) {
-    id
+    programmes {  id
     name
-    mode
     type
     programCode
-    resultEntered
-    resultPublished
-    candidateCount
     category {
       name
     }
-    anyIssue
     candidateProgramme {
       id
       zonalpoint
       finalpoint
       finalgrade {
+        id
         name
-        pointGroup
-        pointSingle
-        pointHouse
       }
       finalposition {
+        id
         name
-        value
-        pointGroup
-        pointSingle
-        pointHouse
       }
       zonalgrade {
+        id
         name
-        pointGroup
-        pointSingle
-        pointHouse
       }
       zonalposition {
+        id
         name
-        value
-        pointGroup
-        pointSingle
-        pointHouse
       }
       candidate {
         name
@@ -286,11 +242,92 @@ query findResultEnteredProgrammesByZone($zone: String!) {
         team {
           name
           id
+          zone{
+            name
+            id
+          }
         }
+        
       }
+
+    }}
+
+    topTeams {
+      teamName
+      zoneName
+      totalPoint
+      totalPercentage
+      categoryWisePoint{
+        categoryName
+        categoryPoint
+      }
+    }
+    topCandidates{
+      candidateName
+      chestNo
+      teamName
+      zoneName
+      totalPoint
+      categoryName
     }
   }
 }
+
+# query findResultEnteredProgrammesByZone($zone: String!) {
+#   findResultEnteredProgrammesByZone(zone: $zone) {
+#     id
+#     name
+#     mode
+#     type
+#     programCode
+#     resultEntered
+#     resultPublished
+#     candidateCount
+#     category {
+#       name
+#     }
+#     anyIssue
+#     candidateProgramme {
+#       id
+#       zonalpoint
+#       finalpoint
+#       finalgrade {
+#         name
+#         pointGroup
+#         pointSingle
+#         pointHouse
+#       }
+#       finalposition {
+#         name
+#         value
+#         pointGroup
+#         pointSingle
+#         pointHouse
+#       }
+#       zonalgrade {
+#         name
+#         pointGroup
+#         pointSingle
+#         pointHouse
+#       }
+#       zonalposition {
+#         name
+#         value
+#         pointGroup
+#         pointSingle
+#         pointHouse
+#       }
+#       candidate {
+#         name
+#         chestNO
+#         team {
+#           name
+#           id
+#         }
+#       }
+#     }
+#   }
+# }
 
 query GetAllDetailedProgrammeForJudge($api_key: String!) {
   programmes(api_key: $api_key) {

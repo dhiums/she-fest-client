@@ -1,14 +1,15 @@
 "use client";
-import { CandidateProgramme, Programme, Zone } from "@/gql/graphql";
+import { CandidateProgramme, CandidateWithPoint, Programme, TeamWithPoint, Zone } from "@/gql/graphql";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import ViewResult from "./ViewResult";
 
 interface Props {
   zones: Zone[];
-  enteredPrograms: Programme[];
-  programs: Programme[];
+  results: Programme[];
   zone: string;
+  topTeams : TeamWithPoint[]
+  topCandidates : CandidateWithPoint[]
 }
 export default function Result(props: Props) {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function Result(props: Props) {
   const array = [1, 1, 1, 1];
 
   useEffect(() => {
-    console.log(props.enteredPrograms);
+    console.log(props.results);
 
     console.log(props.zone);
 
@@ -72,42 +73,34 @@ export default function Result(props: Props) {
               </button>
             ))}
           </div>
-          <div className="flex flex-col gap-2 justify-evenly items-center h-full">
-            {array.map((item) => (
+          <div className="flex flex-col gap-2 justify-evenly items-center overflow-y-scroll">
+            {props.topTeams.map((item , index) => (
               <div className="flex text-white w-full p-2  border-2 border-white border-dashed rounded-lg">
                 <div className="flex flex-col w-3/6 gap-1">
-                  <p className="font-bold text-lg">#01</p>
-                  <p className="font-bold text-4xl">1456</p>
+                  <p className="font-bold text-lg">#0{index}</p>
+                  <p className="font-bold text-4xl">{item.totalPoint}</p>
                   <p className="font-semibold text-xs">
-                    VALAPATTANAM VALAPATTANAM
+                    {item.teamName}
                   </p>
                 </div>
                 <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
-                  <p>
-                    <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
-                      ㅤ
-                    </span>
-                    Thanawiyya : 400
-                  </p>
-                  <p>
-                    <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
-                      ㅤ
-                    </span>
-                    Aliya : 400
-                  </p>
-                  <p>
-                    <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
-                      ㅤ
-                    </span>
-                    Kulliyya : 400
-                  </p>
+                  {
+                    item.categoryWisePoint.map((cw)=>(
+                      <p>
+                        <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
+                          ㅤ
+                        </span>
+                        {cw.categoryName} : {cw.categoryPoint}
+                      </p>
+                    ))
+                  }
                 </div>
               </div>
             ))}
           </div>
         </div>
         <div className="flex flex-col w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
-          {props.enteredPrograms?.map((program) => (
+          {props.results?.map((program) => (
             <div
               className="border-2 border-primary cursor-pointer"
               onClick={() => {
