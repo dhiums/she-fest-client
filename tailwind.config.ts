@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        'spin-slow': 'spin 20s linear infinite',
+      },
       backgroundImage: {
         "h-line": "url('/img/horizonadal-lines.png')",
         "v-line": "url('/img/vertical-lines.png')",
