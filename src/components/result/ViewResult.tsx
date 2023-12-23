@@ -12,13 +12,7 @@ export default function ViewResult(props: Props) {
     props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.zonalpoint as number - ( a?.zonalpoint  as number)
   ) as CandidateProgramme[])
 
-  useEffect(()=>{
-    setSorted(
-    props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.zonalpoint as number - ( a?.zonalpoint  as number) ) as CandidateProgramme[]
-    )
-  },[
-    props.selectedProgram
-  ])
+
 
   return (
     <div

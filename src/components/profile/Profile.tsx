@@ -1,6 +1,7 @@
 "use client";
 import {
   Candidate,
+  CandidateProgramme,
   GetCandidateByChestNoQuery,
   Programme,
 } from "@/gql/graphql";
@@ -13,7 +14,7 @@ interface Props {
 }
 export default function Profile(props: Props) {
   const [programResultView, setProgramResultView] = useState<boolean>(false);
-  const [selectedProgram, setSelectedProgram] = useState<Programme>();
+  const [selectedCP, setSelectedCP] = useState<CandidateProgramme>();
   return (
     <>
       {props?.error ? (
@@ -43,8 +44,8 @@ export default function Profile(props: Props) {
             {props.candidate.candidateProgrammes?.map((candidateProgramme) => (
               <p
                 onClick={() => {
-                  setSelectedProgram(
-                    candidateProgramme?.programme as Programme
+                  setSelectedCP(
+                    candidateProgramme as CandidateProgramme
                   );
                   setProgramResultView(true);
                 }}
@@ -58,7 +59,7 @@ export default function Profile(props: Props) {
         </div>
       )}
       <ProgramResult
-        selectedProgram={selectedProgram as Programme}
+        selectedCP={selectedCP as CandidateProgramme}
         programResultView={programResultView}
         setProgramResultView={setProgramResultView}
       />
