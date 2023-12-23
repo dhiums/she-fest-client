@@ -27,16 +27,8 @@ export default function Page() {
             </ul>
           </nav>
         </div>
-        <p className="px-20 text-[72px] leading-[75px] font-bold text-center">
-          {/* Brushing Colours, <br /> Bridging Cultures */}
-          <span className="inline-block animate-typing px-2 xxx" >S</span>
-          <span className="inline-block animate-typing px-2 xxx" >H</span>
-          <span className="inline-block animate-typing px-2 xxx" >E</span>
-          <span className="inline-block animate-typing px-2 xxx" >F</span>
-          <span className="inline-block animate-typing px-2 xxx" >E</span>
-
-          <span className="inline-block animate-typing px-2 xxx" >S</span>
-          <span className="inline-block animate-typing px-2 xxx" >T</span>
+        <p className="px-20 pt-10 text-[72px] leading-[75px] font-bold text-center">
+          Brushing <span className="bg-yellow  font-mono">Colours</span>, <br /> <span className="text-brown font-serif animate-pulse">Bridging</span> Cultures
         </p>
         <div className="flex justify-between bg-h-line bg-contain h-40 items-end">
           <button className="bg-yellow ml-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
