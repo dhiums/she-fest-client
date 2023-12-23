@@ -18,7 +18,7 @@ const page = () => {
         </h1>
       </div>
       <div className="flex flex-col gap-2 justify-center items-center">
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap items-center justify-center">
           <div className="bg-yellow w-72 h-20 hover:bg-yellower transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ const page = () => {
           </div>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap items-center justify-center">
           <div className="bg-yellow w-72 h-20 hover:bg-yellower transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ const page = () => {
             Aliya Programs
           </div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap items-center justify-center">
 
           <div className="bg-yellow w-72 h-20 hover:bg-yellower transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
             <svg
