@@ -1,7 +1,7 @@
 import Link from "next/link";
 export default function Page() {
   return (
-    <div className=" w-screen">
+    <div className="w-screen">
       <section id="section-1" className="min-h-screen justify-between flex flex-col">
         <div className="flex justify-between bg-h-line bg-contain h-40 items-center px-8">
           <img
@@ -159,7 +159,7 @@ export default function Page() {
               </svg>
               Score Board
             </div>
-            <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-3 text-xl px-5 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
+            <div className="bg-orange w-72 h-20 hover:bg-oranger transition-all duration-300  flex items-center gap-3 text-xl px-5 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="16"
@@ -174,7 +174,7 @@ export default function Page() {
           </div>
 
           <div className="flex gap-3">
-            <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-3 text-xl px-5 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
+            <div className="bg-yellow w-72 h-20 hover:bg-yellower transition-all duration-300  flex items-center gap-3 text-xl px-5 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="16"
@@ -186,7 +186,7 @@ export default function Page() {
               </svg>
               Candidate Points
             </div>
-            <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-3 text-xl px-5 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
+            <div className="bg-pink w-72 h-20 hover:bg-pinker transition-all duration-300  flex items-center gap-3 text-xl px-5 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="16"
