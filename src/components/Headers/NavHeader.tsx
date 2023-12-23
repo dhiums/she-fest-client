@@ -18,7 +18,7 @@ function Header() {
       </div>
       <div className="hidden px-10 md:flex w-full bg-h-line bg-cover bg-center items-center justify-between my-6">
         <div className="bg-white px-10">
-          <Link href="/admin/">
+          <Link href="/">
             <img src="/img/logo/logo.svg" alt="logo" className="h-24" />
           </Link>
         </div>

@@ -18,7 +18,7 @@ export default function Page() {
           <img
             src="/img/logo/logo.svg"
             alt="she fest logo"
-            className="h-[120px]"
+            className="md:h-24 h-16"
           />
           <img
             src="/img/logo/flowers/orange.svg"
@@ -36,7 +36,10 @@ export default function Page() {
         </div>
         <p className="px-20 text-[6vw] leading-[6vw] font-bold text-center">
           Brushing <span className="bg-yellow font-mono">Colours</span>, <br />
-          <span className="text-brown font-serif animate-pulse">Bridging</span> Cultures
+          <span className="text-brown font-serif animate-pulse">
+            Bridging
+          </span>{" "}
+          Cultures
         </p>
         <div className="flex justify-between bg-h-line bg-contain h-40 items-end">
           <button className="bg-yellow hover:bg-yellower transition-colors duration-300 ml-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
@@ -134,64 +137,62 @@ export default function Page() {
 
         <div className="flex flex-col gap-2 justify-center items-center">
           <div className="flex gap-3">
-
-         
-          <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="h-10"
-            >
-              <path
-                fill="currentColor"
-                d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
-              ></path>
-            </svg>
-            Score Board
+            <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="h-10"
+              >
+                <path
+                  fill="currentColor"
+                  d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
+                ></path>
+              </svg>
+              Score Board
+            </div>
+            <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="h-10"
+              >
+                <path
+                  fill="currentColor"
+                  d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
+                ></path>
+              </svg>
+              Downloads Section{" "}
+            </div>{" "}
           </div>
-          <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="h-10"
-            >
-              <path
-                fill="currentColor"
-                d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
-              ></path>
-            </svg>
-Downloads Section          </div> </div>
 
-
-
-
-<div className="flex gap-3">
-          <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="h-10"
-            >
-              <path
-                fill="currentColor"
-                d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
-              ></path>
-            </svg>
-           Candidate Points
+          <div className="flex gap-3">
+            <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="h-10"
+              >
+                <path
+                  fill="currentColor"
+                  d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
+                ></path>
+              </svg>
+              Candidate Points
+            </div>
+            <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="h-10"
+              >
+                <path
+                  fill="currentColor"
+                  d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
+                ></path>
+              </svg>
+              Institution Login
+            </div>
           </div>
-          <div className="bg-blue w-72 h-20 hover:bg-bluer transition-all duration-300  flex items-center gap-2 text-xl px-3 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="h-10"
-            >
-              <path
-                fill="currentColor"
-                d="M224 80c0-26.5-21.5-48-48-48H80C53.5 32 32 53.5 32 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80zm0 256c0-26.5-21.5-48-48-48H80c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336zM288 80v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48zM480 336c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48V336z"
-              ></path>
-            </svg>
-            College Login
-          </div></div>
         </div>
 
         <div className="flex justify-between bg-h-line bg-contain h-40 items-end">
@@ -218,7 +219,6 @@ Downloads Section          </div> </div>
           <img src="/img/logo/logo.svg" alt="logo" className="h-36" />
         </div>
         <div className="w-full px-4">
-             
           <div className="flex flex-wrap sm:flex-nowrap items-top my-10 justify-center lg:justify-end xl:mr-32 gap-10">
             <div className="px-4">
               <span className="block uppercase text-blueGray-500 text-sm font-semibold mb-2">
