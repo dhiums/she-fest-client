@@ -79,7 +79,7 @@ export default function Result(props: Props) {
                 <div className="flex text-white w-full p-2  border-2 border-white border-dashed rounded-lg">
                   <div className="flex flex-col w-3/6 gap-1">
                     <p className="font-bold text-lg">#0{index}</p>
-                    <div className="flex items-end"> <span className="font-bold text-4xl">{item.totalPoint}</span>  <span className="font-bold text-md">{item.totalPercentage}%</span> </div>
+                    <div className="flex items-end"> <span className="font-bold text-4xl">{item.totalPoint}</span>  <span className="font-bold text-md">{item.totalPercentage.toFixed(2)}%</span> </div>
                     <p className="font-semibold text-xs">
                       {item.teamName}
                     </p>
