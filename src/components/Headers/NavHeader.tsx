@@ -32,7 +32,7 @@ function Header() {
               href="/admin/programs"
             >
               Programs
-            </Link>{" "}
+            </Link>
             &#x2022;
             <Link
               className={`${
@@ -44,7 +44,7 @@ function Header() {
             </Link>
             {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
               <>
-                &#x2022;{" "}
+                &#x2022;
                 <Link
                   className={`${
                     path != "/admin/institutions"

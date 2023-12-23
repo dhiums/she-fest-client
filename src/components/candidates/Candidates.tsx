@@ -156,7 +156,7 @@ function Candidates(props: Props) {
             placeholder="Search Candidates Here"
             onChange={(e) => delayedSearch(e.target.value)}
             required
-          />{" "}
+          />
           {/* institutions dropdown to filter */}
           {/* <select className='
             rounded-full px-3 h-10
