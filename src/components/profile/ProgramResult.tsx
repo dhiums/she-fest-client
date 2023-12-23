@@ -16,7 +16,7 @@ export default function ProgramResult(props: Props) {
     >
       <div className="bg-white p-3 rounded-xl flex flex-col items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center ">
         <p className="font-semibold text-2xl">{props.selectedProgram?.name}</p>
-        {props.selectedProgram?.resultPublished ? (
+        {props.selectedProgram?.candidateProgramme && props.selectedProgram?.candidateProgramme?.zonalpoint > 0 ? (
           // props.selectedProgram?.resultEntered ?
           props.selectedProgram?.candidateProgramme?.map((cp) => (
             <>

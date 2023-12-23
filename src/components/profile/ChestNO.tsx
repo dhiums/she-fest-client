@@ -9,9 +9,9 @@ export default function ChestNO() {
     <div className="flex justify-center items-center  w-full h-[30vh] gap-1">
       <input
         type="text"
-        className="w-1/4 h-14 border-4 border-primary rounded-2xl text-2xl text-center uppercase"
+        className="w-full md:w-1/3 h-14 border-4 border-primary rounded-2xl  text-lg md:text-2xl text-center uppercase"
         value={chestNO}
-        placeholder="Enter your chest number"
+        placeholder="Enter your Reg.No Here"
         onChange={(e) => setchestNO(e.target.value)}
       />
       <button

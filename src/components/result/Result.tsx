@@ -57,7 +57,7 @@ export default function Result(props: Props) {
             <p className="text-white text-2xl font-semibold">Results</p>
           </div>
           <div className="flex w-full justify-evenly">
-            {props.zones.map((zone) => (
+            {props.zones?.map((zone) => (
               <button
                 onClick={() => {
                   setSelectedZone(zone?.name as string);
@@ -75,7 +75,7 @@ export default function Result(props: Props) {
           </div>
           <div className="flex flex-col gap-2 justify-evenly items-center overflow-y-auto">
             {
-              props.topTeams.length > 0 ? props.topTeams.map((item , index) => (
+              props.topTeams?.length > 0 ? props.topTeams.map((item , index) => (
                 <div className="flex text-white w-full p-2  border-2 border-white border-dashed rounded-lg">
                   <div className="flex flex-col w-3/6 gap-1">
                     <p className="font-bold text-lg">#0{index}</p>
@@ -106,7 +106,9 @@ export default function Result(props: Props) {
             }
           </div>
         </div>
-        <div className="flex flex-col w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
+        <div className="flex flex-col w-3/4 h-[90vh] p-3">
+        <div className="flex flex-col w-full h-2/3 border-2 border-primary  rounded-3xl p-3">
+            Results
           {
             props.results?.length > 0  ? (props.results?.map((program) => (
               <div
@@ -126,6 +128,52 @@ export default function Result(props: Props) {
               <p className="text-lg font-semibold text-primary">Please wait for the results to be published...</p>
             </div>
           }
+        </div>
+        <div className="flex">
+        <div className="flex flex-wrap w-1/2 h-1/3 border-2 border-primary rounded-3xl p-3 overflow-x-scroll">
+          Aliya Toppers
+          {
+            props.topCandidates?.filter((topper) => topper.categoryName == "Aliya")?.length > 0  ? (props.topCandidates?.filter((topper) => topper.categoryName == "Aliya")?.map((topper) => (
+              <div
+                className="border-2 w-1/2 border-primary "
+              >
+                <p>{topper.candidateName}</p>
+                <p>{topper.chestNo}</p>
+                <p>{topper.categoryName}</p>
+                <p>{topper.teamName}</p>
+                <p>{topper.totalPoint}</p>
+                <p>------------</p>
+              </div>
+            ))) : 
+            <div className="flex flex-col items-center justify-center h-full">
+              <p className="text-2xl font-bold text-primary">No Results Published.</p>
+              <p className="text-lg font-semibold text-primary">Please wait for the results to be published...</p>
+            </div>
+          }
+        </div>
+        
+        <div className="flex flex-wrap  w-1/2 h-1/3 border-2 border-primary rounded-3xl p-3 overflow-x-scroll">
+         Thanawiyya Toppers
+          {
+            props.topCandidates?.filter((topper) => topper.categoryName == "Thanawiyya")?.length > 0  ? (props.topCandidates?.filter((topper) => topper.categoryName == "Thanawiyya").map((topper) => (
+              <div
+                className="border-2 w-1/2 border-primary "
+              >
+                <p>{topper.candidateName}</p>
+                <p>{topper.chestNo}</p>
+                <p>{topper.categoryName}</p>
+                <p>{topper.teamName}</p>
+                <p>{topper.totalPoint}</p>
+                <p>------------</p>
+              </div>
+            ))) : 
+            <div className="flex flex-col items-center justify-center h-full">
+              <p className="text-2xl font-bold text-primary">No Results Published.</p>
+              <p className="text-lg font-semibold text-primary">Please wait for the results to be published...</p>
+            </div>
+          }
+        </div>
+        </div>
         </div>
       </div>
       <ViewResult
