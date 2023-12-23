@@ -73,46 +73,59 @@ export default function Result(props: Props) {
               </button>
             ))}
           </div>
-          <div className="flex flex-col gap-2 justify-evenly items-center overflow-y-scroll">
-            {props.topTeams.map((item , index) => (
-              <div className="flex text-white w-full p-2  border-2 border-white border-dashed rounded-lg">
-                <div className="flex flex-col w-3/6 gap-1">
-                  <p className="font-bold text-lg">#0{index}</p>
-                  <p className="font-bold text-4xl">{item.totalPoint}</p>
-                  <p className="font-semibold text-xs">
-                    {item.teamName}
-                  </p>
+          <div className="flex flex-col gap-2 justify-evenly items-center overflow-y-auto">
+            {
+              props.topTeams.length > 0 ? props.topTeams.map((item , index) => (
+                <div className="flex text-white w-full p-2  border-2 border-white border-dashed rounded-lg">
+                  <div className="flex flex-col w-3/6 gap-1">
+                    <p className="font-bold text-lg">#0{index}</p>
+                    <div className="flex items-end"> <span className="font-bold text-4xl">{item.totalPoint}</span>  <span className="font-bold text-md">{item.totalPercentage}%</span> </div>
+                    <p className="font-semibold text-xs">
+                      {item.teamName}
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
+                    {
+                      item.categoryWisePoint.map((cw)=>(
+                        <p>
+                          <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
+                            ㅤ
+                          </span>
+                          {cw.categoryName} : {cw.categoryPoint}
+                        </p>
+                      ))
+                    }
+                  </div>
                 </div>
-                <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
-                  {
-                    item.categoryWisePoint.map((cw)=>(
-                      <p>
-                        <span className="w-6 h-w-6 mr-1 rounded-full bg-white">
-                          ㅤ
-                        </span>
-                        {cw.categoryName} : {cw.categoryPoint}
-                      </p>
-                    ))
-                  }
-                </div>
+              ))
+
+              : 
+              <div className="flex flex-col items-center justify-center h-full">
+                <p className="text-2xl font-bold text-white">No Results Published.</p>
               </div>
-            ))}
+            }
           </div>
         </div>
         <div className="flex flex-col w-3/4 h-[90vh] border-2 border-primary mx-5 rounded-3xl p-3">
-          {props.results?.map((program) => (
-            <div
-              className="border-2 border-primary cursor-pointer"
-              onClick={() => {
-                setSelectedProgram(program);
-                setResultView(true);
-              }}
-            >
-              <p>{program.programCode}</p>
-              <p>{program.name}</p>
-              <p>------------</p>
+          {
+            props.results?.length > 0  ? (props.results?.map((program) => (
+              <div
+                className="border-2 border-primary cursor-pointer"
+                onClick={() => {
+                  setSelectedProgram(program);
+                  setResultView(true);
+                }}
+              >
+                <p>{program.programCode}</p>
+                <p>{program.name}</p>
+                <p>------------</p>
+              </div>
+            ))) : 
+            <div className="flex flex-col items-center justify-center h-full">
+              <p className="text-2xl font-bold text-primary">No Results Published.</p>
+              <p className="text-lg font-semibold text-primary">Please wait for the results to be published...</p>
             </div>
-          ))}
+          }
         </div>
       </div>
       <ViewResult
