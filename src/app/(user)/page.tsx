@@ -12,8 +12,8 @@ export default function Page() {
   // }
   // )
   return (
-    <>
-      <section className="min-h-screen justify-between flex flex-col">
+    <div className=" w-screen">
+      <section id="section-1" className="min-h-screen justify-between flex flex-col">
         <div className="flex justify-between bg-h-line bg-contain h-40 items-center px-8">
           <img
             src="/img/logo/logo.svg"
@@ -27,10 +27,10 @@ export default function Page() {
           />
           <nav>
             <ul className="flex gap-2">
-              <li>Home</li>
-              <li>Home</li>
-              <li>Home</li>
-              <li>Home</li>
+              <li className="cursor-pointer">Home</li>
+              <li className="cursor-pointer">Result</li>
+              <li className="cursor-pointer">Downloads</li>
+              <li className="cursor-pointer">Profile</li>
             </ul>
           </nav>
         </div>
@@ -42,7 +42,8 @@ export default function Page() {
           Cultures
         </p>
         <div className="flex justify-between bg-h-line bg-contain h-40 items-end">
-          <button className="bg-yellow hover:bg-yellower transition-colors duration-300 ml-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
+         <a href="#section-2">
+         <button className="bg-yellow hover:bg-yellower transition-colors duration-300 ml-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="16"
@@ -53,6 +54,7 @@ export default function Page() {
             </svg>
             explore
           </button>
+         </a>
           <img
             src="/img/logo/flowers/blue.svg"
             alt="blue flower"
@@ -61,7 +63,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="h-screen relative flex flex-col justify-between">
+      <section id="section-2" className="h-screen relative flex flex-col justify-between">
         <div className="bg-h-line bg-contain h-40 flex items-center justify-center">
           <img
             src="/img/logo/logo.svg"
@@ -108,7 +110,7 @@ export default function Page() {
         </div>
 
         <div className="bg-h-line bg-contain h-40 flex items-end justify-end">
-          <button className="bg-yellow hover:bg-yellower transition-colors duration-300 mr-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
+         <a href="#section-3"> <button className="bg-yellow hover:bg-yellower transition-colors duration-300 mr-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="16"
@@ -118,7 +120,7 @@ export default function Page() {
               <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
             </svg>
             explore
-          </button>
+          </button></a>
         </div>
         <img
           src="/img/logo/flowers/yellow.svg"
@@ -126,7 +128,8 @@ export default function Page() {
           className="h-80 animate-spin-slow absolute -bottom-32 -left-32"
         />
       </section>
-      <section className="h-screen relative flex flex-col justify-between">
+
+      <section id="section-3" className="h-screen relative flex flex-col justify-between">
         <div className="bg-h-line bg-contain h-40 flex items-center justify-center">
           <img
             src="/img/logo/logo.svg"
@@ -196,7 +199,7 @@ export default function Page() {
         </div>
 
         <div className="flex justify-between bg-h-line bg-contain h-40 items-end">
-          <button className="bg-yellow hover:bg-yellower transition-colors duration-300 ml-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
+         <a href="#section-1"> <button className="bg-yellow hover:bg-yellower transition-colors duration-300 ml-12 mb-10 flex items-center gap-1 animate-bounce text-lg px-3 py-2 border-black shadow-md border-2 rounded-md font-semibold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="16"
@@ -206,7 +209,7 @@ export default function Page() {
               <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
             </svg>
             explore
-          </button>
+          </button></a>
           <img
             src="/img/logo/flowers/orange.svg"
             alt="orange flower"
@@ -214,7 +217,8 @@ export default function Page() {
           />
         </div>
       </section>
-      <div className="flex flex-col text-center items-center lg:text-left lg:items-start lg:flex-row justify-between px-16 py-5">
+      
+      <div id="section-4" className="flex flex-col text-center items-center lg:text-left lg:items-start lg:flex-row justify-between px-16 py-5">
         <div className="flex items-center my-auto">
           <img src="/img/logo/logo.svg" alt="logo" className="h-36" />
         </div>
@@ -301,6 +305,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

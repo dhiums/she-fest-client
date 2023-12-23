@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ['latin'] })
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className='scroll-smooth'>
       <head>
         <meta charSet="utf-8" />
         <title>SHE FEST</title>
