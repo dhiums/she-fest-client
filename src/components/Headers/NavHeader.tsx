@@ -13,13 +13,13 @@ function Header() {
       <div className="print:hidden">
       <div className="px-10 flex md:hidden w-full bg-h-line bg-cover bg-center items-center justify-center my-6">
         <div className="bg-white px-10">
-          <img src="/img/logo.svg" alt="logo" className="md:h-24 h-16" />
+          <img src="/img/logo/logo.svg" alt="logo" className="md:h-24 h-16" />
         </div>
       </div>
       <div className="hidden px-10 md:flex w-full bg-h-line bg-cover bg-center items-center justify-between my-6">
         <div className="bg-white px-10">
           <Link href="/admin/">
-            <img src="/img/logo.svg" alt="logo" className="h-24" />
+            <img src="/img/logo/logo.svg" alt="logo" className="h-24" />
           </Link>
         </div>
 
@@ -69,7 +69,7 @@ function Header() {
               ? "Institutions"
               : ""}
             <img
-              src="/img/flowers/yellow.svg"
+              src="/img/logo/flowers/yellow.svg"
               alt="flower"
               className="w-8 absolute right-4 -bottom-2"
             />

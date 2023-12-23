@@ -7,7 +7,7 @@ function Footer() {
       <div className="w-full bg-h-line bg-cover h-12"></div>
       <div className="flex flex-col text-center items-center lg:text-left lg:items-start lg:flex-row justify-between px-16 py-5">
         <div className="flex items-center my-auto">
-          <img src="/img/logo.svg" alt="logo" className="h-36" />
+          <img src="/img/logo/logo.svg" alt="logo" className="h-36" />
         </div>
         <div className="w-full px-4">
              

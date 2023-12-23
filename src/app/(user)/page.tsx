@@ -12,11 +12,11 @@ export default function Page() {
     <>
       <section className="min-h-screen justify-between flex flex-col">
         <div className="flex justify-between bg-h-line bg-contain h-40 items-center px-8">
-          <img src="/img/logo.svg" alt="she fest logo" className="h-[120px]" />
+          <img src="/img/logo/logo.svg" alt="she fest logo" className="h-[120px]" />
           <img
-            src="/img/flowers/orange.svg"
+            src="/img/logo/flowers/orange.svg"
             alt="orange flower"
-            className="h-80 animate-spin-slow"
+            className="h-80 animate-spin-slow absolute -top-32 right-[35vw]"
           />
           <nav>
             <ul className="flex gap-2">
@@ -27,7 +27,7 @@ export default function Page() {
             </ul>
           </nav>
         </div>
-        <p className="px-20 pt-10 text-[72px] leading-[75px] font-bold text-center">
+        <p className="px-20 text-[6vw] leading-[6vw] font-bold text-center">
           Brushing <span className="bg-yellow  font-mono">Colours</span>, <br /> <span className="text-brown font-serif animate-pulse">Bridging</span> Cultures
         </p>
         <div className="flex justify-between bg-h-line bg-contain h-40 items-end">
@@ -36,13 +36,20 @@ export default function Page() {
             explore
           </button>
           <img
-            src="/img/flowers/blue.svg"
+            src="/img/logo/flowers/blue.svg"
             alt="blue flower"
-            className="h-80 -mr-20 animate-spin-slow"
+            className="h-80 animate-spin-slow absolute -bottom-32 -right-32"
           />
         </div>
       </section>
-      <section className="h-screen">
+      <section className="h-screen relative">
+
+      <img
+            src="/img/logo/flowers/yellow.svg"
+            alt="yellow flower"
+            className="h-80 animate-spin-slow absolute -bottom-32 -left-32"
+          />
+
 
       </section>
     </>

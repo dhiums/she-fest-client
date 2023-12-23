@@ -51,7 +51,7 @@ function Login() {
       <div className="flex flex-col justify-center gap-8">
         <div className="mx-auto">
           <img
-            src="/img/icon.svg"
+            src="/img/logo/icon.svg"
             alt="logo"
             className="h-40 lg:h-56 hover:scale-105 transition-transform duration-300"
           />
