@@ -19,7 +19,7 @@ function Footer() {
               <ul className="list-unstyled opacity-80">
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Sheets
@@ -27,7 +27,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Projects
@@ -35,7 +35,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Organizations
@@ -43,7 +43,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Docs
@@ -51,7 +51,7 @@ function Footer() {
                 </li>
                 {/* <li>
                 <Link
-                  className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                  className=" font-semibold block pb-2 text-sm"
                   href="/tea-stall"
                 >
                   Tea Stall
@@ -66,7 +66,7 @@ function Footer() {
               <ul className="list-unstyled opacity-80 ">
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/login"
                   >
                     Login
@@ -74,7 +74,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Sign Up
@@ -82,7 +82,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Profile
