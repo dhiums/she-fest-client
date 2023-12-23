@@ -34186,7 +34186,6 @@ const data: any = condata
         bold: true,
       };
     });
-      console.log(worksheet);
 
       // Add data rows
       programme.candidateProgramme.forEach((candidate:any) => {

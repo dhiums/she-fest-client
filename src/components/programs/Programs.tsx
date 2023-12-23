@@ -122,6 +122,49 @@ function Programs(props: Props) {
     setTotalCompleted(completed?.length);
   }, [programs, data?.team?.name]);
 
+  const downloadExcel = async (program: Programme) => {
+    const postData = {
+      zone,
+      program
+    };
+    try {
+      const postData = {
+        zone,
+        program
+      };
+      // Make a POST request to the Excel API route
+      const response = await fetch("/api/excel/programCandidates", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Specify the content type if sending JSON data
+        },
+        body: JSON.stringify(postData),
+      });
+
+
+      if (response.ok) {
+        // Convert the response to a Blob and create a URL for downloading
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a download link and trigger the download
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${program.name}-${program.programCode}-${zone}.xlsx`
+        a.click();
+        // Clean up by revoking the URL
+
+        window.URL.revokeObjectURL(url);
+      } else {
+        console.error("Failed to generate Excel file.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    console.log(postData)
+  }
+
   return (
     <>
       <div className="p-12 pt-0 lg:p-20">
@@ -366,7 +409,7 @@ function Programs(props: Props) {
                       </svg>
                     </button> */}
                       <button className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
-                      // onClick={downloadExcel}
+                        onClick={() => { downloadExcel(program) }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
