@@ -57,17 +57,6 @@ function Programs(props: Props) {
 
   useEffect(() => {
     (async () => {
-      // const fetching = await fetch("/api/programs", {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-      // const fetchedProgrammes = await fetching.json();
-      // setPrograms(fetchedProgrammes);
-      // setCandidateProgrammes(
-      //   selected?.candidateProgramme as CandidateProgramme[]
-      // );
       axios
         .post("https://she-fest-api.vercel.app/graphql", {
           query: `{

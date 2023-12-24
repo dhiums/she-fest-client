@@ -24,7 +24,7 @@ export default function Page() {
              data.roles == Roles.TeamManager && <>{data.team.name}</>
           }
           <img
-            src="/img/flowers/yellow.svg"
+            src="/img/logo/flowers/yellow.svg"
             alt="flower"
             className="w-8 absolute right-4 -bottom-2"
           />

@@ -211,7 +211,7 @@ const ViewProgram = (props: Props) => {
     >
       <div className="bg-white p-3 rounded-xl flex flex-col items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center ">
         <p className="text-lg mt-3 font-bold text-primary">
-          <span className="text-xl ">{props.selected?.programCode}</span>{" "}
+          <span className="text-xl ">{props.selected?.programCode}</span>
           {props.selected?.name}
         </p>
         {(data.admin?.roles == Roles.Admin ||
@@ -275,7 +275,7 @@ const ViewProgram = (props: Props) => {
                     className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between"
                   >
                     <p className="text-white font-black text-2xl bg-primary rounded-md     mx-auto">
-                      {cp.candidate?.chestNO}{" "}
+                      {cp.candidate?.chestNO}
                     </p>
                     <p className="text-primary font-bold">
                       {props.selected.type == Types.Group ||

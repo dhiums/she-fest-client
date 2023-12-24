@@ -7,7 +7,7 @@ function Footer() {
       <div className="w-full bg-h-line bg-cover h-12"></div>
       <div className="flex flex-col text-center items-center lg:text-left lg:items-start lg:flex-row justify-between px-16 py-5">
         <div className="flex items-center my-auto">
-          <img src="/img/logo.svg" alt="logo" className="h-36" />
+          <img src="/img/logo/logo.svg" alt="logo" className="h-36" />
         </div>
         <div className="w-full px-4">
              
@@ -19,7 +19,7 @@ function Footer() {
               <ul className="list-unstyled opacity-80">
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Sheets
@@ -27,7 +27,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Projects
@@ -35,7 +35,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Organizations
@@ -43,7 +43,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Docs
@@ -51,7 +51,7 @@ function Footer() {
                 </li>
                 {/* <li>
                 <Link
-                  className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                  className=" font-semibold block pb-2 text-sm"
                   href="/tea-stall"
                 >
                   Tea Stall
@@ -66,7 +66,7 @@ function Footer() {
               <ul className="list-unstyled opacity-80 ">
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/login"
                   >
                     Login
@@ -74,7 +74,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Sign Up
@@ -82,7 +82,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    className=" font-semibold block pb-2 text-sm"
                     href="/"
                   >
                     Profile
