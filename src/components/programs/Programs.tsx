@@ -20,6 +20,8 @@ import { useGlobalContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ResultUpload from "./ResultUpload";
+import { jsPDF } from "jspdf";
+import { saveAs } from "file-saver";
 
 interface Props {
   programmes: Programme[];
@@ -123,10 +125,7 @@ function Programs(props: Props) {
   }, [programs, data?.team?.name]);
 
   const downloadExcel = async (program: Programme) => {
-    const postData = {
-      zone,
-      program
-    };
+
     try {
       const postData = {
         zone,
@@ -161,8 +160,26 @@ function Programs(props: Props) {
     } catch (error) {
       console.error("Error:", error);
     }
+  }
 
-    console.log(postData)
+  const downloadJudgeForm = (program: Programme)=> {
+    console.log(program);
+    
+    const doc = new jsPDF("portrait", "px", "a4");
+    // Load Montserrat font
+    doc.addFont(
+      "https://fonts.gstatic.com/s/montserrat/v15/JTUSjIg1_i6t8kCHKm459Wlhzg.ttf",
+      "Montserrat",
+      "normal"
+    );
+
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = doc.internal.pageSize.getHeight();
+    const backgroundImageUrl = program.mode == 'STAGE'?'/img/judgement/stage.jpg':'/img/judgement/non-stage.jpg'
+    doc.addImage(backgroundImageUrl, "JPEG", 0, 0, pdfWidth, pdfHeight);
+    const pdfBlob = doc.output("blob");
+    var filename = program.programCode
+    saveAs(pdfBlob, `${filename}.pdf`);
   }
 
   return (
@@ -427,7 +444,7 @@ function Programs(props: Props) {
                         </svg>
                       </button>
                       <button className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
-                      // onClick={downloadJudgeForm}
+                      onClick={(()=>{downloadJudgeForm(program)})}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

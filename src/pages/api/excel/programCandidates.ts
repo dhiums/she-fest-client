@@ -77,11 +77,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       };
     });
 
-    program.candidateProgramme.forEach((candidate: CandidateProgramme) => {
+    program.candidateProgramme?.filter((candidateProgram: CandidateProgramme) => candidateProgram.candidate?.team?.zone?.name === zone).map((candidateProgramme: CandidateProgramme) => {  
       const subRow = sheet.addRow([
-        candidate?.candidate?.chestNO,
-        candidate?.candidate?.name,
-        candidate?.candidate?.team?.name,
+        candidateProgramme?.candidate?.chestNO,
+        candidateProgramme?.candidate?.name,
+        candidateProgramme?.candidate?.team?.name,
         "",
       ]);
       subRow.eachCell((cell: any) => {
