@@ -245,9 +245,14 @@ const ViewProgram = (props: Props) => {
                 />
                 <div className="w-full   overflow-y-auto">
                   {props.candidateProgrammes
-                    ?.filter((cp) => cp.candidate?.team?.zone?.name === props.zone)
-                    ?.map((cp , i) => (
-                      <div key={i} className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
+                    ?.filter(
+                      (cp) => cp.candidate?.team?.zone?.name === props.zone
+                    )
+                    ?.map((cp, i) => (
+                      <div
+                        key={i}
+                        className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between"
+                      >
                         <p className="text-white font-black text-2xl bg-primary rounded-md  mx-auto">
                           {cp.candidate?.chestNO}
                         </p>

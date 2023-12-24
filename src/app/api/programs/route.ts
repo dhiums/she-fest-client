@@ -15,6 +15,8 @@ export async function GET() {
   >(GetAllProgrammesDocument, {
     api_key: API_KEY,
   });
+  console.log(res);
+  
 
   return NextResponse.json(res.data?.programmes);
 }

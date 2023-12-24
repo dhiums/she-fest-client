@@ -33,10 +33,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     };
     mainTitle.font = {
       size: 48,
-      bold:true,
+      bold: true,
     };
-    
-    programTitle.value = `${program.programCode}-${program.name}-${program.category.name}-${zone}`
+
+    programTitle.value = `${program.programCode}-${program.name}-${program.category.name}-${zone}`;
     programTitle.alignment = {
       vertical: "middle",
       horizontal: "center",
@@ -49,9 +49,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     };
     programTitle.font = {
       size: 14,
-      bold:true,
+      bold: true,
     };
-
 
     const headers = ["Reg. No", "Name", "Team", "Remarks"];
     const widths: any = {
@@ -77,22 +76,27 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       };
     });
 
-    program.candidateProgramme?.filter((candidateProgram: CandidateProgramme) => candidateProgram.candidate?.team?.zone?.name === zone).map((candidateProgramme: CandidateProgramme) => {  
-      const subRow = sheet.addRow([
-        candidateProgramme?.candidate?.chestNO,
-        candidateProgramme?.candidate?.name,
-        candidateProgramme?.candidate?.team?.name,
-        "",
-      ]);
-      subRow.eachCell((cell: any) => {
-        cell.border = {
-          top: { style: "thin" },
-          left: { style: "thin" },
-          bottom: { style: "thin" },
-          right: { style: "thin" },
-        };
+    program.candidateProgramme
+      ?.filter(
+        (candidateProgram: CandidateProgramme) =>
+          candidateProgram.candidate?.team?.zone?.name === zone
+      )
+      .map((candidateProgramme: CandidateProgramme) => {
+        const subRow = sheet.addRow([
+          candidateProgramme?.candidate?.chestNO,
+          candidateProgramme?.candidate?.name,
+          candidateProgramme?.candidate?.team?.name,
+          "",
+        ]);
+        subRow.eachCell((cell: any) => {
+          cell.border = {
+            top: { style: "thin" },
+            left: { style: "thin" },
+            bottom: { style: "thin" },
+            right: { style: "thin" },
+          };
+        });
       });
-    });
 
     // Generate the Excel file
     const buffer = await workbook.xlsx.writeBuffer();
