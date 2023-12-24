@@ -83,9 +83,9 @@ export default function Page() {
             />
             <div className="text-center mr-4">
               <p className="font-black leading-9 md:font-bold md:text-[70px] md:leading-[50px] text-5xl">
-                300
+              3.5K+
               </p>
-              <p className="font-semibold text-lg">candidates</p>
+              <p className="font-semibold text-lg">Candidates</p>
             </div>
           </div>
           <div className="flex items-center gap-2 hover:scale-110 transition-transform duration-500 ease-in-out">
@@ -96,9 +96,9 @@ export default function Page() {
             />
             <div className="text-center mr-4">
               <p className="font-black leading-9 md:font-bold md:text-[70px] md:leading-[50px] text-5xl">
-                300
+                60+
               </p>
-              <p className="font-semibold text-lg">candidates</p>
+              <p className="font-semibold text-lg">Institutions</p>
             </div>
           </div>
 
@@ -110,9 +110,9 @@ export default function Page() {
             />
             <div className="text-center mr-4">
               <p className="font-black leading-9 md:font-bold md:text-[70px] md:leading-[50px] text-5xl">
-                300
+                45+
               </p>
-              <p className="font-semibold text-lg">candidates</p>
+              <p className="font-semibold text-lg">Programs</p>
             </div>
           </div>
         </div>

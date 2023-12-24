@@ -151,8 +151,7 @@ function Programs(props: Props) {
     }
   };
 
-  const downloadJudgeForm = (program: Programme) => {
-    console.log(program);
+  const downloadJudgeForm = (programme: Programme) => {
 
     const doc = new jsPDF("portrait", "px", "a4");
     // Load Montserrat font
@@ -164,18 +163,37 @@ function Programs(props: Props) {
 
     const pdfWidth = doc.internal.pageSize.getWidth();
     const pdfHeight = doc.internal.pageSize.getHeight();
+    programs?.map((program, index) => {
+    doc.addPage("a4");
     const backgroundImageUrl =
       program.mode == "STAGE"
         ? "/img/judgement/stage.jpg"
         : "/img/judgement/non-stage.jpg";
     doc.addImage(backgroundImageUrl, "JPEG", 0, 0, pdfWidth, pdfHeight);
+    doc.setFontSize(11);
 
-    doc.text(`${program.programCode}`, 125, 205);
-      doc.text(`${program.name}`, 125, 218);
-      doc.text(`${program.category?.name}`, 345, 205);
-      doc.text(`${zone}`, 345, 218);
+
+    doc.text(`${program.programCode}`, 115, 160);
+      doc.text(`${program.name}`, 115, 175);
+      doc.text(`${program.category?.name}`, 315, 160);
+      doc.text(`${zone}`, 315, 175);
+
+      // text all candidates of the zone in the program
+
+      program?.candidateProgramme?.filter(cp => cp.candidate?.team?.zone?.name == zone).map((cp, index) => {
+        
+        console.log(cp.candidate?.chestNO + " " + cp.candidate?.team?.zone?.name);
+        // if(cp.candidate?.team?.zone?.name == zone){}
+        doc.text(`${cp.candidate?.chestNO}`, 70 , 225  + index * 15.7);
+      }
+      );
+    });
+    
+    doc.deletePage(1);
+
+
     const pdfBlob = doc.output("blob");
-    var filename = program.programCode;
+    var filename = "Judjement Form";
     saveAs(pdfBlob, `${filename}.pdf`);
   };
 
@@ -425,6 +443,7 @@ function Programs(props: Props) {
                     <button
                       className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
                       onClick={() => {
+                        setSelected(program);
                         downloadExcel(program);
                       }}
                     >
