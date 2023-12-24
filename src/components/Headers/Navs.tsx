@@ -9,12 +9,12 @@ const Navs = () => {
     <ul className="flex flex-col items-end gap-1">
       <div className="flex gap-1">
         <li onClick={()=>{
-            router.push('/result')
+            // router.push('/result')
     }} className="cursor-pointer bg-yellow hover:bg-yellower transition-colors duration-300 px-3 py-2 border-2 border-black shadow-md rounded-md font-semibold">
           Results
         </li>
         <li onClick={()=>{
-            router.push('/profile')
+            // router.push('/profile')
     }}  className="cursor-pointer bg-blue hover:bg-bluer transition-colors duration-300 px-3 py-2 border-2 border-black shadow-md rounded-md font-semibold">
           Candidates
         </li>

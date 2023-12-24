@@ -56,7 +56,7 @@ function Header() {
               className={`${
                 path != "/result" ? "text-secondary" : "text-brown"
               }`}
-              href="/result"
+              href="/"
             >
               Results
             </Link>
@@ -65,7 +65,7 @@ function Header() {
               className={`${
                 path != "/profile" ? "text-secondary" : "text-brown"
               }`}
-              href="/profile/"
+              href="/"
             >
               Candidates
             </Link>
