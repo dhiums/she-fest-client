@@ -25,7 +25,10 @@ function Header() {
 
         <div className="bg-white flex-col flex py-2 px-8">
           <div className="flex gap-1 text-sm font-semibold justify-center text-center">
-            <Link
+           {
+            data.roles && (
+              <>
+               <Link
               className={`${
                 path != "/admin/programs" ? "text-secondary" : "text-brown"
               }`}
@@ -42,6 +45,51 @@ function Header() {
             >
               Candidates
             </Link>
+            </>
+            )
+           }
+
+{
+            !data.roles && (
+              <>
+               <Link
+              className={`${
+                path != "/result" ? "text-secondary" : "text-brown"
+              }`}
+              href="/result"
+            >
+              Results
+            </Link>
+            &#x2022;
+            <Link
+              className={`${
+                path != "/profile" ? "text-secondary" : "text-brown"
+              }`}
+              href="/profile/"
+            >
+              Candidates
+            </Link>
+            <Link
+              className={`${
+                path != "/download" ? "text-secondary" : "text-brown"
+              }`}
+              href="/download/"
+            >
+              Downloads
+              
+            </Link>
+            <Link
+              className={`${
+                path != "/login" ? "text-secondary" : "text-brown"
+              }`}
+              href="/login/"
+            >
+              Login
+            </Link>
+            </>
+            )
+           }
+
             {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
               <>
                 &#x2022;
