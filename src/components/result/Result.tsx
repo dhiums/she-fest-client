@@ -136,9 +136,9 @@ export default function Result(props: Props) {
                     ))
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full">
-                    <p className="text-2xl font-bold text-primary">
+                    {/* <p className="text-2xl font-bold text-primary">
                       No Results Published.
-                    </p>
+                    </p> */}
 
                   </div>
                 )}
@@ -163,10 +163,10 @@ export default function Result(props: Props) {
                       </div>
                     ))
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <p className="text-2xl font-bold text-primary">
+                  <div className="flex flex-col items-center justify-center h-full w-full">
+                    {/* <p className="text-2xl font-bold text-primary">
                       No Results Published.
-                    </p>
+                    </p> */}
 
                   </div>
                 )}
