@@ -117,7 +117,7 @@ export default function Result(props: Props) {
               </div>
             )}
           </div>
-          <div className="flex flex-col lg:flex-row mt-8">
+          <div className="flex flex-col lg:flex-row mt-60 lg:mt-8">
             <div>
               <p className="font-bold text-xl text-center">Aliya Toppers</p>
               <div className="flex flex-wrap p-3 overflow-x-scroll gap-2">
