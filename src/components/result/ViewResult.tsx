@@ -30,7 +30,7 @@ export default function ViewResult(props: Props) {
 
      
 
-      <div className="bg-white p-3 rounded-xl flex flex-col gap-2 items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center  overflow-auto">
+      <div className="bg-white relative p-3 rounded-xl flex flex-col gap-2 items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center  overflow-auto">
       
       <p className="text-sm bg-orange inline font-semibold p-1 rounded-md">{props?.selectedProgram?.programCode}</p>
       <p className="text-md font-bold">{props.selectedProgram?.name}</p>
@@ -50,7 +50,12 @@ export default function ViewResult(props: Props) {
           <div className="hover:bg-ysmoke p-3 border rounded-md w-full">
           <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.candidate?.chestNO}</p>
           <p className=" text-md font-bold">{cp?.candidate?.name}</p>
-          <p className="text-sm">{cp?.candidate?.team?.name} pts</p>
+          <p className="text-sm">{cp?.candidate?.team?.name}</p>
+            <div className="flex gap-2 w-full items-center justify-center h-full">
+          <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.zonalpoint} pts</p> 
+          <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.zonalposition?.name || "NIL"}</p> 
+         <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.zonalgrade?.name || "NIL"}</p> 
+          </div>
         </div>
         ))
         : 
@@ -61,14 +66,17 @@ export default function ViewResult(props: Props) {
       }
 
 
-        <button
-          className="bg-primary text-white rounded-lg p-2  fixed bottom-6"
+<button
+          className="bg-primary text-white rounded-full p-2  absolute top-4 right-4"
           onClick={() => {
             props.setResultView(false);
             console.log(props.resultView);
           }}
         >
-          Close
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+</svg>
+
         </button>
       </div>
     </div>
