@@ -48,7 +48,7 @@ const Links = () => {
       >
         <div 
         onClick={() => {
-          // router.push('/profile');
+          router.push('/profile');
         }} className="cursor-pointer bg-yellow w-72 h-20 hover:bg-yellower transition-all duration-300  flex items-center gap-3 text-xl px-5 py-2 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02]">
           <svg
             xmlns="http://www.w3.org/2000/svg"

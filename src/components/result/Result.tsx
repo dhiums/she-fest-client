@@ -9,6 +9,7 @@ import {
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import ViewResult from "./ViewResult";
+import Header from "../Headers/NavHeader";
 
 interface Props {
   zones: Zone[];
@@ -41,6 +42,7 @@ export default function Result(props: Props) {
 
   return (
     <>
+    <Header/>
       <div className="flex flex-col lg:flex-row w-full h-screen items-center p-5">
         <div className="flex flex-col h-[90vh] min-w-[300px] rounded-3xl gap-4 p-3 ">
           <div className="flex justify-center mt-4">
