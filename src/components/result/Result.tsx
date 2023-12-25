@@ -9,6 +9,7 @@ import {
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import ViewResult from "./ViewResult";
+import Header from "../Headers/NavHeader";
 
 interface Props {
   zones: Zone[];
@@ -41,6 +42,7 @@ export default function Result(props: Props) {
 
   return (
     <>
+    <Header/>
       <div className="flex flex-col lg:flex-row w-full h-screen items-center p-5">
         <div className="flex flex-col h-[90vh] min-w-[300px] rounded-3xl gap-4 p-3 ">
           <div className="flex justify-center mt-4">
@@ -61,12 +63,12 @@ export default function Result(props: Props) {
               </button>
             ))}
           </div>
-          <div className="flex flex-col gap-2 justify-evenly items-center overflow-y-auto">
+          <div className="flex flex-col gap-2  items-center overflow-y-auto">
             {props.topTeams?.length > 0 ? (
               props.topTeams.map((item, index) => (
                 <div className="flex border hover:bg-ysmoke w-full p-4 transition-colors duration-300 rounded-lg">
                   <div className="flex flex-col w-3/6 gap-1">
-                    <p className="font-bold text-lg">#0{index}</p>
+                    <p className="font-bold text-lg">#{index + 1}</p>
                     <div className="flex items-end">
                       
                       <span className="font-bold text-4xl text-browner">
@@ -117,7 +119,7 @@ export default function Result(props: Props) {
               </div>
             )}
           </div>
-          <div className="flex flex-col lg:flex-row mt-8">
+          <div className="flex flex-col lg:flex-row mt-60 lg:mt-8">
             <div>
               <p className="font-bold text-xl text-center">Aliya Toppers</p>
               <div className="flex flex-wrap p-3 overflow-x-scroll gap-2">
@@ -136,9 +138,9 @@ export default function Result(props: Props) {
                     ))
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full">
-                    <p className="text-2xl font-bold text-primary">
+                    {/* <p className="text-2xl font-bold text-primary">
                       No Results Published.
-                    </p>
+                    </p> */}
 
                   </div>
                 )}
@@ -163,10 +165,10 @@ export default function Result(props: Props) {
                       </div>
                     ))
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <p className="text-2xl font-bold text-primary">
+                  <div className="flex flex-col items-center justify-center h-full w-full">
+                    {/* <p className="text-2xl font-bold text-primary">
                       No Results Published.
-                    </p>
+                    </p> */}
 
                   </div>
                 )}

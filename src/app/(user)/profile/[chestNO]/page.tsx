@@ -26,5 +26,6 @@ export default async function page({
   const error = result?.error?.message;
   const candidate: Candidate = result?.data?.candidateByChestNo as Candidate;
 
-  return <Profile error={error as string} candidate={candidate} />;
+  // return <Profile error={error as string} candidate={candidate} />;
+  return <>Updating soon...</>
 }

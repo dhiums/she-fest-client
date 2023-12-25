@@ -122,6 +122,12 @@ export default function ResultUpload(props: Props) {
             ?.filter((cp) => cp.candidate?.team?.zone?.name === props.zone)
             ?.map((candidateProgramme) => {
                 const uploadData = toUploadForm.find((data) => data.chestNo == candidateProgramme.candidate?.chestNO)
+                // if( uploadData && candidateProgramme.zonalgrade?.name){
+                //   uploadData.grade = candidateProgramme.zonalgrade?.name
+                // }  
+                // if( uploadData && candidateProgramme.zonalposition?.name){
+                //   uploadData.position = candidateProgramme.zonalposition?.name
+                // }
               return (
                 (
                   <div className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between">
@@ -156,8 +162,10 @@ export default function ResultUpload(props: Props) {
                           setToUploadForm(editedToUploadForm)
     
                           console.log(editedToUploadForm, toUploadForm);
+
     
                         }}
+
                       >
                         <option value="null">NIL</option>
                         <option value="First">1st</option>

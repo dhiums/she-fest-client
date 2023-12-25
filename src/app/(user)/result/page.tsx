@@ -31,14 +31,17 @@ export default async function page({ params, searchParams }: any) {
   });
 
   return (
-    <Result
-      zones={zones.data?.zones as Zone[]}
-      results={
-        enteredProgrammes.data?.findResultEnteredProgrammesByZone?.programmes as Programme[]
-      }
-      zone={searchParams.zone}
-      topCandidates={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topCandidates as CandidateWithPoint[]}
-      topTeams={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topTeams as TeamWithPoint[]}
-    />
+    // <Result
+    //   zones={zones.data?.zones as Zone[]}
+    //   results={
+    //     enteredProgrammes.data?.findResultEnteredProgrammesByZone?.programmes as Programme[]
+    //   }
+    //   zone={searchParams.zone}
+    //   topCandidates={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topCandidates as CandidateWithPoint[]}
+    //   topTeams={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topTeams as TeamWithPoint[]}
+    // />
+    <>
+    Updating soon...
+    </>
   );
 }

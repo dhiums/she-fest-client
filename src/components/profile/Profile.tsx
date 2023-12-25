@@ -4,6 +4,7 @@ import {
   CandidateProgramme,
   GetCandidateByChestNoQuery,
   Programme,
+  Types,
 } from "@/gql/graphql";
 import { useState } from "react";
 import ProgramResult from "./ProgramResult";
@@ -27,16 +28,28 @@ export default function Profile(props: Props) {
         <div className="flex flex-col justify-center items-center my-10 w-full">
           <p className="font-semibold text-2xl">Details</p>
           <div className="flex flex-col items-center border-2 border-primary p-2 rounded-xl">
-            <p className="font-semibold text-xl">{props?.candidate?.chestNO}</p>
-            <p className="font-semibold text-xl">{props?.candidate?.name}</p>
-            <p className="font-semibold text-xl">
+            <p className="font-semibold text-xl text-center">{props?.candidate?.chestNO}</p>
+            <p className="font-semibold text-xl text-center">{props?.candidate?.name}</p>
+            <p className="font-semibold text-xl text-center">
               {props?.candidate?.category?.name}
             </p>
-            <p className="font-semibold text-xl">
+            <p className="font-semibold text-xl text-center">
               {props?.candidate?.team?.name}
             </p>
-            <p className="font-semibold text-xl">
-              {props?.candidate?.individualPoint}
+            <p className="font-semibold text-xl text-center">
+            Total Points :  {
+            //  if program type is Types.Single then sum point otherwise not sum
+
+            props?.candidate?.candidateProgrammes?.reduce((a, b) => {
+              if(b?.programme?.type == Types.Single){
+                return a + (b?.zonalpoint  as unknown as number)
+              }else{
+                return a + 0
+              }
+            }, 0)
+              
+              
+            }
             </p>
           </div>
           <p className="font-semibold text-2xl">Programs</p>

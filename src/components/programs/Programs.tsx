@@ -67,12 +67,15 @@ function Programs(props: Props) {
             type
             mode
             candidateCount
+            enteredA
+            publishedA
             groupCount
             category {
               name
             }
             candidateProgramme{
               id
+              zonalpoint
               candidate{
                 chestNO
                 name
@@ -84,9 +87,11 @@ function Programs(props: Props) {
                 }
               }
               zonalposition{
+                id
                 name
               }
               zonalgrade{
+                id
                 name
               }
             }
@@ -184,7 +189,12 @@ function Programs(props: Props) {
         
         console.log(cp.candidate?.chestNO + " " + cp.candidate?.team?.zone?.name);
         // if(cp.candidate?.team?.zone?.name == zone){}
-        doc.text(`${cp.candidate?.chestNO}`, 70 , 225  + index * 15.7);
+        program.mode == "STAGE"
+        ?
+        doc.text(`${cp.candidate?.chestNO}`, 70 , 225  + index * 15.7)
+        :
+        doc.text(`${cp.candidate?.chestNO}`, 70 , 220  + index * 11.93)
+
       }
       );
     });
@@ -505,6 +515,14 @@ function Programs(props: Props) {
                         />
                       </svg>
                     </button>
+                    <div >
+                      Status
+                      <div className="flex gap-3">
+                        <div className={`w-4 h-4 rounded-full ${program.enteredA ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                        <div className={`w-4 h-4 rounded-full ${program.publishedA ? 'bg-green-500' : 'bg-red-500'}`}></div>
+
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
