@@ -25,9 +25,92 @@ interface ToDownLoadData {
 }
 
 export default function Publish(props: Props) {
+  const [toDownLoadData, setToDownLoadData] = useState<ToDownLoadData[]>([]);
+
+  // useEffect(() => {
+  //   // change the program data to download data format
+
+  //   let downloadData: ToDownLoadData[] = [];
+
+  //   props.result?.forEach((programme, index) => {
+  //     if (programme.resultPublished) {
+  //       return;
+  //     }
+  //     programme.candidateProgramme?.sort(
+  //       (a, b) => (b.point as number) - (a.point as number)
+  //     );
+
+  //     programme.candidateProgramme?.forEach((candidate, i) => {
+  //       let sl = i == 0 ? index + 1 : "";
+  //       let programName = i == 0 ? programme.name : "";
+  //       let programCode = i == 0 ? programme.programCode : "";
+  //       let category = i == 0 ? programme.category?.name : "";
+  //       let gradePoint =
+  //         programme.type == Types.Single
+  //           ? candidate.grade?.pointSingle
+  //           : programme.type == Types.Group
+  //             ? candidate.grade?.pointGroup
+  //             : programme.type == Types.House
+  //               ? candidate.grade?.pointHouse
+  //               : 0;
+  //       let positionPoint =
+  //         programme.type == Types.Single
+  //           ? candidate.position?.pointSingle
+  //           : programme.type == Types.Group
+  //             ? candidate.position?.pointGroup
+  //             : programme.type == Types.House
+  //               ? candidate.position?.pointHouse
+  //               : 0;
+
+  //       let chestNo =
+  //         programme.type == Types.House
+  //           ? candidate.candidate?.chestNO?.slice(0, -2) + "00"
+  //           : candidate.candidate?.chestNO;
+  //       let candidateClass =
+  //         programme.type == Types.Single ? candidate.candidate?.class : "-";
+  //       let candidateName =
+  //         programme.type == Types.Single
+  //           ? candidate.candidate?.name
+  //           : programme.type == Types.Group
+        
+  //             ? candidate.candidate?.name + " & Team"
+  //             : programme.type == Types.House
+  //               ? candidate.candidate?.team?.name
+  //               : null;
+
+  //       // if there no position or grade then not push
+
+  //       if (candidate.position || candidate.grade) {
+  //         downloadData.push({
+  //           sl: sl,
+  //           programCode: programCode as string,
+  //           programmeName: programName as string,
+  //           category: category as string,
+  //           position: candidate.position?.value
+  //             ? candidate.position?.value
+  //             : ("" as any),
+  //           grade: candidate.grade?.name
+  //             ? candidate.grade?.name
+  //             : ("" as string),
+  //           candidateChestNo: chestNo as string,
+  //           candidateName: candidateName as string,
+  //           class: candidateClass as string,
+  //           candidateTeam: candidate.candidate?.team?.name as string,
+
+  //           gradePoint: gradePoint ? gradePoint : ("" as any),
+  //           positionPoint: positionPoint ? positionPoint : ("" as any),
+  //           totalPoint: candidate.point as number,
+  //           checkCode: programme.programCode as string,
+  //         });
+  //       }
+  //     });
+  //   });
+
+  //   setToDownLoadData(downloadData as ToDownLoadData[]);
+  // }, []);
+
   const [selectedPrograms, setSelectedPrograms] = useState<Programme[]>([]);
   const [state, PublishResultExicute] = useMutation(PublishResultsDocument);
-  const [toDownLoadData, setToDownLoadData] = useState<ToDownLoadData[]>([]);
 
   const handlePublish = async () => {
     console.log(selectedPrograms);
