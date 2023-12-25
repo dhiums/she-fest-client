@@ -4,9 +4,9 @@ import {
   GetAllZonesDocument,
   GetAllZonesQuery,
   GetAllZonesQueryVariables,
-  GetEnteredProgrammesDocument,
-  GetEnteredProgrammesQuery,
-  GetEnteredProgrammesQueryVariables,
+  GetPublishedProgrammesDocument,
+  GetPublishedProgrammesQuery,
+  GetPublishedProgrammesQueryVariables,
   Programme,
   TeamWithPoint,
   Zone,
@@ -24,9 +24,9 @@ export default async function page({ params, searchParams }: any) {
   const zone = searchParams.zone || 'A'
 
   const enteredProgrammes = await client.query<
-    GetEnteredProgrammesQuery,
-    GetEnteredProgrammesQueryVariables
-  >(GetEnteredProgrammesDocument, {
+    GetPublishedProgrammesQuery,
+    GetPublishedProgrammesQueryVariables
+  >(GetPublishedProgrammesDocument, {
     zone: zone,
   });
 
@@ -34,11 +34,11 @@ export default async function page({ params, searchParams }: any) {
     <Result
       zones={zones.data?.zones as Zone[]}
       results={
-        enteredProgrammes.data?.findResultEnteredProgrammesByZone?.programmes as Programme[]
+        enteredProgrammes.data?.findResultPublishedProgrammesByZone?.programmes as Programme[]
       }
       zone={searchParams.zone}
-      topCandidates={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topCandidates as CandidateWithPoint[]}
-      topTeams={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topTeams as TeamWithPoint[]}
+      topCandidates={enteredProgrammes.data?.findResultPublishedProgrammesByZone?.topCandidates as CandidateWithPoint[]}
+      topTeams={enteredProgrammes.data?.findResultPublishedProgrammesByZone?.topTeams as TeamWithPoint[]}
     />
   );
 }
