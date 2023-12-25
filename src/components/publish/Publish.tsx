@@ -191,7 +191,7 @@ export default function Publish(props: Props) {
       </div>
       <div className="flex flex-wrap gap-2 justify-center mt-3">
         {props.programs?.filter((prg => 
-        // prg.publishedA != true &&
+        prg.publishedA != true &&
          prg.enteredA == true
          )).map((program, index) => (
           <div
