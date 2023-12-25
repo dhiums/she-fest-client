@@ -42,8 +42,8 @@ export default function Result(props: Props) {
 
   return (
     <>
-    <Header/>
-      <div className="flex flex-col lg:flex-row w-full h-screen items-center p-5">
+    {/* <Header/> */}
+      <div className="flex flex-col lg:flex-row w-full md:h-screen items-center p-5">
         <div className="flex flex-col h-[90vh] min-w-[300px] rounded-3xl gap-4 p-3 ">
           <div className="flex justify-center mt-4">
             <p className=" text-4xl font-semibold">Zones</p>
@@ -98,7 +98,9 @@ export default function Result(props: Props) {
             )}
           </div>
         </div>
-        <div className="flex flex-col w-3/4 h-[90vh] p-3">
+
+        <div className="flex flex-col w-3/4 h-[90vh] overflow-y-auto p-3">
+          <span className="text-center">Programs</span>
           <div className="flex flex-wrap justify-center p-1 w-full gap-1 h-2/3">
             {props.results?.length > 0 ? (
               props.results?.map((program) => (
@@ -119,7 +121,11 @@ export default function Result(props: Props) {
               </div>
             )}
           </div>
-          <div className="flex flex-col lg:flex-row mt-60 lg:mt-8">
+        </div>
+
+      </div>
+      
+      <div className="flex flex-col lg:flex-row mt-60 lg:mt-8">
             <div>
               <p className="font-bold text-xl text-center">Aliya Toppers</p>
               <div className="flex flex-wrap p-3 overflow-x-scroll gap-2">
@@ -175,8 +181,6 @@ export default function Result(props: Props) {
               </div>
             </div>
           </div>
-        </div>
-      </div>
       <ViewResult
         selectedProgram={selectedProgram as Programme}
         resultView={resultView}
