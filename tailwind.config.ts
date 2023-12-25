@@ -22,6 +22,7 @@ const config: Config = {
         browner: "#a23104",
         yellow: "#F8AD1D",
         yellower: "#df9404",
+        ysmoke: "#FACF7E",
         pink: "#F4A27A",
         pinker: "#F18E5C",
         orange: "#e8521d",
