@@ -61,12 +61,12 @@ export default function Result(props: Props) {
               </button>
             ))}
           </div>
-          <div className="flex flex-col gap-2 justify-evenly items-center overflow-y-auto">
+          <div className="flex flex-col gap-2  items-center overflow-y-auto">
             {props.topTeams?.length > 0 ? (
               props.topTeams.map((item, index) => (
                 <div className="flex border hover:bg-ysmoke w-full p-4 transition-colors duration-300 rounded-lg">
                   <div className="flex flex-col w-3/6 gap-1">
-                    <p className="font-bold text-lg">#0{index}</p>
+                    <p className="font-bold text-lg">#{index + 1}</p>
                     <div className="flex items-end">
                       
                       <span className="font-bold text-4xl text-browner">
