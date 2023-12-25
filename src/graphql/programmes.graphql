@@ -3,16 +3,30 @@ query GetAllProgrammes($api_key: String!) {
     id
     name
     programCode
-    resultEntered
     type
     mode
-    resultPublished
+    enteredA
+    publishedA
     candidateCount
     groupCount
     category {
       name
     }
     candidateProgramme {
+      zonalpoint
+      zonalgrade {
+        name
+        pointGroup
+        pointSingle
+        pointHouse
+      }
+      zonalposition {
+        name
+         pointGroup
+        pointSingle
+        pointHouse
+        value
+      }
       id
       candidate {
         chestNO

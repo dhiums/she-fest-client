@@ -40,5 +40,8 @@ export default async function page({ params, searchParams }: any) {
       topCandidates={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topCandidates as CandidateWithPoint[]}
       topTeams={enteredProgrammes.data?.findResultEnteredProgrammesByZone?.topTeams as TeamWithPoint[]}
     />
+    // <>
+    // Updating soon...
+    // </>
   );
 }

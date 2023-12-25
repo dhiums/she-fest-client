@@ -34,6 +34,7 @@ export default function ViewResult(props: Props) {
       
       <p className="text-sm bg-orange inline font-semibold p-1 rounded-md">{props?.selectedProgram?.programCode}</p>
       <p className="text-md font-bold">{props.selectedProgram?.name}</p>
+      <p className="text-md font-bold">{props.selectedProgram?.category?.name}</p>
 
 
       {
