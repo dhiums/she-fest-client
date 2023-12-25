@@ -16,9 +16,16 @@ query GetAllProgrammes($api_key: String!) {
       zonalpoint
       zonalgrade {
         name
+        pointGroup
+        pointSingle
+        pointHouse
       }
       zonalposition {
         name
+         pointGroup
+        pointSingle
+        pointHouse
+        value
       }
       id
       candidate {
