@@ -25,7 +25,10 @@ function Header() {
 
         <div className="bg-white flex-col flex py-2 px-8">
           <div className="flex gap-1 text-sm font-semibold justify-center text-center">
-            <Link
+           {
+            data.roles && (
+              <>
+               <Link
               className={`${
                 path != "/admin/programs" ? "text-secondary" : "text-brown"
               }`}
@@ -42,6 +45,51 @@ function Header() {
             >
               Candidates
             </Link>
+            </>
+            )
+           }
+
+{
+            !data.roles && (
+              <>
+               <Link
+              className={`${
+                path != "/result" ? "text-secondary" : "text-brown"
+              }`}
+              href="/"
+            >
+              Results
+            </Link>
+            &#x2022;
+            <Link
+              className={`${
+                path != "/profile" ? "text-secondary" : "text-brown"
+              }`}
+              href="/"
+            >
+              Candidates
+            </Link>
+            <Link
+              className={`${
+                path != "/download" ? "text-secondary" : "text-brown"
+              }`}
+              href="/download/"
+            >
+              Downloads
+              
+            </Link>
+            <Link
+              className={`${
+                path != "/login" ? "text-secondary" : "text-brown"
+              }`}
+              href="/login/"
+            >
+              Login
+            </Link>
+            </>
+            )
+           }
+
             {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
               <>
                 &#x2022;
@@ -78,7 +126,10 @@ function Header() {
       </div>
 
       <div className="flex fixed bottom-0 shadow-lg shadow-black bg-white md:hidden w-full items-center justify-center p-2 z-50">
-        <Link
+       {
+        data.roles && (
+          <>
+           <Link
           className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"
           href="/admin/"
         >
@@ -125,6 +176,60 @@ function Header() {
           </svg>
           Candidates
         </Link>
+          </>
+        )
+       }
+
+       {
+        !data.roles && (
+          <>
+            <Link
+            className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"
+            href="/"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+</svg>
+
+            Results
+          </Link>
+
+          <Link
+            className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"
+            href="/"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+
+            Candidates
+          </Link>
+
+          <Link
+            className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"
+            href="/download/"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+</svg>
+
+            Downloads
+          </Link>
+
+          <Link
+            className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"
+            href="/login/"
+          >
+           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+</svg>
+
+            Login
+          </Link>
+          </>
+        )
+       }
+       
 
         {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
           <Link

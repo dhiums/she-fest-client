@@ -20,6 +20,8 @@ import { useGlobalContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ResultUpload from "./ResultUpload";
+import { jsPDF } from "jspdf";
+import { saveAs } from "file-saver";
 
 interface Props {
   programmes: Programme[];
@@ -112,15 +114,13 @@ function Programs(props: Props) {
   }, [programs, data?.team?.name]);
 
   const downloadExcel = async (program: Programme) => {
-    const postData = {
-      zone,
-      program
-    };
     try {
       const postData = {
         zone,
-        program
+        program,
       };
+      console.log(postData);
+
       // Make a POST request to the Excel API route
       const response = await fetch("/api/excel/programCandidates", {
         method: "POST",
@@ -130,7 +130,6 @@ function Programs(props: Props) {
         body: JSON.stringify(postData),
       });
 
-
       if (response.ok) {
         // Convert the response to a Blob and create a URL for downloading
         const blob = await response.blob();
@@ -139,7 +138,7 @@ function Programs(props: Props) {
         // Create a download link and trigger the download
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${program.name}-${program.programCode}-${zone}.xlsx`
+        a.download = `${program.name}-${program.programCode}-${zone}.xlsx`;
         a.click();
         // Clean up by revoking the URL
 
@@ -150,9 +149,53 @@ function Programs(props: Props) {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
 
-    console.log(postData)
-  }
+  const downloadJudgeForm = (programme: Programme) => {
+
+    const doc = new jsPDF("portrait", "px", "a4");
+    // Load Montserrat font
+    doc.addFont(
+      "https://fonts.gstatic.com/s/montserrat/v15/JTUSjIg1_i6t8kCHKm459Wlhzg.ttf",
+      "Montserrat",
+      "normal"
+    );
+
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = doc.internal.pageSize.getHeight();
+    programs?.map((program, index) => {
+    doc.addPage("a4");
+    const backgroundImageUrl =
+      program.mode == "STAGE"
+        ? "/img/judgement/stage.jpg"
+        : "/img/judgement/non-stage.jpg";
+    doc.addImage(backgroundImageUrl, "JPEG", 0, 0, pdfWidth, pdfHeight);
+    doc.setFontSize(11);
+
+
+    doc.text(`${program.programCode}`, 115, 160);
+      doc.text(`${program.name}`, 115, 175);
+      doc.text(`${program.category?.name}`, 315, 160);
+      doc.text(`${zone}`, 315, 175);
+
+      // text all candidates of the zone in the program
+
+      program?.candidateProgramme?.filter(cp => cp.candidate?.team?.zone?.name == zone).map((cp, index) => {
+        
+        console.log(cp.candidate?.chestNO + " " + cp.candidate?.team?.zone?.name);
+        // if(cp.candidate?.team?.zone?.name == zone){}
+        doc.text(`${cp.candidate?.chestNO}`, 70 , 225  + index * 15.7);
+      }
+      );
+    });
+    
+    doc.deletePage(1);
+
+
+    const pdfBlob = doc.output("blob");
+    var filename = "Judjement Form";
+    saveAs(pdfBlob, `${filename}.pdf`);
+  };
 
   return (
     <>
@@ -190,25 +233,25 @@ function Programs(props: Props) {
 
                 {(data.roles == Roles.Controller ||
                   data.roles == Roles.Admin) && (
-                    <div className="flex flex-col gap-2">
-                      <p className="text-primary text-xl font-semibold text-center">
-                        Select Team
-                      </p>
-                      <select
-                        className="w-72 px-4 py-2 rounded-xl border-2 border-dashed border-brown"
-                        onChange={(e) => {
-                          setTeam(e.target.value);
-                        }}
-                      >
-                        <option value="">Select Team</option>
-                        {props.team?.map((team, index) => (
-                          <option key={index} value={team?.name as string}>
-                            {team.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                  <div className="flex flex-col gap-2">
+                    <p className="text-primary text-xl font-semibold text-center">
+                      Select Team
+                    </p>
+                    <select
+                      className="w-72 px-4 py-2 rounded-xl border-2 border-dashed border-brown"
+                      onChange={(e) => {
+                        setTeam(e.target.value);
+                      }}
+                    >
+                      <option value="">Select Team</option>
+                      {props.team?.map((team, index) => (
+                        <option key={index} value={team?.name as string}>
+                          {team.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 {data.roles == Roles.TeamManager && (
                   <div
@@ -332,28 +375,28 @@ function Programs(props: Props) {
                     {data.roles == Roles.TeamManager
                       ? program.type == Types.Single
                         ? program.candidateProgramme?.filter((cp) => {
-                          return cp.candidate?.team?.name == data.team?.name;
-                        }).length +
-                        "/" +
-                        program.candidateCount
+                            return cp.candidate?.team?.name == data.team?.name;
+                          }).length +
+                          "/" +
+                          program.candidateCount
                         : program.candidateProgramme?.filter((cp) => {
-                          return cp.candidate?.team?.name == data.team?.name;
-                        }).length +
-                        "/" +
-                        program.groupCount
+                            return cp.candidate?.team?.name == data.team?.name;
+                          }).length +
+                          "/" +
+                          program.groupCount
                       : program.type == Types.Single
-                        ? program.candidateProgramme?.length +
+                      ? program.candidateProgramme?.length +
                         "/" +
                         (program.candidateCount as number) * 60
-                        : program.candidateProgramme?.length +
+                      : program.candidateProgramme?.length +
                         "/" +
                         (program.groupCount as number) * 60}
                   </p>
                 </div>
                 {(data.roles == Roles.Controller ||
                   data.roles == Roles.Admin) && (
-                    <div className="flex w-full justify-between mt-3">
-                      {/* <button
+                  <div className="flex w-full justify-between mt-3">
+                    {/* <button
                       onClick={() => {
                         setIsUpdate(true);
                         setSelected(program);
@@ -397,66 +440,73 @@ function Programs(props: Props) {
                         />
                       </svg>
                     </button> */}
-                      <button className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
-                        onClick={() => { downloadExcel(program) }}
+                    <button
+                      className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
+                      onClick={() => {
+                        setSelected(program);
+                        downloadExcel(program);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6 text-brown"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6 text-brown"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
-                          />
-                        </svg>
-                      </button>
-                      <button className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
-                      // onClick={downloadJudgeForm}
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
+                      onClick={() => {
+                        downloadJudgeForm(program);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6 text-brown"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6 text-brown"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
-                        onClick={() => {
-                          setIsResult(true);
-                          setSelected(program);
-                        }}
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="bg-white border border-dashed border-primary rounded-xl px-4 py-2"
+                      onClick={() => {
+                        setIsResult(true);
+                        setSelected(program);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6 text-brown"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6 text-brown"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  )}
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
