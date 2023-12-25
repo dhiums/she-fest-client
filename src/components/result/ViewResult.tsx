@@ -70,7 +70,7 @@ export default function ViewResult(props: Props) {
           className="bg-primary text-white rounded-full p-2  absolute top-4 right-4"
           onClick={() => {
             props.setResultView(false);
-            console.log(props.resultView);
+            // console.log(props.resultView);
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

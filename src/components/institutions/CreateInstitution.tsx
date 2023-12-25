@@ -33,7 +33,7 @@ import {
         name: name,
         zoneId:zoneId
       });
-      console.log(datas);
+      // console.log(datas);
   
       if (datas.data?.createTeam) {
         props.setTeams([...props.teams , datas.data.createTeam]);

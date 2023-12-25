@@ -58,7 +58,7 @@ export default function ResultUpload(props: Props) {
         input: toUploadForm,
         zone: props.zone
       });
-    console.log(data);
+    // console.log(data);
     if (data.data?.uploadResultManually) {
       let finalData = data.data?.uploadResultManually;
       let editedDate = props.programmes.map((data, i) => {
@@ -161,7 +161,7 @@ export default function ResultUpload(props: Props) {
                           // editedToUploadForm.position = e.target.value ;
                           setToUploadForm(editedToUploadForm)
     
-                          console.log(editedToUploadForm, toUploadForm);
+                          // console.log(editedToUploadForm, toUploadForm);
 
     
                         }}
@@ -192,7 +192,7 @@ export default function ResultUpload(props: Props) {
                           // editedToUploadForm.position = e.target.value ;
                           setToUploadForm(editedToUploadForm)
     
-                          console.log(editedToUploadForm, toUploadForm);
+                          // console.log(editedToUploadForm, toUploadForm);
     
                         }}
                       >

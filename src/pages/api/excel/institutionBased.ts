@@ -5,7 +5,7 @@ import ExcelJS from "exceljs";
 import { Readable } from "stream";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log(req.body);
+  // console.log(req.body);
   var condata = {
     colleges: [
       {
@@ -30596,7 +30596,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       };
       sheet.getColumn(1).width = 12;
       sheet.getColumn(2).width = 50;
-      // console.log(headerCellNo, subRowCellNo)
+      // // console.log(headerCellNo, subRowCellNo)
 
       // bordering remaining all cells
       function cellToIndices(cell: any) {
@@ -30653,7 +30653,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Pipe the stream to the response
     stream.pipe(res);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ error: "Failed to generate Excel file." });
   }
 };

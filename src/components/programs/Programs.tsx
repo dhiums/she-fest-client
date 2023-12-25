@@ -99,7 +99,7 @@ function Programs(props: Props) {
         }`,
         })
         .then((res) => {
-          console.log(res.data?.data?.programmes);
+          // console.log(res.data?.data?.programmes);
           setPrograms(res.data?.data?.programmes);
           setCandidateProgrammes(
             selected?.candidateProgramme as CandidateProgramme[]
@@ -124,7 +124,7 @@ function Programs(props: Props) {
         zone,
         program,
       };
-      console.log(postData);
+      // console.log(postData);
 
       // Make a POST request to the Excel API route
       const response = await fetch("/api/excel/programCandidates", {
@@ -187,7 +187,7 @@ function Programs(props: Props) {
 
       program?.candidateProgramme?.filter(cp => cp.candidate?.team?.zone?.name == zone).map((cp, index) => {
         
-        console.log(cp.candidate?.chestNO + " " + cp.candidate?.team?.zone?.name);
+        // console.log(cp.candidate?.chestNO + " " + cp.candidate?.team?.zone?.name);
         // if(cp.candidate?.team?.zone?.name == zone){}
         program.mode == "STAGE"
         ?

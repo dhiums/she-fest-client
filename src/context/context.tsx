@@ -38,10 +38,10 @@ export const GlobalContextProvider = ({ children }: any) => {
   });
 
   useEffect(() => {
-    console.log(result.data);
+    // console.log(result.data);
 
     if (result.data?.checkLoggedIn) {
-      console.log(result.data);
+      // console.log(result.data);
       
       setData(result.data.checkLoggedIn as DataType);
     }

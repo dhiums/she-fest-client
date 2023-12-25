@@ -6,7 +6,7 @@ import { Readable } from "stream";
 import { Candidate, CandidateProgramme } from "@/gql/graphql";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const zone: any = req.body.zone;
   const program: any = req.body.program;
@@ -116,7 +116,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Pipe the stream to the response
     stream.pipe(res);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ error: "Failed to generate Excel file." });
   }
 };

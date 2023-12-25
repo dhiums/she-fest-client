@@ -32,11 +32,11 @@ function Login() {
     > = await LoginMutation(data);
 
     if (!datas.data?.login) {
-      console.log(datas);
+      // console.log(datas);
 
       setError("Invalid username or password");
     } else {
-      console.log(datas);
+      // console.log(datas);
       setError("");
       setData(datas.data.login.admin);
       // location.reload();

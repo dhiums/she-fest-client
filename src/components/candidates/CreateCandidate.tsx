@@ -35,7 +35,7 @@ const CreateCandidate = (props: Props) => {
       chestNO: chestNO,
       team: team,
     });
-    console.log(datas);
+    // console.log(datas);
 
     if (datas.data?.createCandidate) {
       props.setCandidates([...props.candidates, datas.data.createCandidate]);

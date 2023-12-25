@@ -31,7 +31,7 @@ function Institutions(props: Props) {
   });
 
   useEffect(() => {
-    console.log(props.teams);
+    // console.log(props.teams);
     setTimeout(() => {
       if (!(data.roles == Roles.Controller || data.roles == Roles.Admin)) {
         router.push("/login");

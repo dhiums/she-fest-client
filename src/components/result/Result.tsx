@@ -27,9 +27,9 @@ export default function Result(props: Props) {
   const array = [1, 1, 1, 1];
 
   useEffect(() => {
-    console.log(props.results);
+    // console.log(props.results);
 
-    console.log(props.zone);
+    // console.log(props.zone);
 
     localStorage.getItem("selectedZone")
       ? (setSelectedZone(localStorage.getItem("selectedZone") as string),

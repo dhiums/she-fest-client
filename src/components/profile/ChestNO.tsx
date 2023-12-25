@@ -17,7 +17,7 @@ export default function ChestNO() {
       <button
         className="flex justify-center items-center bg-primary h-14 w-14 rounded-2xl "
         onClick={() => {
-          console.log(chestNO);
+          // console.log(chestNO);
           router.push(`/profile/${chestNO}`);
         }}
       >

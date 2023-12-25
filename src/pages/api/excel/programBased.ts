@@ -5,7 +5,7 @@ import ExcelJS from 'exceljs';
 import { Readable } from 'stream';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log(req.body);
+  // console.log(req.body);
   var condata = {
     "data": {
       "programmes": [
@@ -34126,7 +34126,7 @@ const data: any = condata
   try {
     // Create a new workbook
     const workbook = new ExcelJS.Workbook();
-    //   console.log(workbook);
+    //   // console.log(workbook);
 
     data.data.programmes.map((programme:any) => {
       const sheetName = programme.name.length<20? `${programme.name}-${programme.programCode}`:programme.programCode
@@ -34329,7 +34329,7 @@ const data: any = condata
 
     // var slno = 1;
     // data.forEach((item: any) => {
-    //   console.log(item.programCode, item.checkCode);
+    //   // console.log(item.programCode, item.checkCode);
     //   if (SelectedProgrammes.includes(item.checkCode)) {
     //     const subRow = worksheet.addRow(Object.values(item));
     //     subRow.eachCell((cell: any, num: any) => {
@@ -34343,7 +34343,7 @@ const data: any = condata
     //         cell.value = slno++;
     //       }
     //       if (num == 2 && cell.value) {
-    //         console.log(cell.row);
+    //         // console.log(cell.row);
     //         setBlackBackground(worksheet, "A", "M", cell.row);
     //       }
     //       if (num == 14) {
@@ -34372,7 +34372,7 @@ const data: any = condata
     // Pipe the stream to the response
     stream.pipe(res);
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     res.status(500).json({ error: "Failed to generate Excel file." });
   }
 };

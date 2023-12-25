@@ -145,7 +145,7 @@ const ViewProgram = (props: Props) => {
         }`,
           })
           .then((res) => {
-            console.log(res.data?.data?.programmes);
+            // console.log(res.data?.data?.programmes);
             props.setPrograms(res.data?.data?.programmes);
             props.setSelected(
               res.data?.data?.programmes.find(
@@ -410,7 +410,7 @@ const ViewProgram = (props: Props) => {
           className="bg-red-700 text-white font-bold px-3 py-2 rounded-lg mt-3"
           onClick={() => {
             props.setIsView(false);
-            console.log(data);
+            // console.log(data);
             // set chest no to empty
             setChestNo("");
             // set p to empty

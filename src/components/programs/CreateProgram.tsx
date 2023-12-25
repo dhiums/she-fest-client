@@ -61,7 +61,7 @@ const CreateProgram = (props: Props) => {
       mode: mode as Mode,
       conceptNote: conceptNote,
     });
-    console.log(datas);
+    // console.log(datas);
 
     if (datas.data?.createProgramme) {
       props.setPrograms([...props.programs as Programme[], datas.data.createProgramme as Programme]);

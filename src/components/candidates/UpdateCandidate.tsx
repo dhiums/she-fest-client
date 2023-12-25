@@ -35,7 +35,7 @@ const UpdateCandidate = (props: Props) => {
       chestNO: chestNO,
       team: team,
     });
-    console.log(datas);
+    // console.log(datas);
 
     if (datas.data?.updateCandidate) {
       props.setCandidates([...props.candidates, datas.data.updateCandidate]);

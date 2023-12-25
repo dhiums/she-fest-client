@@ -11,9 +11,9 @@ export default function ProgramResult(props: Props) {
 
   useEffect(()=>{
    
-   console.log('====================================');
-   console.log(props.selectedCP);
-   console.log('====================================');
+   // console.log('====================================');
+   // console.log(props.selectedCP);
+   // console.log('====================================');
    
   })
 
@@ -43,7 +43,7 @@ export default function ProgramResult(props: Props) {
           className="bg-primary text-white rounded-lg p-2"
           onClick={() => {
             props.setProgramResultView(false);
-            console.log(props.programResultView);
+            // console.log(props.programResultView);
           }}
         >
           Close

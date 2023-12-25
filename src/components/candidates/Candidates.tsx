@@ -77,7 +77,7 @@ function Candidates(props: Props) {
     if (user?.searchCandidates) {
       setCandidates(user.searchCandidates.candidates as Candidate[]);
       setTotalCandidates(user.searchCandidates.totalCandidates);
-      console.log(user.searchCandidates.candidates);
+      // console.log(user.searchCandidates.candidates);
     }
   }, [data.team?.name, user]);
 
@@ -86,7 +86,7 @@ function Candidates(props: Props) {
   }, 1000);
 
   const handleDownload = async () => {
-    // console.log(categoryForTotal);
+    // // console.log(categoryForTotal);
     try {
       // const postData = {
       //   data: toDownLoadData,

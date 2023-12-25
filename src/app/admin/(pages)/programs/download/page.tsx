@@ -20,7 +20,7 @@ export default async function page({params , searchParams}: any) {
   const { client } = getUrqlClient();
 
   const team = searchParams.team;
-  console.log(team);
+  // console.log(team);
   
 
   const programmes = await client.query<
@@ -40,7 +40,7 @@ export default async function page({params , searchParams}: any) {
     teamName: team,
   });
 
-  console.log(candidates);
+  // console.log(candidates);
   
 
   const categories = await client.query<

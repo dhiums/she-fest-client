@@ -51,7 +51,7 @@ const UpdateTeam = (props: Props) => {
         name: name,
         zoneId: zoneId,
       });
-    console.log(datas);
+    // console.log(datas);
 
     if (datas.data?.updateTeam) {
       props.setTeams([...props.teams, datas.data.updateTeam]);
