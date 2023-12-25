@@ -1,12 +1,115 @@
 "use client";
 
 import { Programme } from "@/gql/graphql";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 
 interface Props {
   programs: Programme[];
 }
+
+interface ToDownLoadData {
+  sl: number | string;
+  programCode: string;
+  programmeName: string;
+  category: string;
+  position: number;
+  grade: string;
+  candidateChestNo: string;
+  candidateName: string;
+  class: string;
+  candidateTeam: string;
+  gradePoint: number;
+  positionPoint: number;
+  totalPoint: number;
+  checkCode: string;
+}
+
 export default function Publish(props: Props) {
+  const [toDownLoadData, setToDownLoadData] = useState<ToDownLoadData[]>([]);
+
+  // useEffect(() => {
+  //   // change the program data to download data format
+
+  //   let downloadData: ToDownLoadData[] = [];
+
+  //   props.result?.forEach((programme, index) => {
+  //     if (programme.resultPublished) {
+  //       return;
+  //     }
+  //     programme.candidateProgramme?.sort(
+  //       (a, b) => (b.point as number) - (a.point as number)
+  //     );
+
+  //     programme.candidateProgramme?.forEach((candidate, i) => {
+  //       let sl = i == 0 ? index + 1 : "";
+  //       let programName = i == 0 ? programme.name : "";
+  //       let programCode = i == 0 ? programme.programCode : "";
+  //       let category = i == 0 ? programme.category?.name : "";
+  //       let gradePoint =
+  //         programme.type == Types.Single
+  //           ? candidate.grade?.pointSingle
+  //           : programme.type == Types.Group
+  //             ? candidate.grade?.pointGroup
+  //             : programme.type == Types.House
+  //               ? candidate.grade?.pointHouse
+  //               : 0;
+  //       let positionPoint =
+  //         programme.type == Types.Single
+  //           ? candidate.position?.pointSingle
+  //           : programme.type == Types.Group
+  //             ? candidate.position?.pointGroup
+  //             : programme.type == Types.House
+  //               ? candidate.position?.pointHouse
+  //               : 0;
+
+  //       let chestNo =
+  //         programme.type == Types.House
+  //           ? candidate.candidate?.chestNO?.slice(0, -2) + "00"
+  //           : candidate.candidate?.chestNO;
+  //       let candidateClass =
+  //         programme.type == Types.Single ? candidate.candidate?.class : "-";
+  //       let candidateName =
+  //         programme.type == Types.Single
+  //           ? candidate.candidate?.name
+  //           : programme.type == Types.Group
+        
+  //             ? candidate.candidate?.name + " & Team"
+  //             : programme.type == Types.House
+  //               ? candidate.candidate?.team?.name
+  //               : null;
+
+  //       // if there no position or grade then not push
+
+  //       if (candidate.position || candidate.grade) {
+  //         downloadData.push({
+  //           sl: sl,
+  //           programCode: programCode as string,
+  //           programmeName: programName as string,
+  //           category: category as string,
+  //           position: candidate.position?.value
+  //             ? candidate.position?.value
+  //             : ("" as any),
+  //           grade: candidate.grade?.name
+  //             ? candidate.grade?.name
+  //             : ("" as string),
+  //           candidateChestNo: chestNo as string,
+  //           candidateName: candidateName as string,
+  //           class: candidateClass as string,
+  //           candidateTeam: candidate.candidate?.team?.name as string,
+
+  //           gradePoint: gradePoint ? gradePoint : ("" as any),
+  //           positionPoint: positionPoint ? positionPoint : ("" as any),
+  //           totalPoint: candidate.point as number,
+  //           checkCode: programme.programCode as string,
+  //         });
+  //       }
+  //     });
+  //   });
+
+  //   setToDownLoadData(downloadData as ToDownLoadData[]);
+  // }, []);
+
   const [selectedPrograms, setSelectedPrograms] = useState<Programme[]>([]);
   const programs = [
     {
@@ -386,6 +489,627 @@ export default function Publish(props: Props) {
       },
     },
   ];
+
+  const newData = {
+    "data": {
+      "findResultEnteredProgrammesByZone": {
+        "programmes": [
+          {
+            "id": 11,
+            "name": "SPEECH MLM",
+            "type": "SINGLE",
+            "programCode": "TX2",
+            "category": {
+              "name": "Thanawiyya"
+            },
+            "candidateProgramme": [
+              {
+                "id": 146,
+                "zonalpoint": 7,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 2,
+                  "name": "Second"
+                },
+                "candidate": {
+                  "name": "FATHIMATH HIRSHA KP",
+                  "chestNO": "CMS227800",
+                  "team": {
+                    "name": "NISWA WOMENS COLLEGE, KOLAVAYAL",
+                    "id": 284,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 148,
+                "zonalpoint": 8,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 1,
+                  "name": "First"
+                },
+                "candidate": {
+                  "name": "HASEENA PP",
+                  "chestNO": "CMS227020",
+                  "team": {
+                    "name": "ALWARDA WOMEN'S COLLEGE, KAITHAKKAD",
+                    "id": 279,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 1015,
+                "zonalpoint": 4,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 2,
+                  "name": "B"
+                },
+                "zonalposition": {
+                  "id": 3,
+                  "name": "Third"
+                },
+                "candidate": {
+                  "name": "MAJIDA. TK",
+                  "chestNO": "CMS227831",
+                  "team": {
+                    "name": "AL FARABI GIRLS ACADEMY, VALAPATTANAM",
+                    "id": 275,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 1522,
+                "zonalpoint": 8,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 1,
+                  "name": "First"
+                },
+                "candidate": {
+                  "name": "FATHIMATH SUMAYYA",
+                  "chestNO": "CMS227511",
+                  "team": {
+                    "name": "AFSAL-UL-ULAMA WOMEN'S COLLEGE, A K ROAD, BEKAL",
+                    "id": 281,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 1561,
+                "zonalpoint": 4,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 2,
+                  "name": "B"
+                },
+                "zonalposition": {
+                  "id": 3,
+                  "name": "Third"
+                },
+                "candidate": {
+                  "name": "FATHIMATH MAHNAZ",
+                  "chestNO": "CMS238663",
+                  "team": {
+                    "name": "BEEVI KHADEEJA WOMEN'S COLLEGE , ULIYATHADUKA",
+                    "id": 282,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2177,
+                "zonalpoint": 3,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 2,
+                  "name": "B"
+                },
+                "zonalposition": null,
+                "candidate": {
+                  "name": "FATHIMATH ZAKIYA",
+                  "chestNO": "CMS228028",
+                  "team": {
+                    "name": "POSOAT JAMA-ATH MAHDIYYA WOMENS COLLEGE, POSOAT",
+                    "id": 285,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2548,
+                "zonalpoint": 3,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 2,
+                  "name": "B"
+                },
+                "zonalposition": null,
+                "candidate": {
+                  "name": "NAFEESATH SAHLAH",
+                  "chestNO": "CMS227664",
+                  "team": {
+                    "name": "DARUL HAMD SAHREEATH COLLEGE, HOSANGADI",
+                    "id": 283,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2585,
+                "zonalpoint": 7,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 2,
+                  "name": "Second"
+                },
+                "candidate": {
+                  "name": "SAHLA FATHIMA AM",
+                  "chestNO": "CMS227701",
+                  "team": {
+                    "name": "AL HIDAYA ARABIC COLLEGE, TALIPARAMBA",
+                    "id": 274,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2924,
+                "zonalpoint": 3,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 2,
+                  "name": "B"
+                },
+                "zonalposition": null,
+                "candidate": {
+                  "name": "FATHIMA NAJIYA C",
+                  "chestNO": "CMS239048",
+                  "team": {
+                    "name": "CHM ARABIC COLLEGE, VARAM",
+                    "id": 277,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "name": "SPEECH ENG",
+            "type": "SINGLE",
+            "programCode": "TX3",
+            "category": {
+              "name": "Thanawiyya"
+            },
+            "candidateProgramme": [
+              {
+                "id": 154,
+                "zonalpoint": 7,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 2,
+                  "name": "Second"
+                },
+                "candidate": {
+                  "name": "ISMATH.KC",
+                  "chestNO": "CMS227019",
+                  "team": {
+                    "name": "ALWARDA WOMEN'S COLLEGE, KAITHAKKAD",
+                    "id": 279,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2182,
+                "zonalpoint": 4,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 2,
+                  "name": "B"
+                },
+                "zonalposition": {
+                  "id": 3,
+                  "name": "Third"
+                },
+                "candidate": {
+                  "name": "MARIYAM HADIYA",
+                  "chestNO": "CMS228034",
+                  "team": {
+                    "name": "POSOAT JAMA-ATH MAHDIYYA WOMENS COLLEGE, POSOAT",
+                    "id": 285,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2592,
+                "zonalpoint": 8,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 1,
+                  "name": "First"
+                },
+                "candidate": {
+                  "name": "THASNEEM C",
+                  "chestNO": "CMS227723",
+                  "team": {
+                    "name": "AL HIDAYA ARABIC COLLEGE, TALIPARAMBA",
+                    "id": 274,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": 30,
+            "name": "SPEECH ARB",
+            "type": "SINGLE",
+            "programCode": "AX2",
+            "category": {
+              "name": "Aliya"
+            },
+            "candidateProgramme": [
+              {
+                "id": 670,
+                "zonalpoint": 6,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 3,
+                  "name": "Third"
+                },
+                "candidate": {
+                  "name": "ZAINABA",
+                  "chestNO": "CMS204498",
+                  "team": {
+                    "name": "ALWARDA WOMEN'S COLLEGE, KAITHAKKAD",
+                    "id": 279,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 1072,
+                "zonalpoint": 6,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 3,
+                  "name": "Third"
+                },
+                "candidate": {
+                  "name": "SAFIYATH. KV",
+                  "chestNO": "CMS216787",
+                  "team": {
+                    "name": "AL FARABI GIRLS ACADEMY, VALAPATTANAM",
+                    "id": 275,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 1628,
+                "zonalpoint": 8,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 1,
+                  "name": "First"
+                },
+                "candidate": {
+                  "name": "MARIYAMATH THAHSEEN",
+                  "chestNO": "CMS194185",
+                  "team": {
+                    "name": "BEEVI KHADEEJA WOMEN'S COLLEGE , ULIYATHADUKA",
+                    "id": 282,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 1632,
+                "zonalpoint": 5,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": null,
+                "candidate": {
+                  "name": "UMAIMATH",
+                  "chestNO": "CMS192577",
+                  "team": {
+                    "name": "ZAINIYYA WOMEN'S ARABIC COLLEGE,PERUMPATTA",
+                    "id": 278,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 1837,
+                "zonalpoint": 5,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": null,
+                "candidate": {
+                  "name": "FATHIMATH FAHIZA.M",
+                  "chestNO": "CMS205170",
+                  "team": {
+                    "name": "AFSAL-UL-ULAMA WOMEN'S COLLEGE, A K ROAD, BEKAL",
+                    "id": 281,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2061,
+                "zonalpoint": 5,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": null,
+                "candidate": {
+                  "name": "AYISHATH SHIFA",
+                  "chestNO": "CMS216716",
+                  "team": {
+                    "name": "NISWA WOMENS COLLEGE, KOLAVAYAL",
+                    "id": 284,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              },
+              {
+                "id": 2720,
+                "zonalpoint": 7,
+                "finalpoint": null,
+                "finalgrade": null,
+                "finalposition": null,
+                "zonalgrade": {
+                  "id": 1,
+                  "name": "A"
+                },
+                "zonalposition": {
+                  "id": 2,
+                  "name": "Second"
+                },
+                "candidate": {
+                  "name": "NAJIYA HAKEEM",
+                  "chestNO": "CMS205514",
+                  "team": {
+                    "name": "AL HIDAYA ARABIC COLLEGE, TALIPARAMBA",
+                    "id": 274,
+                    "zone": {
+                      "name": "A",
+                      "id": 2
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "topTeams": [],
+        "topCandidates": [
+          {
+            "candidateName": "MARIYAMATH THAHSEEN",
+            "chestNo": "CMS194185",
+            "teamName": "BEEVI KHADEEJA WOMEN'S COLLEGE , ULIYATHADUKA",
+            "zoneName": "A",
+            "totalPoint": 8,
+            "categoryName": "Aliya"
+          },
+          {
+            "candidateName": "NAJIYA HAKEEM",
+            "chestNo": "CMS205514",
+            "teamName": "AL HIDAYA ARABIC COLLEGE, TALIPARAMBA",
+            "zoneName": "A",
+            "totalPoint": 7,
+            "categoryName": "Aliya"
+          },
+          {
+            "candidateName": "ZAINABA",
+            "chestNo": "CMS204498",
+            "teamName": "ALWARDA WOMEN'S COLLEGE, KAITHAKKAD",
+            "zoneName": "A",
+            "totalPoint": 6,
+            "categoryName": "Aliya"
+          },
+          {
+            "candidateName": "SAFIYATH. KV",
+            "chestNo": "CMS216787",
+            "teamName": "AL FARABI GIRLS ACADEMY, VALAPATTANAM",
+            "zoneName": "A",
+            "totalPoint": 6,
+            "categoryName": "Aliya"
+          },
+          {
+            "candidateName": "UMAIMATH",
+            "chestNo": "CMS192577",
+            "teamName": "ZAINIYYA WOMEN'S ARABIC COLLEGE,PERUMPATTA",
+            "zoneName": "A",
+            "totalPoint": 5,
+            "categoryName": "Aliya"
+          },
+          {
+            "candidateName": "HASEENA PP",
+            "chestNo": "CMS227020",
+            "teamName": "ALWARDA WOMEN'S COLLEGE, KAITHAKKAD",
+            "zoneName": "A",
+            "totalPoint": 8,
+            "categoryName": "Thanawiyya"
+          },
+          {
+            "candidateName": "FATHIMATH SUMAYYA",
+            "chestNo": "CMS227511",
+            "teamName": "AFSAL-UL-ULAMA WOMEN'S COLLEGE, A K ROAD, BEKAL",
+            "zoneName": "A",
+            "totalPoint": 8,
+            "categoryName": "Thanawiyya"
+          },
+          {
+            "candidateName": "THASNEEM C",
+            "chestNo": "CMS227723",
+            "teamName": "AL HIDAYA ARABIC COLLEGE, TALIPARAMBA",
+            "zoneName": "A",
+            "totalPoint": 8,
+            "categoryName": "Thanawiyya"
+          },
+          {
+            "candidateName": "FATHIMATH HIRSHA KP",
+            "chestNo": "CMS227800",
+            "teamName": "NISWA WOMENS COLLEGE, KOLAVAYAL",
+            "zoneName": "A",
+            "totalPoint": 7,
+            "categoryName": "Thanawiyya"
+          },
+          {
+            "candidateName": "SAHLA FATHIMA AM",
+            "chestNo": "CMS227701",
+            "teamName": "AL HIDAYA ARABIC COLLEGE, TALIPARAMBA",
+            "zoneName": "A",
+            "totalPoint": 7,
+            "categoryName": "Thanawiyya"
+          }
+        ]
+      }
+    }
+  }
+  
   return (
     <div className="py-5">
       <div className="flex justify-center items-center ">
