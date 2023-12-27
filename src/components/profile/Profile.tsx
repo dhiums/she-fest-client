@@ -25,11 +25,17 @@ export default function Profile(props: Props) {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center my-10 w-full">
-          <p className="font-semibold text-2xl">Details</p>
-          <div className="flex flex-col items-center border-2 border-primary p-2 rounded-xl">
-            <p className="font-semibold text-xl text-center">{props?.candidate?.chestNO}</p>
-            <p className="font-semibold text-xl text-center">{props?.candidate?.name}</p>
+        <div className="flex flex-col justify-center items-center my-10 px-10 w-full">
+          <p className="font-semibold bg-yellow px-2 py-1 rounded-md text-lg -mb-5 z-50">
+            Details
+          </p>
+          <div className="flex flex-col items-center border-2 border-yellow p-5 rounded-xl">
+            <p className="font-semibold text-xl text-center">
+              {props?.candidate?.chestNO}
+            </p>
+            <p className="font-semibold text-xl text-center">
+              {props?.candidate?.name}
+            </p>
             <p className="font-semibold text-xl text-center">
               {props?.candidate?.category?.name}
             </p>
@@ -37,38 +43,37 @@ export default function Profile(props: Props) {
               {props?.candidate?.team?.name}
             </p>
             <p className="font-semibold text-xl text-center">
-            Total Points :  {
-            //  if program type is Types.Single then sum point otherwise not sum
-
-            props?.candidate?.candidateProgrammes?.reduce((a, b) => {
-              if(b?.programme?.type == Types.Single){
-                return a + (b?.zonalpoint  as unknown as number)
-              }else{
-                return a + 0
-              }
-            }, 0)
-              
-              
-            }
+              Total Points :{" "}
+              {props?.candidate?.candidateProgrammes?.reduce((a, b) => {
+                if (b?.programme?.type == Types.Single) {
+                  return a + (b?.zonalpoint as unknown as number);
+                } else {
+                  return a + 0;
+                }
+              }, 0)}
             </p>
           </div>
-          <p className="font-semibold text-2xl">Programs</p>
-          <div className="flex flex-col items-center border-2 border-primary p-2 rounded-xl gap-2">
-            {props.candidate.candidateProgrammes?.map((candidateProgramme) => (
-              <p
-                onClick={() => {
-                  setSelectedCP(
-                    candidateProgramme as CandidateProgramme
-                  );
-                  setProgramResultView(true);
-                }}
-                className="font-semibold text-xl border-2 border-primary border-dashed rounded-xl p-2 w-full text-center cursor-pointer"
-              >
-                {candidateProgramme?.programme?.programCode} <br />
-                {candidateProgramme.programme?.name}
-              </p>
-            ))}
-          </div>
+          {(props.candidate?.candidateProgrammes as CandidateProgramme[]).length > 0 && (
+            <>
+              <p className="font-semibold text-2xl mt-5">Programs</p>
+              <div className="flex flex-col items-center mt-3 rounded-xl gap-2">
+                {props.candidate.candidateProgrammes?.map(
+                  (candidateProgramme) => (
+                    <p
+                      onClick={() => {
+                        setSelectedCP(candidateProgramme as CandidateProgramme);
+                        setProgramResultView(true);
+                      }}
+                      className="font-semibold text-xl border-2 border-primary border-dashed rounded-xl p-2 w-full text-center cursor-pointer"
+                    >
+                      {candidateProgramme?.programme?.programCode} <br />
+                      {candidateProgramme.programme?.name}
+                    </p>
+                  )
+                )}
+              </div>
+            </>
+          )}
         </div>
       )}
       <ProgramResult

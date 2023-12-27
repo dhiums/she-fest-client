@@ -10,11 +10,12 @@ export default function ChestNO() {
     <div className="flex flex-col justify-center items-center w-full h-[80vh]">
       <input
         type="text"
-        className="w-1/5 border-2 border-brown border-dashed rounded-xl h-14 text-lg p-2 uppercase text-center"
+        className="border-2 border-brown border-dashed rounded-xl h-14 text-lg p-2 uppercase text-center"
         onChange={(e) => setchestNO(e.target.value)}
+        placeholder="Enter Register Number"
       />
       <button
-        className="mt-2 w-1/5 h-10 bg-brown rounded-xl text-white"
+        className="mt-2 h-10 bg-brown rounded-xl text-white p-2"
         // onClick={() => )}
         onClick={() => {
           router.push(`/profile/${chestNO}`);
@@ -24,7 +25,7 @@ export default function ChestNO() {
           }, 5000);
         }}
       >
-        {loading ? `Checking...` : `Check Result`}
+        {loading ? `Processing...` : `Your Score`}
       </button>
     </div>
   );
