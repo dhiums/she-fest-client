@@ -6,7 +6,15 @@ query GetAllProgrammes($api_key: String!) {
     type
     mode
     enteredA
+    enteredB
+    enteredC
+    enteredD
+    enteredE
     publishedA
+    publishedB
+    publishedC
+    publishedD
+    publishedE
     candidateCount
     groupCount
     category {

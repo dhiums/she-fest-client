@@ -22,7 +22,7 @@ const inter = Inter({ subsets: ['latin'] })
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} w-screen overflow-x-hidden `}>
 
       <GlobalContextProvider>{children}</GlobalContextProvider>
       </body>

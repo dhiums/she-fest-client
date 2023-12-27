@@ -3,7 +3,7 @@ import Navs from "@/components/Headers/Navs";
 import Link from "next/link"; 
 export default function Page() {
   return (
-    <div className="w-screen">
+    <div className="w-screen overflow-x-hidden">
       <section
         id="section-1"
         className="min-h-screen justify-between flex flex-col"

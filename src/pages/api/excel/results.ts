@@ -4,11 +4,9 @@ import { Readable } from 'stream';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 
-  console.log(req.body);
-  
-// console.log("hai");
 
  const data : any = req.body.data ;
+ const zone : any = req.body.zone ;
  const SelectedProgrammes : any = req.body.SelectedProgrammes ;
  console.log(SelectedProgrammes);
  
@@ -49,7 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const mainTitle = worksheet.getCell("A1");
     mainTitle.value = "SheFest'23-24";
     const resultTitle = worksheet.getCell("A2");
-    resultTitle.value = "RESULTS  - ZONE A";
+    resultTitle.value = `RESULTS  - ZONE ${zone}`;
     worksheet.getCell("B3").value = "Programs";
     worksheet.getCell("E3").value = "Results";
     worksheet.getCell("G3").value = "Candidate";
@@ -82,17 +80,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     ];
     const widths: any = {
       A: 6,
-      B: 13,
-      C: 30,
+      B: 7,
+      C: 25,
       D: 16,
       E: 8,
       F: 6,
       G: 18,
       H: 30,
-      J: 30.2,
-      K: 6,
-      L: 8,
-      M: 5,
+      I: 45,
+      J: 6,
+      K: 8,
+      L: 6,
     };
 
     Object.keys(widths).forEach((cell: any) => {

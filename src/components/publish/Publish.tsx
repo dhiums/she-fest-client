@@ -1,11 +1,14 @@
 "use client";
 
-import { Programme, PublishResultsDocument, PublishResultsMutation, PublishResultsMutationVariables, Types } from "@/gql/graphql";
+import { CandidateProgramme, Programme, PublishResultsDocument, PublishResultsMutation, PublishResultsMutationVariables, Types, Zone } from "@/gql/graphql";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { OperationResult, useMutation } from "urql";
 
 interface Props {
   programs: Programme[];
+  zones: Zone[];
+  zone : string;
 }
 
 interface ToDownLoadData {
@@ -25,8 +28,11 @@ interface ToDownLoadData {
 }
 
 export default function Publish(props: Props) {
+  const router = useRouter();
   const [toDownLoadData, setToDownLoadData] = useState<ToDownLoadData[]>([]);
-
+  const [selectedZone, setSelectedZone] = useState<string>(
+    props.zones[0]?.name as string
+  );
   // useEffect(() => {
   //   // change the program data to download data format
 
@@ -72,7 +78,7 @@ export default function Publish(props: Props) {
   //         programme.type == Types.Single
   //           ? candidate.candidate?.name
   //           : programme.type == Types.Group
-        
+
   //             ? candidate.candidate?.name + " & Team"
   //             : programme.type == Types.House
   //               ? candidate.candidate?.team?.name
@@ -112,21 +118,34 @@ export default function Publish(props: Props) {
   const [selectedPrograms, setSelectedPrograms] = useState<Programme[]>([]);
   const [state, PublishResultExicute] = useMutation(PublishResultsDocument);
 
+  useEffect(() => {
+    // console.log(props.results);
+
+    // console.log(props.zone);
+
+    localStorage.getItem("selectedZone")
+      ? (setSelectedZone(localStorage.getItem("selectedZone") as string),
+        router.push(`/admin/publish?zone=${selectedZone}`))
+      : (localStorage.setItem("selectedZone", props.zones[0].name as string),
+        setSelectedZone(localStorage.getItem("selectedZone") as string),
+        router.push(`/admin/publish?zone=${selectedZone}`));
+  }, [selectedZone]);
+
   const handlePublish = async () => {
     console.log(selectedPrograms);
     const datas: OperationResult<
-    PublishResultsMutation,
-    PublishResultsMutationVariables
-  > = await PublishResultExicute({
-    programCodes: selectedPrograms.map((prg) => prg.programCode) as string[],
-    zone : "A"
-  });
+      PublishResultsMutation,
+      PublishResultsMutationVariables
+    > = await PublishResultExicute({
+      programCodes: selectedPrograms.map((prg) => prg.programCode) as string[],
+      zone: selectedZone
+    });
 
-  if (datas.data?.publishResults) {
-    alert("Results Published");
-  } else {
-    alert("Error Occured");
-  }
+    if (datas.data?.publishResults) {
+      alert("Results Published");
+    } else {
+      alert("Error Occured");
+    }
   };
 
   useEffect(() => {
@@ -142,7 +161,7 @@ export default function Publish(props: Props) {
         (a, b) => (b.zonalpoint as number) - (a.zonalpoint as number)
       );
 
-      programme.candidateProgramme?.forEach((candidate, i) => {
+      programme.candidateProgramme?.filter((cp : CandidateProgramme)=> cp.candidate?.team?.zone?.name === props.zone).forEach((candidate, i) => {
         let sl = i == 0 ? index + 1 : "";
         let programName = i == 0 ? programme.name : "";
         let programCode = i == 0 ? programme.programCode : "";
@@ -172,7 +191,7 @@ export default function Publish(props: Props) {
           programme.type == Types.Single
             ? candidate.candidate?.name
             : programme.type == Types.Group
-        
+
               ? candidate.candidate?.name + " & Team"
               : programme.type == Types.House
                 ? candidate.candidate?.team?.name
@@ -206,14 +225,15 @@ export default function Publish(props: Props) {
     });
 
     setToDownLoadData(downloadData as ToDownLoadData[]);
-      
+
   }, []);
 
   const handleDownload = async () => {
     try {
       const postData = {
         data: toDownLoadData,
-        SelectedProgrammes: selectedPrograms.map((prg) => prg.programCode) as string[] 
+        SelectedProgrammes: selectedPrograms.map((prg) => prg.programCode) as string[] ,
+        zone : props.zone
       };
       // Make a POST request to the Excel API route
       const response = await fetch("/api/excel/results", {
@@ -224,8 +244,8 @@ export default function Publish(props: Props) {
         body: JSON.stringify(postData),
       });
 
-        console.log(response);
-        
+      console.log(response);
+
 
       if (response.ok) {
         // Convert the response to a Blob and create a URL for downloading
@@ -253,52 +273,68 @@ export default function Publish(props: Props) {
 
   return (
     <div className="py-5">
-      <div className="flex justify-center items-center ">
+      <div className="flex w-full justify-center gap-4">
+            {props.zones?.map((zone) => (
+              <button
+                onClick={() => {
+                  setSelectedZone(zone?.name as string);
+                  localStorage.setItem("selectedZone", zone?.name as string);
+                }}
+                className={`hover:bg-oranger transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
+                  selectedZone === zone?.name ? `bg-oranger` : `bg-orange`
+                }`}
+              >
+                {zone?.name}
+              </button>
+            ))}
+          </div>
+      <div className="flex justify-center items-center mt-5">
         <p className="text-xl font-semibold ">selected {selectedPrograms.length} programs to publish</p>
         <button className="
         bg-primary text-white px-3 py-1 rounded-lg ml-3
         "
-        onClick={
-          handleDownload
-        }
+          onClick={
+            handleDownload
+          }
         >
           Download
         </button>
         <button
           onClick={handlePublish}
-        className="
+          className="
         bg-primary text-white px-3 py-1 rounded-lg ml-3
         ">
           Publish
         </button>
       </div>
       <div className="flex flex-wrap gap-2 justify-center mt-3">
-        {props.programs?.filter((prg => 
-        prg.publishedA != true &&
-         prg.enteredA == true
-         )).map((program, index) => (
+        {props.programs?.filter((prg =>
+          (prg as any)[`published${selectedZone}`] != true &&
+          (prg as any)[`entered${selectedZone}`] == true
+          // prg.publishedD != true &&
+          // prg.enteredA == true
+        )).map((program, index) => (
           <div
             onClick={() => {
               selectedPrograms.find(
                 (selectedProgram) => selectedProgram.id === program.id
               )
                 ? setSelectedPrograms(
-                    selectedPrograms.filter(
-                      (selectedProgram) => selectedProgram.id !== program.id
-                    )
+                  selectedPrograms.filter(
+                    (selectedProgram) => selectedProgram.id !== program.id
                   )
+                )
                 : setSelectedPrograms([
-                    ...selectedPrograms,
-                    program as Programme,
-                  ]);
+                  ...selectedPrograms,
+                  program as Programme,
+                ]);
             }}
-            className={`w-72 bg-secondary p-6 rounded-xl cursor-pointer ${
-              selectedPrograms.find(
-                (selectedProgram) => selectedProgram.id === program.id
-              )
-                ? `border-4`
-                : `border`
-            } border-brown`}
+            className={`w-72 bg-secondary p-6 rounded-xl cursor-pointer ${selectedPrograms.find(
+              (selectedProgram) => selectedProgram.id === program.id
+            )
+              ? `border-4`
+              : `border`
+              } border-brown`}
           >
             <div className="items-center justify-center flex flex-col gap-2">
               <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
