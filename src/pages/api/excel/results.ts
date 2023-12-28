@@ -158,7 +158,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             console.log(cell.row);
             setBlackBackground(worksheet, "A", "L", cell.row);
           }
-          if (num == 14) {
+          if (num == 13) {
             cell.value = "";
             cell.border = {};
           }
