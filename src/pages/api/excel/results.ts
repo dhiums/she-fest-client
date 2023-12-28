@@ -79,13 +79,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       "Total",
     ];
     const widths: any = {
-      A: 6,
-      B: 7,
+      A: 7,
+      B: 6,
       C: 25,
-      D: 16,
+      D: 11,
       E: 8,
       F: 6,
-      G: 18,
+      G: 11,
       H: 30,
       I: 45,
       J: 6,
