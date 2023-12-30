@@ -1,6 +1,15 @@
 "use client";
 
-import { CandidateProgramme, Programme, PublishResultsDocument, PublishResultsMutation, PublishResultsMutationVariables, Types, Zone } from "@/gql/graphql";
+import {
+  CandidateProgramme,
+  Programme,
+  PublishResultsDocument,
+  PublishResultsMutation,
+  PublishResultsMutationVariables,
+  Type,
+  Types,
+  Zone,
+} from "@/gql/graphql";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { OperationResult, useMutation } from "urql";
@@ -8,7 +17,7 @@ import { OperationResult, useMutation } from "urql";
 interface Props {
   programs: Programme[];
   zones: Zone[];
-  zone : string;
+  zone: string;
 }
 
 interface ToDownLoadData {
@@ -138,7 +147,7 @@ export default function Publish(props: Props) {
       PublishResultsMutationVariables
     > = await PublishResultExicute({
       programCodes: selectedPrograms.map((prg) => prg.programCode) as string[],
-      zone: selectedZone
+      zone: selectedZone,
     });
 
     if (datas.data?.publishResults) {
@@ -161,79 +170,84 @@ export default function Publish(props: Props) {
         (a, b) => (b.zonalpoint as number) - (a.zonalpoint as number)
       );
 
-      programme.candidateProgramme?.filter((cp : CandidateProgramme)=> cp.candidate?.team?.zone?.name === props.zone).forEach((candidate, i) => {
-        let sl = i == 0 ? index + 1 : "";
-        let programName = i == 0 ? programme.name : "";
-        let programCode = i == 0 ? programme.programCode : "";
-        let category = i == 0 ? programme.category?.name : "";
-        let gradePoint =
-          programme.type == Types.Single
-            ? candidate.zonalgrade?.pointSingle
-            : programme.type == Types.Group
+      programme.candidateProgramme
+        ?.filter(
+          (cp: CandidateProgramme) =>
+            cp.candidate?.team?.zone?.name === props.zone
+        )
+        .forEach((candidate, i) => {
+          let sl = i == 0 ? index + 1 : "";
+          let programName = i == 0 ? programme.name : "";
+          let programCode = i == 0 ? programme.programCode : "";
+          let category = i == 0 ? programme.category?.name : "";
+          let gradePoint =
+            programme.type == Types.Single
+              ? candidate.zonalgrade?.pointSingle
+              : programme.type == Types.Group
               ? candidate.zonalgrade?.pointGroup
               : programme.type == Types.House
-                ? candidate.zonalgrade?.pointHouse
-                : 0;
-        let positionPoint =
-          programme.type == Types.Single
-            ? candidate.zonalposition?.pointSingle
-            : programme.type == Types.Group
+              ? candidate.zonalgrade?.pointHouse
+              : 0;
+          let positionPoint =
+            programme.type == Types.Single
+              ? candidate.zonalposition?.pointSingle
+              : programme.type == Types.Group
               ? candidate.zonalposition?.pointGroup
               : programme.type == Types.House
-                ? candidate.zonalposition?.pointHouse
-                : 0;
+              ? candidate.zonalposition?.pointHouse
+              : 0;
 
-        let chestNo =
-          programme.type == Types.House
-            ? candidate.candidate?.chestNO?.slice(0, -2) + "00"
-            : candidate.candidate?.chestNO;
-        let candidateName =
-          programme.type == Types.Single
-            ? candidate.candidate?.name
-            : programme.type == Types.Group
-
+          let chestNo =
+            programme.type == Types.House
+              ? candidate.candidate?.chestNO?.slice(0, -2) + "00"
+              : candidate.candidate?.chestNO;
+          let candidateName =
+            programme.type == Types.Single
+              ? candidate.candidate?.name
+              : programme.type == Types.Group
               ? candidate.candidate?.name + " & Team"
               : programme.type == Types.House
-                ? candidate.candidate?.team?.name
-                : null;
+              ? candidate.candidate?.team?.name
+              : null;
 
-        // if there no position or grade then not push
+          // if there no position or grade then not push
 
-        if (candidate.zonalposition || candidate.zonalgrade) {
-          downloadData.push({
-            sl: sl,
-            programCode: programCode as string,
-            programmeName: programName as string,
-            category: category as string,
-            position: candidate.zonalposition?.value
-              ? candidate.zonalposition?.value
-              : ("" as any),
-            grade: candidate.zonalgrade?.name
-              ? candidate.zonalgrade?.name
-              : ("" as string),
-            candidateChestNo: chestNo as string,
-            candidateName: candidateName as string,
-            candidateTeam: candidate.candidate?.team?.name as string,
+          if (candidate.zonalposition || candidate.zonalgrade) {
+            downloadData.push({
+              sl: sl,
+              programCode: programCode as string,
+              programmeName: programName as string,
+              category: category as string,
+              position: candidate.zonalposition?.value
+                ? candidate.zonalposition?.value
+                : ("" as any),
+              grade: candidate.zonalgrade?.name
+                ? candidate.zonalgrade?.name
+                : ("" as string),
+              candidateChestNo: chestNo as string,
+              candidateName: candidateName as string,
+              candidateTeam: candidate.candidate?.team?.name as string,
 
-            gradePoint: gradePoint ? gradePoint : ("" as any),
-            positionPoint: positionPoint ? positionPoint : ("" as any),
-            totalPoint: candidate.zonalpoint as number,
-            checkCode: programme.programCode as string,
-          });
-        }
-      });
+              gradePoint: gradePoint ? gradePoint : ("" as any),
+              positionPoint: positionPoint ? positionPoint : ("" as any),
+              totalPoint: candidate.zonalpoint as number,
+              checkCode: programme.programCode as string,
+            });
+          }
+        });
     });
 
     setToDownLoadData(downloadData as ToDownLoadData[]);
-
   }, []);
 
   const handleDownload = async () => {
     try {
       const postData = {
         data: toDownLoadData,
-        SelectedProgrammes: selectedPrograms.map((prg) => prg.programCode) as string[] ,
-        zone : props.zone
+        SelectedProgrammes: selectedPrograms.map(
+          (prg) => prg.programCode
+        ) as string[],
+        zone: props.zone,
       };
       // Make a POST request to the Excel API route
       const response = await fetch("/api/excel/results", {
@@ -246,7 +260,6 @@ export default function Publish(props: Props) {
 
       console.log(response);
 
-
       if (response.ok) {
         // Convert the response to a Blob and create a URL for downloading
         const blob = await response.blob();
@@ -257,7 +270,6 @@ export default function Publish(props: Props) {
         a.href = url;
         a.download = "data.xlsx";
         a.click();
-
 
         // Clean up by revoking the URL
 
@@ -270,32 +282,195 @@ export default function Publish(props: Props) {
     }
   };
 
+  // const findResultPublishedProgrammesByZone = async () => {
+  //   try {
+  //     const programmes = selectedPrograms;
+
+  //     // find all teams of this zone and total thier zonalpoint
+
+  //     //  create object of all teams with zone name and team name
+
+  //     interface CategoryWisePoint {
+  //       categoryName: string;
+  //       categoryPoint: number;
+  //     }
+  //     interface teamWithPoint {
+  //       totalPercentage: number;
+  //       teamName: string;
+  //       zoneName: string;
+  //       totalPoint: number;
+  //       categoryWisePoint: CategoryWisePoint[];
+  //     }
+
+  //     interface candidateWithPoint {
+  //       candidateName: string;
+  //       teamName: string;
+  //       zoneName: string;
+  //       totalPoint: number;
+  //       categoryName: string;
+  //       chestNo: string;
+  //     }
+
+  //     const teamsOfZone = selectedPrograms?.map((programme) => {
+  //       return programme.candidateProgramme
+  //         ?.filter(
+  //           (cp: CandidateProgramme) =>
+  //             cp.candidate?.team?.zone?.name === props.zone
+  //         )
+  //         .map((candidate: CandidateProgramme) => {
+  //           return {
+  //             name: candidate?.candidate?.team?.name,
+  //             zone: candidate?.candidate?.team?.zone,
+  //             isDegreeHave: candidate?.candidate?.team?.isDegreeHave,
+  //           };
+  //         });
+  //     });
+  //     const categories = Array.from(
+  //       new Set(selectedPrograms?.map((programme) => programme?.category?.name))
+  //     ).map((name) => ({ name }));
+  //     console.log(categories);
+
+  //     const teamsWithPoint: teamWithPoint[] = [];
+
+  //     // looping the teams
+
+  //     (teamsOfZone[0] as any).forEach((team: any) => {
+  //       const teamWithPoint: teamWithPoint = {
+  //         totalPercentage: 0,
+  //         teamName: team.name,
+  //         zoneName: team.zone.name,
+  //         totalPoint: 0,
+  //         categoryWisePoint: categories.map((category: any) => {
+  //           return {
+  //             categoryName: category.name,
+  //             categoryPoint: 0,
+  //           };
+  //         }),
+  //       };
+
+  //       //   // looping the programmes
+
+  //       programmes?.forEach((programme) => {
+  //         programme?.candidateProgramme?.forEach((cp) => {
+  //           if (cp.candidate?.team?.name === team.name) {
+  //             teamWithPoint.totalPoint += cp.zonalpoint as number;
+  //             if (team.isDegreeHave) {
+  //               teamWithPoint.totalPercentage =
+  //                 teamWithPoint.totalPoint / 418 / 100;
+  //             } else {
+  //               teamWithPoint.totalPercentage =
+  //                 teamWithPoint.totalPoint / 242 / 100;
+  //             }
+
+  //             teamWithPoint.categoryWisePoint.forEach((categoryWisePoint) => {
+  //               if (
+  //                 categoryWisePoint.categoryName === programme?.category?.name
+  //               ) {
+  //                 categoryWisePoint.categoryPoint += cp.zonalpoint as number;
+  //               }
+  //             });
+  //           }
+  //         });
+  //       });
+
+  //       teamsWithPoint.push(teamWithPoint);
+  //     });
+
+  //     teamsWithPoint.sort((a, b) => {
+  //       return b.totalPercentage - a.totalPercentage;
+  //     });
+
+  //     // finding top 5 candidates
+
+  //     const topperCandidates: candidateWithPoint[] = [];
+
+  //     programmes?.forEach((programme) => {
+  //       if ((programme.type as string) == Type.Single) {
+  //         programme?.candidateProgramme?.forEach((cp) => {
+  //           // checking is candidate already in the topperCandidates array
+  //           const isCandidateExist = topperCandidates.some(
+  //             (candidate) => candidate.chestNo == cp?.candidate?.chestNO
+  //           );
+
+  //           if (isCandidateExist) {
+  //             // add the point to the candidate
+  //             topperCandidates.forEach((candidate) => {
+  //               if (candidate.chestNo === cp?.candidate?.chestNO) {
+  //                 candidate.totalPoint += cp?.zonalpoint as number;
+  //               }
+  //             });
+  //           } else {
+  //             const candidateWithPoint: candidateWithPoint = {
+  //               candidateName: cp?.candidate?.name as string,
+  //               teamName: cp?.candidate?.team?.name as string,
+  //               zoneName: cp?.candidate?.team?.zone?.name as string,
+  //               totalPoint: cp.zonalpoint as number,
+  //               categoryName: programme?.category?.name as string,
+  //               chestNo: cp?.candidate?.chestNO as string,
+  //             };
+
+  //             topperCandidates.push(candidateWithPoint);
+  //           }
+  //         });
+  //       }
+  //     });
+
+  //     topperCandidates.sort((a, b) => {
+  //       return b.totalPoint - a.totalPoint;
+  //     });
+
+  //     // taking top 5 candidates from a category on topperCandidates
+
+  //     const top5Candidates: candidateWithPoint[] = [];
+
+  //     categories.forEach((category: any) => {
+  //       let count = 0;
+  //       topperCandidates.forEach((candidate) => {
+  //         if (candidate.categoryName === category?.name && count < 5) {
+  //           top5Candidates.push(candidate);
+  //           count++;
+  //         }
+  //       });
+  //     });
+
+  //     console.log(top5Candidates);
+
+  //     return {
+  //       programmes: programmes,
+  //       topTeams: teamsWithPoint,
+  //       topCandidates: top5Candidates,
+  //     };
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <div className="py-5">
       <div className="flex w-full justify-center gap-4">
-            {props.zones?.map((zone) => (
-              <button
-                onClick={() => {
-                  setSelectedZone(zone?.name as string);
-                  localStorage.setItem("selectedZone", zone?.name as string);
-                }}
-                className={`hover:bg-oranger transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
-                  selectedZone === zone?.name ? `bg-oranger` : `bg-orange`
-                }`}
-              >
-                {zone?.name}
-              </button>
-            ))}
-          </div>
+        {props.zones?.map((zone) => (
+          <button
+            onClick={() => {
+              setSelectedZone(zone?.name as string);
+              localStorage.setItem("selectedZone", zone?.name as string);
+            }}
+            className={`hover:bg-oranger transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
+              selectedZone === zone?.name ? `bg-oranger` : `bg-orange`
+            }`}
+          >
+            {zone?.name}
+          </button>
+        ))}
+      </div>
       <div className="flex justify-center items-center mt-5">
-        <p className="text-xl font-semibold ">selected {selectedPrograms.length} programs to publish</p>
-        <button className="
+        <p className="text-xl font-semibold ">
+          selected {selectedPrograms.length} programs to publish
+        </p>
+        <button
+          className="
         bg-primary text-white px-3 py-1 rounded-lg ml-3
         "
-          onClick={
-            handleDownload
-          }
+          onClick={handleDownload}
         >
           Download
         </button>
@@ -303,53 +478,60 @@ export default function Publish(props: Props) {
           onClick={handlePublish}
           className="
         bg-primary text-white px-3 py-1 rounded-lg ml-3
-        ">
+        "
+        >
           Publish
         </button>
       </div>
       <div className="flex flex-wrap gap-2 justify-center mt-3">
-        {props.programs?.filter((prg =>
-          (prg as any)[`published${selectedZone}`] != true &&
-          (prg as any)[`entered${selectedZone}`] == true
-          // prg.publishedD != true &&
-          // prg.enteredA == true
-        )).map((program, index) => (
-          <div
-            onClick={() => {
-              selectedPrograms.find(
-                (selectedProgram) => selectedProgram.id === program.id
-              )
-                ? setSelectedPrograms(
-                  selectedPrograms.filter(
-                    (selectedProgram) => selectedProgram.id !== program.id
-                  )
+        {props.programs
+          ?.filter(
+            (prg) =>
+              (prg as any)[`published${selectedZone}`] != true &&
+              (prg as any)[`entered${selectedZone}`] == true
+            // prg.publishedD != true &&
+            // prg.enteredA == true
+          )
+          .map((program, index) => (
+            <div
+              onClick={async () => {
+                selectedPrograms.find(
+                  (selectedProgram) => selectedProgram.id === program.id
                 )
-                : setSelectedPrograms([
-                  ...selectedPrograms,
-                  program as Programme,
-                ]);
-            }}
-            className={`w-72 bg-secondary p-6 rounded-xl cursor-pointer ${selectedPrograms.find(
-              (selectedProgram) => selectedProgram.id === program.id
-            )
-              ? `border-4`
-              : `border`
+                  ? setSelectedPrograms(
+                      selectedPrograms.filter(
+                        (selectedProgram) => selectedProgram.id !== program.id
+                      )
+                    )
+                  : setSelectedPrograms([
+                      ...selectedPrograms,
+                      program as Programme,
+                    ]);
+                // const newdata = await findResultPublishedProgrammesByZone();
+                // console.log(newdata);
+              }}
+              className={`w-72 bg-secondary p-6 rounded-xl cursor-pointer ${
+                selectedPrograms.find(
+                  (selectedProgram) => selectedProgram.id === program.id
+                )
+                  ? `border-4`
+                  : `border`
               } border-brown`}
-          >
-            <div className="items-center justify-center flex flex-col gap-2">
-              <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
-                {program.programCode}
-              </p>
-              <p className="line-clamp-2 text-center">{program.name}</p>
-
-              <div className="flex gap-1 flex-wrap justify-center items-center">
-                <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
-                  {program.category?.name}
+            >
+              <div className="items-center justify-center flex flex-col gap-2">
+                <p className="px-2 py-1 bg-primary inline rounded-lg text-white font-semibold">
+                  {program.programCode}
                 </p>
+                <p className="line-clamp-2 text-center">{program.name}</p>
+
+                <div className="flex gap-1 flex-wrap justify-center items-center">
+                  <p className="px-2 py-1 bg-primary text-xs inline rounded-lg text-white font-semibold">
+                    {program.category?.name}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

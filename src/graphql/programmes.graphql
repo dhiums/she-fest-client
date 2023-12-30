@@ -44,6 +44,7 @@ query GetAllProgrammes($api_key: String!) {
           zone {
             name
           }
+          isDegreeHave
         }
       }
     }
