@@ -47,6 +47,18 @@ query GetAllProgrammes($api_key: String!) {
           isDegreeHave
         }
       }
+
+      candidatesOfGroup{
+        chestNO
+        name
+        team {
+          name
+          zone {
+            name
+          }
+          isDegreeHave
+        }
+      }
     }
   }
 }

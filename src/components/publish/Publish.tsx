@@ -170,7 +170,8 @@ export default function Publish(props: Props) {
         (a, b) => (b.zonalpoint as number) - (a.zonalpoint as number)
       );
 
-      programme.candidateProgramme
+      if(programme.type != Types.House){
+        programme.candidateProgramme
         ?.filter(
           (cp: CandidateProgramme) =>
             cp.candidate?.team?.zone?.name === props.zone
@@ -235,6 +236,75 @@ export default function Publish(props: Props) {
             });
           }
         });
+
+      }else{
+        programme.candidateProgramme
+        ?.filter(
+          (cp: CandidateProgramme) =>
+            cp.candidate?.team?.zone?.name === props.zone
+        )
+        .forEach((candidate, i) => {
+          
+          candidate?.candidatesOfGroup?.forEach((cgp ,ind) => {
+
+            let sl = i == 0 && ind == 0 ? index + 1 : "";
+          let programName = i == 0 && ind == 0 ? programme.name : "";
+          let programCode = i == 0 && ind == 0 ? programme.programCode : "";
+          let category = i == 0 && ind == 0 ? programme.category?.name : "";
+          let gradePoint =
+            programme.type == Types.Single
+              ? candidate.zonalgrade?.pointSingle
+              : programme.type == Types.Group
+              ? candidate.zonalgrade?.pointGroup
+              : programme.type == Types.House
+              ? candidate.zonalgrade?.pointHouse
+              : 0;
+          let positionPoint =
+            programme.type == Types.Single
+              ? candidate.zonalposition?.pointSingle
+              : programme.type == Types.Group
+              ? candidate.zonalposition?.pointGroup
+              : programme.type == Types.House
+              ? candidate.zonalposition?.pointHouse
+              : 0;
+
+          let chestNo = cgp?.chestNO;
+          let candidateName = cgp?.name;
+
+          // if there no position or grade then not push
+
+          if (candidate.zonalposition || candidate.zonalgrade) {
+            downloadData.push({
+              sl: sl,
+              programCode: programCode as string,
+              programmeName: programName as string,
+              category: category as string,
+              position: candidate.zonalposition?.value
+                ? candidate.zonalposition?.value
+                : ("" as any),
+              grade: candidate.zonalgrade?.name
+                ? candidate.zonalgrade?.name
+                : ("" as string),
+              candidateChestNo: chestNo as string,
+              candidateName: candidateName as string,
+              candidateTeam: candidate.candidate?.team?.name as string,
+
+              gradePoint: gradePoint ? gradePoint : ("" as any),
+              positionPoint: positionPoint ? positionPoint : ("" as any),
+              totalPoint: candidate.zonalpoint as number,
+              checkCode: programme.programCode as string,
+            });
+          }
+        
+          });
+
+          });
+
+      }
+
+     
+       
+
     });
 
     setToDownLoadData(downloadData as ToDownLoadData[]);
@@ -487,7 +557,7 @@ export default function Publish(props: Props) {
         {props.programs
           ?.filter(
             (prg) =>
-              (prg as any)[`published${selectedZone}`] != true &&
+              // (prg as any)[`published${selectedZone}`] != true &&
               (prg as any)[`entered${selectedZone}`] == true
             // prg.publishedD != true &&
             // prg.enteredA == true
