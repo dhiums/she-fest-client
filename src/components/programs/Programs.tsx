@@ -165,7 +165,6 @@ function Programs(props: Props) {
   };
 
   const downloadJudgeForm = (programme: Programme) => {
-
     const doc = new jsPDF("portrait", "px", "a4");
     // Load Montserrat font
     doc.addFont(
@@ -216,28 +215,29 @@ function Programs(props: Props) {
         {/* card of dashboard to view the status of programs count */}
         <div className=" w-full flex items-center justify-center gap-4  ">
           <div className="flex flex-col">
-            <select
-              className="w-full border-2  border-brown  border-dashed rounded-md placeholder:text-sm py-2 px-3 my-2 remove-arrow"
-              value={zone}
-              onChange={(e) => {
-                setZone(e.target.value);
-              }}
-            >
-              {props?.zones?.map((zone, index) => (
-                <option
-                  className="text-center"
-                  key={index}
-                  value={zone.name as string}
-                >
-                  {zone.name}
-                </option>
-              ))}
-            </select>
+            {(data.roles == Roles.Controller || data.roles == Roles.Admin) && (
+              <select
+                className="w-full border-2  border-brown  border-dashed rounded-md placeholder:text-sm py-2 px-3 my-2 remove-arrow"
+                value={zone}
+                onChange={(e) => {
+                  setZone(e.target.value);
+                }}
+              >
+                {props?.zones?.map((zone, index) => (
+                  <option
+                    className="text-center"
+                    key={index}
+                    value={zone.name as string}
+                  >
+                    {zone.name}
+                  </option>
+                ))}
+              </select>
+            )}
             <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
               <div className="bg-secondary rounded-xl p-6 flex flex-col gap-2 items-center justify-center">
                 <p className="text-primary text-2xl font-semibold">
-                  Registration status
-                </p>
+                  Finalized programs                </p>
                 <p className="text-brown text-4xl font-bold">
                   {totalCompleted + "/" + programs?.length}
                 </p>
@@ -247,9 +247,6 @@ function Programs(props: Props) {
                 {(data.roles == Roles.Controller ||
                   data.roles == Roles.Admin) && (
                   <div className="flex flex-col gap-2">
-                    <p className="text-primary text-xl font-semibold text-center">
-                      Select Team
-                    </p>
                     <select
                       className="w-72 px-4 py-2 rounded-xl border-2 border-dashed border-brown"
                       onChange={(e) => {
