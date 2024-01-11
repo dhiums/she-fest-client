@@ -63,7 +63,7 @@ function Candidates(props: Props) {
     variables: {
       chestNo: "",
       name: searchTerm,
-      limit: 10,
+      limit: 12,
       teamName: teamName,
     },
     pause: searchTerm == "",
