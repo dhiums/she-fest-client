@@ -184,7 +184,6 @@ function Programs(props: Props) {
   };
 
   const downloadJudgeForm = (programme: Programme) => {
-
     const doc = new jsPDF("portrait", "px", "a4");
     // Load Montserrat font
     doc.addFont(
@@ -267,9 +266,6 @@ function Programs(props: Props) {
                 {(data.roles == Roles.Controller ||
                   data.roles == Roles.Admin) && (
                   <div className="flex flex-col gap-2">
-                    <p className="text-primary text-xl font-semibold text-center">
-                      Select Team
-                    </p>
                     <select
                       className="w-72 px-4 py-2 rounded-xl border-2 border-dashed border-brown"
                       onChange={(e) => {

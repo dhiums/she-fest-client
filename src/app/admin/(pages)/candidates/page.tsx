@@ -18,12 +18,7 @@ import { getUrqlClient } from "@/lib/urql";
 
 export default async function Page() {
   const { client } = getUrqlClient();
-  const candidates = await client.query<
-    GetAllCandidatesQuery,
-    GetAllCandidatesQueryVariables
-  >(GetAllCandidatesDocument, {
-    api_key: API_KEY,
-  });
+
 
   
   const categories = await client.query<
@@ -42,7 +37,7 @@ export default async function Page() {
   
   return (
     <div>
-      <Candidates pageProps={1} teams = {teams.data?.teams as Team[]} categories={categories.data?.categories as Category[]}  candidates={candidates.data?.candidates as Candidate[] } />
+      <Candidates pageProps={1} teams = {teams.data?.teams as Team[]} categories={categories.data?.categories as Category[]}  />
     </div>
   );
 }

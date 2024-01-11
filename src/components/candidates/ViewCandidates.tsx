@@ -85,8 +85,8 @@ const ViewCandidates = (props: Props) => {
           >
             Close
           </button>
+        </div>
       </div>
-    </div>
   );
 };
 
