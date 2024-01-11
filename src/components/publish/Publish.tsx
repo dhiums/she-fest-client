@@ -6,7 +6,6 @@ import {
   PublishResultsDocument,
   PublishResultsMutation,
   PublishResultsMutationVariables,
-  Type,
   Types,
   Zone,
 } from "@/gql/graphql";

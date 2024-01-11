@@ -36,9 +36,7 @@ export default function ResultUpload(props: Props) {
 
   useEffect(() => {
   if (props?.candidateProgrammes && props.zone) {
-    const updatedForm = props.candidateProgrammes
-      .filter(cp => cp.candidate?.team?.zone?.name === props.zone)
-      .map(item => ({
+    const updatedForm = props.candidateProgrammes?.map(item => ({
         chestNo: item.candidate?.chestNO || '', // Ensure proper default value if chestNo is undefined
         grade: null,
         position: null,
@@ -119,7 +117,6 @@ export default function ResultUpload(props: Props) {
         <p className="text-red-500 text-sm">{error}</p>
         <div className="overflow-y-auto">
           {props?.candidateProgrammes
-            ?.filter((cp) => cp.candidate?.team?.zone?.name === props.zone)
             ?.map((candidateProgramme) => {
                 const uploadData = toUploadForm.find((data) => data.chestNo == candidateProgramme.candidate?.chestNO)
                 // if( uploadData && candidateProgramme.zonalgrade?.name){

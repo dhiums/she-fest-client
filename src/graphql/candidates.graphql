@@ -48,6 +48,35 @@ query GetSearchCandidates(
   }
 }
 
+query GetFinalSearchCandidates(
+  $chestNo: String!
+  $name: String!
+  $limit: Int
+  $teamName: String
+){
+  searchFinalCandidates(chestNo: $chestNo, name: $name, limit: $limit , teamName: $teamName) {
+   totalCandidates
+   candidates{
+    id
+    name
+    chestNO
+    category {
+      name
+    }
+    team {
+      name
+    }
+    candidateProgrammes {
+      programme {
+        name
+        programCode
+        type
+      }
+    }
+   }
+  }
+}
+
 query GetAllDetailedCandidates($api_key: String!) {
   candidates(api_key: $api_key) {
     id

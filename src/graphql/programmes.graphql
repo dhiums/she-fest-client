@@ -30,7 +30,7 @@ query GetAllProgrammes($api_key: String!) {
       }
       zonalposition {
         name
-         pointGroup
+        pointGroup
         pointSingle
         pointHouse
         value
@@ -48,7 +48,72 @@ query GetAllProgrammes($api_key: String!) {
         }
       }
 
-      candidatesOfGroup{
+      candidatesOfGroup {
+        chestNO
+        name
+        team {
+          name
+          zone {
+            name
+          }
+          isDegreeHave
+        }
+      }
+    }
+  }
+}
+
+query GetAllFinalProgrammes($api_key: String!) {
+  finalprogrammes(api_key: $api_key) {
+    id
+    name
+    programCode
+    type
+    mode
+    enteredA
+    enteredB
+    enteredC
+    enteredD
+    enteredE
+    publishedA
+    publishedB
+    publishedC
+    publishedD
+    publishedE
+    candidateCount
+    groupCount
+    category {
+      name
+    }
+    candidateProgramme {
+      zonalpoint
+      zonalgrade {
+        name
+        pointGroup
+        pointSingle
+        pointHouse
+      }
+      zonalposition {
+        name
+        pointGroup
+        pointSingle
+        pointHouse
+        value
+      }
+      id
+      candidate {
+        chestNO
+        name
+        team {
+          name
+          zone {
+            name
+          }
+          isDegreeHave
+        }
+      }
+
+      candidatesOfGroup {
         chestNO
         name
         team {
@@ -176,62 +241,62 @@ query totalProgramsCount($api_key: String!) {
   }
 }
 
-query GetPublishedProgrammes($zone:String! ) {
-  findResultPublishedProgrammesByZone( zone:$zone) {
-    programmes {  id
-    name
-    type
-    programCode
-    category {
-      name
-    }
-    candidateProgramme {
+query GetPublishedProgrammes($zone: String!) {
+  findResultPublishedProgrammesByZone(zone: $zone) {
+    programmes {
       id
-      zonalpoint
-      finalpoint
-      finalgrade {
-        id
+      name
+      type
+      programCode
+      category {
         name
       }
-      finalposition {
+      candidateProgramme {
         id
-        name
-      }
-      zonalgrade {
-        id
-        name
-      }
-      zonalposition {
-        id
-        name
-      }
-      candidate {
-        name
-        chestNO
-        team {
-          name
+        zonalpoint
+        finalpoint
+        finalgrade {
           id
-          zone{
+          name
+        }
+        finalposition {
+          id
+          name
+        }
+        zonalgrade {
+          id
+          name
+        }
+        zonalposition {
+          id
+          name
+        }
+        candidate {
+          name
+          chestNO
+          team {
             name
             id
+            zone {
+              name
+              id
+            }
           }
         }
-        
       }
-
-    }}
+    }
 
     topTeams {
       teamName
       zoneName
       totalPoint
       totalPercentage
-      categoryWisePoint{
+      categoryWisePoint {
         categoryName
         categoryPoint
       }
     }
-    topCandidates{
+    topCandidates {
       candidateName
       chestNo
       teamName
@@ -244,60 +309,60 @@ query GetPublishedProgrammes($zone:String! ) {
 
 query GetEnteredProgrammes($zone: String!) {
   findResultEnteredProgrammesByZone(zone: $zone) {
-    programmes {  id
-    name
-    type
-    programCode
-    category {
-      name
-    }
-    candidateProgramme {
+    programmes {
       id
-      zonalpoint
-      finalpoint
-      finalgrade {
-        id
+      name
+      type
+      programCode
+      category {
         name
       }
-      finalposition {
+      candidateProgramme {
         id
-        name
-      }
-      zonalgrade {
-        id
-        name
-      }
-      zonalposition {
-        id
-        name
-      }
-      candidate {
-        name
-        chestNO
-        team {
-          name
+        zonalpoint
+        finalpoint
+        finalgrade {
           id
-          zone{
+          name
+        }
+        finalposition {
+          id
+          name
+        }
+        zonalgrade {
+          id
+          name
+        }
+        zonalposition {
+          id
+          name
+        }
+        candidate {
+          name
+          chestNO
+          team {
             name
             id
+            zone {
+              name
+              id
+            }
           }
         }
-        
       }
-
-    }}
+    }
 
     topTeams {
       teamName
       zoneName
       totalPoint
       totalPercentage
-      categoryWisePoint{
+      categoryWisePoint {
         categoryName
         categoryPoint
       }
     }
-    topCandidates{
+    topCandidates {
       candidateName
       chestNo
       teamName

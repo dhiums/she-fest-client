@@ -2,15 +2,15 @@ import Download from "@/components/programs/Download";
 import {
   Candidate,
   Category,
-  GetSearchCandidatesDocument,
-  GetSearchCandidatesQuery,
-  GetSearchCandidatesQueryVariables,
+  GetFinalSearchCandidatesDocument,
+  GetFinalSearchCandidatesQuery,
+  GetFinalSearchCandidatesQueryVariables,
   GetAllCategoriesDocument,
   GetAllCategoriesQuery,
   GetAllCategoriesQueryVariables,
-  GetAllProgrammesDocument,
-  GetAllProgrammesQuery,
-  GetAllProgrammesQueryVariables,
+  GetAllFinalProgrammesDocument,
+  GetAllFinalProgrammesQuery,
+  GetAllFinalProgrammesQueryVariables,
   Programme,
 } from "@/gql/graphql";
 import { API_KEY } from "@/lib/env";
@@ -24,16 +24,16 @@ export default async function page({params , searchParams}: any) {
   
 
   const programmes = await client.query<
-    GetAllProgrammesQuery,
-    GetAllProgrammesQueryVariables
-  >(GetAllProgrammesDocument, {
+    GetAllFinalProgrammesQuery,
+    GetAllFinalProgrammesQueryVariables
+  >(GetAllFinalProgrammesDocument, {
     api_key: API_KEY,
   });
 
   const candidates = await client.query<
-    GetSearchCandidatesQuery,
-    GetSearchCandidatesQueryVariables
-  >(GetSearchCandidatesDocument, {
+    GetFinalSearchCandidatesQuery,
+    GetFinalSearchCandidatesQueryVariables
+  >(GetFinalSearchCandidatesDocument, {
     chestNo:"",
     name:"",
     limit: 300,
@@ -54,8 +54,8 @@ export default async function page({params , searchParams}: any) {
     <>
       <Download
         teamName={team}
-        programs={programmes.data?.programmes as Programme[]}
-        candidates={candidates.data?.searchCandidates?.candidates as Candidate[]}
+        programs={programmes.data?.finalprogrammes as Programme[]}
+        candidates={candidates.data?.searchFinalCandidates?.candidates as Candidate[]}
         categories={categories.data?.categories as Category[]}
       />
     </>

@@ -14,7 +14,7 @@ const Navs = () => {
           Results
         </li>
         <li onClick={()=>{
-            // router.push('/profile')
+            router.push('/profile')
     }}  className="cursor-pointer bg-blue hover:bg-bluer transition-colors duration-300 px-3 py-2 border-2 border-black shadow-md rounded-md font-semibold">
           Candidates
         </li>

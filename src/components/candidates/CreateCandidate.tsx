@@ -38,7 +38,7 @@ const CreateCandidate = (props: Props) => {
     // console.log(datas);
 
     if (datas.data?.createCandidate) {
-      props.setCandidates([...props.candidates, datas.data.createCandidate]);
+      props.setCandidates([...props.candidates as Candidate[] , datas.data.createCandidate as Candidate]);
       props.setIsCreate(false);
     }
   };

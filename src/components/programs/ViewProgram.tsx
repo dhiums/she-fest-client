@@ -64,7 +64,10 @@ const ViewProgram = (props: Props) => {
   const router = useRouter();
   const { data, setData } = useGlobalContext();
 
-  useEffect(() => {}, [props.selected]);
+  useEffect(() => {
+    console.log(props.candidateProgrammes);
+    
+  }, [props.selected]);
 
   const handleInputChange = (index: number, value: any) => {
     const updatedP = [...p];
@@ -117,7 +120,7 @@ const ViewProgram = (props: Props) => {
         axios
           .post("https://she-fest-api.vercel.app/graphql", {
             query: `{
-          programmes(api_key:"abc"){
+          finalprogrammes(api_key:"abc"){
            id
             name
             programCode
@@ -146,7 +149,7 @@ const ViewProgram = (props: Props) => {
           })
           .then((res) => {
             // console.log(res.data?.data?.programmes);
-            props.setPrograms(res.data?.data?.programmes);
+            props.setPrograms(res.data?.data?.finalprogrammes);
             props.setSelected(
               res.data?.data?.programmes.find(
                 (program: Programme) => program.id === props.selected?.id
@@ -244,11 +247,7 @@ const ViewProgram = (props: Props) => {
                   placeholder={`Search by name or chest number..`}
                 />
                 <div className="w-full   overflow-y-auto">
-                  {props.candidateProgrammes
-                    ?.filter(
-                      (cp) => cp.candidate?.team?.zone?.name === props.zone
-                    )
-                    ?.map((cp, i) => (
+                  {props.candidateProgrammes?.map((cp, i) => (
                       <div
                         key={i}
                         className="border-2 border-primary rounded-lg p-3 my-2 w-full justify-between"

@@ -2,9 +2,9 @@
 import {
   Candidate,
   Category,
-  GetSearchCandidatesDocument,
-  GetSearchCandidatesQuery,
-  GetSearchCandidatesQueryVariables,
+  GetFinalSearchCandidatesDocument,
+  GetFinalSearchCandidatesQuery,
+  GetFinalSearchCandidatesQueryVariables,
   Roles,
   Team,
 } from "@/gql/graphql";
@@ -56,14 +56,14 @@ function Candidates(props: Props) {
   // });
 
   const [{ fetching, data: user }] = useQuery<
-    GetSearchCandidatesQuery,
-    GetSearchCandidatesQueryVariables
+    GetFinalSearchCandidatesQuery,
+    GetFinalSearchCandidatesQueryVariables
   >({
-    query: GetSearchCandidatesDocument,
+    query: GetFinalSearchCandidatesDocument,
     variables: {
       chestNo: "",
       name: searchTerm,
-      limit: 10,
+      limit: 12,
       teamName: teamName,
     },
     pause: searchTerm == "",
@@ -74,9 +74,9 @@ function Candidates(props: Props) {
       setTeamName(data.team?.name as string);
     }
 
-    if (user?.searchCandidates) {
-      setCandidates(user.searchCandidates.candidates as Candidate[]);
-      setTotalCandidates(user.searchCandidates.totalCandidates);
+    if (user?.searchFinalCandidates) {
+      setCandidates(user.searchFinalCandidates.candidates as Candidate[]);
+      setTotalCandidates(user.searchFinalCandidates.totalCandidates);
       // console.log(user.searchCandidates.candidates);
     }
   }, [data.team?.name, user]);
@@ -238,7 +238,7 @@ function Candidates(props: Props) {
               >
                 <p className="line-clamp-2 text-center">{candidate.name}</p>
               </div>
-              {(data.roles == Roles.Controller ||
+              {/* {(data.roles == Roles.Controller ||
                 data.roles == Roles.Admin) && (
                   <div className="flex w-full justify-between">
                     <button
@@ -286,7 +286,7 @@ function Candidates(props: Props) {
                       </svg>
                     </button>
                   </div>
-                )}
+                )} */}
             </div>
           ))}
         </div>

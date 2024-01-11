@@ -59,14 +59,12 @@ function Programs(props: Props) {
     (async () => {
       axios
         .post("https://she-fest-api.vercel.app/graphql", {
-          query: `{
-          programmes(api_key:"abc"){
-           id
+          query: ` {finalprogrammes(api_key: "abc") {
+            id
             name
             programCode
             type
             mode
-            candidateCount
             enteredA
             enteredB
             enteredC
@@ -77,38 +75,59 @@ function Programs(props: Props) {
             publishedC
             publishedD
             publishedE
+            candidateCount
             groupCount
             category {
               name
             }
-            candidateProgramme{
-              id
+            candidateProgramme {
               zonalpoint
-              candidate{
+              zonalgrade {
+                name
+                pointGroup
+                pointSingle
+                pointHouse
+              }
+              zonalposition {
+                name
+                 pointGroup
+                pointSingle
+                pointHouse
+                value
+              }
+              id
+              candidate {
                 chestNO
                 name
-                team{
+                team {
                   name
-                  zone{
+                  zone {
                     name
                   }
+                  isDegreeHave
                 }
               }
-              zonalposition{
-                id
+        
+              candidatesOfGroup{
+                chestNO
                 name
-              }
-              zonalgrade{
-                id
-                name
+                team {
+                  name
+                  zone {
+                    name
+                  }
+                  isDegreeHave
+                }
               }
             }
           }
-        }`,
+          }`,
         })
         .then((res) => {
           // console.log(res.data?.data?.programmes);
-          setPrograms(res.data?.data?.programmes);
+          setPrograms(res.data?.data?.finalprogrammes);
+          console.log(res.data?.data?.finalprogrammes);
+          
           setCandidateProgrammes(
             selected?.candidateProgramme as CandidateProgramme[]
           );
@@ -192,9 +211,7 @@ function Programs(props: Props) {
 
       // text all candidates of the zone in the program
 
-      program?.candidateProgramme
-        ?.filter((cp) => cp.candidate?.team?.zone?.name == zone)
-        .map((cp, index) => {
+      program?.candidateProgramme?.map((cp, index) => {
           // console.log(cp.candidate?.chestNO + " " + cp.candidate?.team?.zone?.name);
           // if(cp.candidate?.team?.zone?.name == zone){}
           program.mode == "STAGE"
@@ -214,9 +231,10 @@ function Programs(props: Props) {
     <>
       <div className="p-12 pt-0 lg:p-20">
         {/* card of dashboard to view the status of programs count */}
+        
         <div className=" w-full flex items-center justify-center gap-4  ">
           <div className="flex flex-col">
-            <select
+            {/* <select
               className="w-full border-2  border-brown  border-dashed rounded-md placeholder:text-sm py-2 px-3 my-2 remove-arrow"
               value={zone}
               onChange={(e) => {
@@ -232,11 +250,13 @@ function Programs(props: Props) {
                   {zone.name}
                 </option>
               ))}
-            </select>
+            </select> */}
+
+
             <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
               <div className="bg-secondary rounded-xl p-6 flex flex-col gap-2 items-center justify-center">
                 <p className="text-primary text-2xl font-semibold">
-                  Registration status
+                  Final Programs Status
                 </p>
                 <p className="text-brown text-4xl font-bold">
                   {totalCompleted + "/" + programs?.length}
