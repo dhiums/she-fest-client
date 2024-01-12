@@ -12,6 +12,8 @@ import {
   GetAllFinalProgrammesQuery,
   GetAllFinalProgrammesQueryVariables,
   Programme,
+  Mode,
+  Modes,
 } from "@/gql/graphql";
 import { API_KEY } from "@/lib/env";
 import { getUrqlClient } from "@/lib/urql";
@@ -50,11 +52,19 @@ export default async function page({params , searchParams}: any) {
     api_key: API_KEY,
   });
 
+  const finalprogrammes = programmes.data?.finalprogrammes?.filter((prg )=>{
+    if(prg.mode == Modes.Stage){
+      return prg;
+    }else if(prg.name?.toLocaleUpperCase() == "CALLIGRAPHY".toLocaleUpperCase()){
+      return prg;
+    }
+  })
+
   return (
     <>
       <Download
         teamName={team}
-        programs={programmes.data?.finalprogrammes as Programme[]}
+        programs={finalprogrammes as Programme[]}
         candidates={candidates.data?.searchFinalCandidates?.candidates as Candidate[]}
         categories={categories.data?.categories as Category[]}
       />
