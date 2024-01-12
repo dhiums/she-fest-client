@@ -21,6 +21,7 @@ const ViewCandidates = (props: Props) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>("");
   const [success, setSuccess] = React.useState<string>("");
+  const [iNeedFoodAndAccommodation, setINeedFoodAndAccommodation] = React.useState<boolean>(false);
 
   useEffect(() => {
     setFile(null);
@@ -39,6 +40,7 @@ const ViewCandidates = (props: Props) => {
     formData.append('file', file as File);
     formData.append('chestNo', props.selected?.chestNO as string);
     formData.append('IamReady', ready.toString());
+    formData.append('iNeedFoodAndAccommodation', iNeedFoodAndAccommodation.toString());
 
     axios.post('https://she-fest-api.vercel.app/candidates/avatar', formData , {
       headers: {
@@ -127,7 +129,7 @@ const ViewCandidates = (props: Props) => {
                   {/* please note */}
                   <p className="text-primary font-bold text-sm">Please note:</p>
                   {/* upload image less than i mb */}
-                  <p className="text-primary  text-sm">1 -Upload image less than 1 mb </p>
+                  <p className="text-primary  text-sm">1 -Upload the photo that has been taken in the last six months (less than 1 MB). </p>
                   {/* upload image less than i mb */}
                   <p className="text-primary  text-sm">2 -Photo of yourself wearing a HIJAB without NIQAB.</p>
                   {/* upload image less than i mb */}
@@ -138,7 +140,7 @@ const ViewCandidates = (props: Props) => {
               <div className="w-full flex items-center justify-center">
                 <img src={
                   // if any file there show that file else show default image
-                  file ? URL.createObjectURL(file) : props.selected?.avatar ? props.selected?.avatar : "https://static.vecteezy.com/system/resources/thumbnails/021/687/852/small_2x/close-up-portrait-of-a-female-character-wear-niqab-islamic-veil-headscarf-round-circle-avatar-icon-for-social-media-user-profile-website-app-line-cartoon-style-illustration-free-vector.jpg"
+                  file ? URL.createObjectURL(file) : props.selected?.avatar ? props.selected?.avatar : "/img/avatar.webp"
                 } alt="" className="w-1/4 rounded-full" />
               </div>
 
@@ -148,8 +150,16 @@ const ViewCandidates = (props: Props) => {
                   <input type="checkbox" defaultChecked   name="ready" id="ready"  onChange={()=>{
                     setReady(!ready);
                   }} />
-                  <label htmlFor="ready" className="text-primary  text-sm font-bold pl-3"> {" "}I am Ready for Final Programs</label>
+                  <label htmlFor="ready" className="text-primary  text-sm font-bold pl-3"> {" "}I am ready for the She Fest Grand Finale</label>
                 </div>
+                  
+                  {/* i need food and accommodation */} 
+                  {/* <div className="flex w-full h-full items-center justify-center">
+                  <input type="checkbox"    name="iNeedFoodAndAccommodation" id="iNeedFoodAndAccommodation"  onChange={()=>{
+                    setINeedFoodAndAccommodation(!iNeedFoodAndAccommodation);
+                  }} />
+                  <label htmlFor="iNeedFoodAndAccommodation" className="text-primary  text-sm font-bold pl-3"> {" "}I need food and accommodation</label>
+                </div> */}
               <input type="file" name="file" id="file" className="hidden" onChange={(e)=>{
                 const file = e.target?.files && e.target?.files[0];
                 setFile(file);

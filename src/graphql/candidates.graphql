@@ -56,10 +56,12 @@ query GetFinalSearchCandidates(
 ){
   searchFinalCandidates(chestNo: $chestNo, name: $name, limit: $limit , teamName: $teamName) {
    totalCandidates
+   
    candidates{
     id
     name
     avatar
+    iNeedFoodAndAccommodation
     chestNO
     iamReady
     category {

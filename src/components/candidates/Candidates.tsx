@@ -133,6 +133,46 @@ function Candidates(props: Props) {
     }
   };
 
+  const handleDownloadStatus = async () => {
+    // // console.log(categoryForTotal);
+    try {
+      const postData = {
+        candidates:candidates ,
+        team: candidates[0].team?.name as string,
+        zone : candidates[0].team?.zone?.name as string,
+        // SelectedProgrammes,
+      };
+      // Make a POST request to the Excel API route
+      const response = await fetch("/api/excel/candidates", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Specify the content type if sending JSON data
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
+        // Convert the response to a Blob and create a URL for downloading
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a download link and trigger the download
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Status.xlsx";
+        a.click();
+
+        // Clean up by revoking the URL
+
+        window.URL.revokeObjectURL(url);
+      } else {
+        console.error("Failed to generate Excel file.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col items-center gap-4 p-20">
@@ -148,6 +188,19 @@ function Candidates(props: Props) {
                 Candidates Status
               </p>
               <p className="text-brown text-4xl font-bold">{ `${registeredCandidates} /  ${totalCandidates}`}</p>
+              {/* download botton */}
+
+              <button
+                onClick={handleDownloadStatus}
+                className="bg-primary rounded-xl px-4 py-2 mt-3 "
+              >
+                <p className="
+                text-white text-sm font-semibold
+                ">
+                Dowload Excel
+                </p>
+              </button>
+              
             </div>
           </div>
         </div>
