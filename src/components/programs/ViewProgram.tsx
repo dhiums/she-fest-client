@@ -290,7 +290,7 @@ const ViewProgram = (props: Props) => {
                     <p className="text-primary font-semibold">
                       {cp.candidate?.team?.name}
                     </p>
-                    <button
+                    {/* <button
                       onClick={async () => {
                         setToDeleteCP(cp);
                         await HandleDelete(cp.id as number);
@@ -322,7 +322,7 @@ const ViewProgram = (props: Props) => {
                           />
                         </svg>
                       )}
-                    </button>
+                    </button> */}
                   </div>
                 );
               }
@@ -346,9 +346,9 @@ const ViewProgram = (props: Props) => {
               className={`w-full p-3 text-left`}
             >
               <p className="text-lg mt-3 font-bold text-primary text-center">
-                Add Candidates
+                No Candidates Found
               </p>
-              <p className="text-sm mt-3 font-bold text-primary">Reg No</p>
+              {/* <p className="text-sm mt-3 font-bold text-primary">Reg No</p>
               {props.selected.type == Types.Group ||
               props.selected.type == Types.House ? (
                 // map input as much as props.selected.candidateCount
@@ -390,19 +390,20 @@ const ViewProgram = (props: Props) => {
                   }}
                   placeholder={`Reg No`}
                 />
-              )}
-              <p className="text-sm mt-1 font-bold text-primary">
+              )} */}
+
+              {/* <p className="text-sm mt-1 font-bold text-primary">
                 {chestNo.length > 0
                   ? !filteredCandidate
                     ? "No candidates found"
                     : filteredCandidate?.name
                   : ""}
               </p>
-              {/* error */}
+
               <p className="text-sm mt-1 font-bold text-red-600">{error}</p>
               <button className="w-full bg-primary text-white font-bold px-3 py-2 rounded-lg mt-3">
                 Add Candidate
-              </button>
+              </button> */}
             </form>
           )}
         <button

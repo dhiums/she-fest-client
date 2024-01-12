@@ -45,6 +45,7 @@ function Candidates(props: Props) {
   const [teamName, setTeamName] = useState("");
   const [selected, setSelected] = useState<Candidate | null>(null);
   const [totalCandidates, setTotalCandidates] = useState(0);
+  const [registeredCandidates, setRegisteredCandidates] = useState(0);
 
   const router = useRouter();
   const { data, setData } = useGlobalContext();
@@ -63,23 +64,32 @@ function Candidates(props: Props) {
     variables: {
       chestNo: "",
       name: searchTerm,
-      limit: 12,
+      limit: 100,
       teamName: teamName,
     },
     pause: searchTerm == "",
   });
 
   useEffect(() => {
-    if (data.roles == Roles.TeamManager) {
-      setTeamName(data.team?.name as string);
-    }
-
     if (user?.searchFinalCandidates) {
       setCandidates(user.searchFinalCandidates.candidates as Candidate[]);
       setTotalCandidates(user.searchFinalCandidates.totalCandidates);
       // console.log(user.searchCandidates.candidates);
+
+      const registered = user.searchFinalCandidates.candidates?.filter(
+        (candidate) => candidate?.avatar != null && candidate.iamReady == true
+      );
+
+      setRegisteredCandidates(registered?.length as number);
     }
-  }, [data.team?.name, user]);
+  }
+  , [user]);
+
+  useEffect(() => {
+    if (data.roles == Roles.TeamManager) {
+      setTeamName(data.team?.name as string);
+    }
+  }, [data.team?.name]);
 
   const delayedSearch = debounce((term: string) => {
     setSearchTerm(term);
@@ -101,7 +111,6 @@ function Candidates(props: Props) {
         // body: JSON.stringify(postData),
       });
 
-
       if (response.ok) {
         // Convert the response to a Blob and create a URL for downloading
         const blob = await response.blob();
@@ -112,7 +121,6 @@ function Candidates(props: Props) {
         a.href = url;
         a.download = "Institution Based.xlsx";
         a.click();
-
 
         // Clean up by revoking the URL
 
@@ -137,9 +145,9 @@ function Candidates(props: Props) {
           <div className="line-clamp-2 border-2  p-3 my-2 border-primary flex items-center justify-center rounded-xl border-dashed ">
             <div className="bg-secondary rounded-xl p-6 flex flex-col items-center justify-center">
               <p className="text-primary text-2xl font-semibold">
-                Total Candidates
+                Candidates Status
               </p>
-              <p className="text-brown text-4xl font-bold">{totalCandidates}</p>
+              <p className="text-brown text-4xl font-bold">{ `${registeredCandidates} /  ${totalCandidates}`}</p>
             </div>
           </div>
         </div>
@@ -321,6 +329,10 @@ function Candidates(props: Props) {
         setIsView={setIsView}
         selected={selected as Candidate}
         setSelected={setSelected as any}
+        candidates={candidates}
+        setCandidates={setCandidates}
+        registeredCandidatesCount={registeredCandidates}
+        setRegisteredCandidatesCount={setRegisteredCandidates}
       />
     </>
   );

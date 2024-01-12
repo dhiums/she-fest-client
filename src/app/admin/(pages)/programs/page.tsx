@@ -1,5 +1,5 @@
 import Programs from "@/components/programs/Programs";
-import { Category, GetAllCandidateProgrammesDocument, GetAllCandidatesDocument, GetAllCandidatesQuery, GetAllCandidatesQueryVariables, GetAllCategoriesDocument, GetAllCategoriesQuery, GetAllCategoriesQueryVariables, GetAllProgrammesDocument, GetAllProgrammesQuery, GetAllProgrammesQueryVariables, GetAllTeamsDocument, GetAllTeamsQuery, GetAllTeamsQueryVariables, GetAllZonesDocument, GetAllZonesQuery, GetAllZonesQueryVariables, Programme, Zone } from "@/gql/graphql";
+import { Category, GetAllCandidateProgrammesDocument, GetAllCandidatesDocument, GetAllCandidatesQuery, GetAllCandidatesQueryVariables, GetAllCategoriesDocument, GetAllCategoriesQuery, GetAllCategoriesQueryVariables, GetAllFinalProgrammesDocument, GetAllFinalProgrammesQuery, GetAllFinalProgrammesQueryVariables, GetAllTeamsDocument, GetAllTeamsQuery, GetAllTeamsQueryVariables, GetAllZonesDocument, GetAllZonesQuery, GetAllZonesQueryVariables, Programme, Zone } from "@/gql/graphql";
 import { API_KEY } from "@/lib/env";
 import { getUrqlClient } from "@/lib/urql";
 
@@ -7,9 +7,9 @@ export default async function Page() {
   const { client } = getUrqlClient();
   
   const programmes = await client.query<
-    GetAllProgrammesQuery,
-    GetAllProgrammesQueryVariables
-  >(GetAllProgrammesDocument, {
+    GetAllFinalProgrammesQuery,
+    GetAllFinalProgrammesQueryVariables
+  >(GetAllFinalProgrammesDocument, {
     api_key: API_KEY,
   });
 
@@ -42,7 +42,7 @@ export default async function Page() {
 
   return (
     <div>
-      <Programs pageProps={1} team={teams.data?.teams} candidates={candidates.data?.candidates} categories={categories.data?.categories as Category[]}  programmes={programmes.data?.programmes as Programme[] } zones={zones.data?.zones as Zone[]} />
+      <Programs pageProps={1} team={teams.data?.teams} candidates={candidates.data?.candidates} categories={categories.data?.categories as Category[]}  programmes={programmes.data?.finalprogrammes as Programme[] } zones={zones.data?.zones as Zone[]} />
     </div>
   );
 }

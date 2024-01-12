@@ -59,7 +59,9 @@ query GetFinalSearchCandidates(
    candidates{
     id
     name
+    avatar
     chestNO
+    iamReady
     category {
       name
     }
