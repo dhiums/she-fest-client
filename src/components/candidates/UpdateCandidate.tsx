@@ -38,7 +38,7 @@ const UpdateCandidate = (props: Props) => {
     // console.log(datas);
 
     if (datas.data?.updateCandidate) {
-      props.setCandidates([...props.candidates, datas.data.updateCandidate]);
+      props.setCandidates([...props.candidates as Candidate[], datas.data.updateCandidate as Candidate]);
       props.setIsUpdate(false);
     }
   };
