@@ -145,8 +145,7 @@ export default function Publish(props: Props) {
       PublishResultsMutation,
       PublishResultsMutationVariables
     > = await PublishResultExicute({
-      programCodes: selectedPrograms.map((prg) => prg.programCode) as string[],
-      zone: selectedZone,
+      programCodes: selectedPrograms.map((prg) => prg.programCode) as string[]
     });
 
     if (datas.data?.publishResults) {

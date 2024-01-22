@@ -53,8 +53,7 @@ export default function ResultUpload(props: Props) {
     const data: OperationResult<AddManualUploadMutation, AddManualUploadMutationVariables> =
       await addManualUploadExecute({
         programmeCode: props.selected.programCode as string,
-        input: toUploadForm,
-        zone: props.zone
+        input: toUploadForm
       });
     // console.log(data);
     if (data.data?.uploadResultManually) {
