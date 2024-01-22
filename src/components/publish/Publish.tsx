@@ -157,6 +157,7 @@ export default function Publish(props: Props) {
     let downloadData: ToDownLoadData[] = [];
 
     props.programs?.forEach((programme, index) => {
+      console.log(programme.name);
 
       // console.log(programme);
       
@@ -168,6 +169,7 @@ export default function Publish(props: Props) {
       );
 
       if(programme.type != Types.House){
+        
         programme.candidateProgramme
         ?.forEach((candidate, i) => {
           let sl = i == 0 ? index + 1 : "";
@@ -231,6 +233,8 @@ export default function Publish(props: Props) {
         });
 
       }else{
+        console.log(programme);
+        
         programme.candidateProgramme
         ?.forEach((candidate, i) => {
           
@@ -303,6 +307,8 @@ export default function Publish(props: Props) {
   }, []);
 
   const handleDownload = async () => {
+    console.log(toDownLoadData);
+    
     try {
       const postData = {
         data: toDownLoadData,
