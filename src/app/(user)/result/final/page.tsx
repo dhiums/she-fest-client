@@ -39,7 +39,7 @@ export default async function page() {
       }
       topCandidates={enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.topCandidates as CandidateWithPoint[]}
       topTeams={enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.topTeams as TeamWithPoint[]}
-      zonesWithPoint={enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.topZones as ZonesWithPoint[]}
+      zonesWithPoint={enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.zonesWithPoint as ZonesWithPoint[]}
     />
     // <>
     // Updating soon...
