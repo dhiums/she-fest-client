@@ -152,13 +152,13 @@ export default function ResultFinal(props: Props) {
           props.zonesWithPoint.map((item, index) => (
             <div className="flex border hover:bg-ysmoke w-full p-4 transition-colors duration-300 rounded-lg">
               <div className="flex flex-col w-3/6 gap-1">
-                <p className="font-bold text-lg">#{index + 1}</p>
+                {/* <p className="font-bold text-lg">#{index + 1}</p> */}
                 <div className="flex items-end">
                   <span className="font-bold text-4xl text-browner">
                     {item.totalPoint}
                   </span>
                 </div>
-                <p className="font-semibold text-xs">{item.name}</p>
+                <p className="font-bold text-xl"> Zone {item.name}</p>
               </div>
               <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
                 {item.categoryWisePoint.map((cw) => (

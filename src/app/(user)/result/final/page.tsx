@@ -29,7 +29,7 @@ export default async function page() {
   >(GetFinalPublishedProgrammesDocument, {
   });
 
-  console.log(publishedProgrammes.data?.findResultPublishedProgrammesByFinal?.topTeams);
+  console.log(publishedProgrammes.data?.findResultPublishedProgrammesByFinal);
   
 
   return (

@@ -158,6 +158,8 @@ export default function Publish(props: Props) {
 
     props.programs?.forEach((programme, index) => {
 
+      // console.log(programme);
+      
       // if (programme.resultPublished) {
       //   return;
       // }

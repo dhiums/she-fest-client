@@ -37,6 +37,19 @@ query GetAllProgrammes($api_key: String!) {
         pointHouse
         value
       }
+       finalgrade {
+        name
+        pointGroup
+        pointSingle
+        pointHouse
+      }
+      finalposition {
+        name
+        pointGroup
+        pointSingle
+        pointHouse
+        value
+      }
       id
       candidate {
         chestNO
