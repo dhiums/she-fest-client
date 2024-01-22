@@ -10,12 +10,12 @@ interface Props {
 
 export default function ViewResultFinal(props: Props) {
   const [sorted,setSorted] = useState<CandidateProgramme[]>(
-    props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.zonalpoint as number - ( a?.zonalpoint  as number)
+    props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.finalpoint as number - ( a?.finalpoint  as number)
   ) as CandidateProgramme[])
 
   useEffect(()=>{
     setSorted(
-    props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.zonalpoint as number - ( a?.zonalpoint  as number) ) as CandidateProgramme[]
+    props.selectedProgram?.candidateProgramme?.sort((a : CandidateProgramme,b : CandidateProgramme)=>b?.finalpoint as number - ( a?.finalpoint  as number) ) as CandidateProgramme[]
     )
   },[
     props.selectedProgram
@@ -43,9 +43,9 @@ export default function ViewResultFinal(props: Props) {
         //   <p className="text-2xl font-semibold">{cp?.candidate?.name}</p>
         //   <p className="text-xl font-semibold">{cp?.candidate?.team?.name}</p>
         //   <div className="flex gap-3 ">
-        //   <p className="text-xl font-semibold">{cp?.zonalpoint}</p> 
-        //   <p className="text-xl font-semibold">{cp?.zonalposition?.name}</p> 
-        //   <p className="text-xl font-semibold">{cp?.zonalgrade?.name}</p> 
+        //   <p className="text-xl font-semibold">{cp?.finalpoint}</p> 
+        //   <p className="text-xl font-semibold">{cp?.finalposition?.name}</p> 
+        //   <p className="text-xl font-semibold">{cp?.finalgrade?.name}</p> 
         //   </div>
         // </div>
           <div className="hover:bg-ysmoke p-3 border rounded-md w-full">
@@ -53,9 +53,9 @@ export default function ViewResultFinal(props: Props) {
           <p className=" text-md font-bold">{cp?.candidate?.name}</p>
           <p className="text-sm">{cp?.candidate?.team?.name}</p>
             <div className="flex gap-2 w-full items-center justify-center h-full">
-          <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.zonalpoint} pts</p> 
-          <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.zonalposition?.name || "NIL"}</p> 
-         <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.zonalgrade?.name || "NIL"}</p> 
+          <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.finalpoint} pts</p> 
+          <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.finalposition?.name || "NIL"}</p> 
+         <p className="text-sm bg-yellow inline font-semibold p-1 rounded-md">{cp?.finalgrade?.name || "NIL"}</p> 
           </div>
         </div>
         ))
