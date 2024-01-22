@@ -6,6 +6,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 
  const data : any = req.body.data ;
+ console.log(data);
+ 
  const zone : any = req.body.zone ;
  const SelectedProgrammes : any = req.body.SelectedProgrammes ;
  console.log(SelectedProgrammes);
@@ -47,7 +49,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const mainTitle = worksheet.getCell("A1");
     mainTitle.value = "SheFest'23-24";
     const resultTitle = worksheet.getCell("A2");
-    resultTitle.value = `RESULTS  - ZONE ${zone}`;
+    resultTitle.value = `RESULTS  - Final`;
     worksheet.getCell("B3").value = "Programs";
     worksheet.getCell("E3").value = "Results";
     worksheet.getCell("G3").value = "Candidate";

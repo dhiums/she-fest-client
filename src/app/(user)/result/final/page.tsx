@@ -5,9 +5,9 @@ import {
   GetAllZonesDocument,
   GetAllZonesQuery,
   GetAllZonesQueryVariables,
-  GetFinalEnteredProgrammesDocument,
-  GetFinalEnteredProgrammesQuery,
-  GetFinalEnteredProgrammesQueryVariables,
+  GetFinalPublishedProgrammesDocument,
+  GetFinalPublishedProgrammesQuery,
+  GetFinalPublishedProgrammesQueryVariables,
   Programme,
   TeamWithPoint,
   Zone,
@@ -23,23 +23,23 @@ export default async function page() {
     {}
   );
 
-  const enteredProgrammes = await client.query<
-    GetFinalEnteredProgrammesQuery,
-    GetFinalEnteredProgrammesQueryVariables
-  >(GetFinalEnteredProgrammesDocument, {
+  const publishedProgrammes = await client.query<
+    GetFinalPublishedProgrammesQuery,
+    GetFinalPublishedProgrammesQueryVariables
+  >(GetFinalPublishedProgrammesDocument, {
   });
 
-  console.log(enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.topTeams);
+  console.log(publishedProgrammes.data?.findResultPublishedProgrammesByFinal?.topTeams);
   
 
   return (
     <ResultFinal
       results={
-        enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.programmes as Programme[]
+        publishedProgrammes.data?.findResultPublishedProgrammesByFinal?.programmes as Programme[]
       }
-      topCandidates={enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.topCandidates as CandidateWithPoint[]}
-      topTeams={enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.topTeams as TeamWithPoint[]}
-      zonesWithPoint={enteredProgrammes.data?.findResultEnteredProgrammesByFinal?.zonesWithPoint as ZonesWithPoint[]}
+      topCandidates={publishedProgrammes.data?.findResultPublishedProgrammesByFinal?.topCandidates as CandidateWithPoint[]}
+      topTeams={publishedProgrammes.data?.findResultPublishedProgrammesByFinal?.topTeams as TeamWithPoint[]}
+      zonesWithPoint={publishedProgrammes.data?.findResultPublishedProgrammesByFinal?.zonesWithPoint as ZonesWithPoint[]}
     />
     // <>
     // Updating soon...

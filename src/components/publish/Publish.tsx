@@ -38,20 +38,18 @@ interface ToDownLoadData {
 export default function Publish(props: Props) {
   const router = useRouter();
   const [toDownLoadData, setToDownLoadData] = useState<ToDownLoadData[]>([]);
-  const [selectedZone, setSelectedZone] = useState<string>(
-    props.zones[0]?.name as string
-  );
+
   // useEffect(() => {
   //   // change the program data to download data format
 
   //   let downloadData: ToDownLoadData[] = [];
 
-  //   props.result?.forEach((programme, index) => {
+  //   props.programs?.forEach((programme, index) => {
   //     if (programme.resultPublished) {
   //       return;
   //     }
   //     programme.candidateProgramme?.sort(
-  //       (a, b) => (b.point as number) - (a.point as number)
+  //       (a, b) => (b.finalpoint as number) - (a.finalpoint as number)
   //     );
 
   //     programme.candidateProgramme?.forEach((candidate, i) => {
@@ -61,27 +59,25 @@ export default function Publish(props: Props) {
   //       let category = i == 0 ? programme.category?.name : "";
   //       let gradePoint =
   //         programme.type == Types.Single
-  //           ? candidate.grade?.pointSingle
+  //           ? candidate.finalgrade?.pointSingle
   //           : programme.type == Types.Group
-  //             ? candidate.grade?.pointGroup
+  //             ? candidate.finalgrade?.pointGroup
   //             : programme.type == Types.House
-  //               ? candidate.grade?.pointHouse
+  //               ? candidate.finalgrade?.pointHouse
   //               : 0;
   //       let positionPoint =
   //         programme.type == Types.Single
-  //           ? candidate.position?.pointSingle
+  //           ? candidate.finalposition?.pointSingle
   //           : programme.type == Types.Group
-  //             ? candidate.position?.pointGroup
+  //             ? candidate.finalposition?.pointGroup
   //             : programme.type == Types.House
-  //               ? candidate.position?.pointHouse
+  //               ? candidate.finalposition?.pointHouse
   //               : 0;
 
   //       let chestNo =
   //         programme.type == Types.House
   //           ? candidate.candidate?.chestNO?.slice(0, -2) + "00"
   //           : candidate.candidate?.chestNO;
-  //       let candidateClass =
-  //         programme.type == Types.Single ? candidate.candidate?.class : "-";
   //       let candidateName =
   //         programme.type == Types.Single
   //           ? candidate.candidate?.name
@@ -126,18 +122,18 @@ export default function Publish(props: Props) {
   const [selectedPrograms, setSelectedPrograms] = useState<Programme[]>([]);
   const [state, PublishResultExicute] = useMutation(PublishResultsDocument);
 
-  useEffect(() => {
-    // console.log(props.results);
+  // useEffect(() => {
+  //   // console.log(props.results);
 
-    // console.log(props.zone);
+  //   // console.log(props.zone);
 
-    localStorage.getItem("selectedZone")
-      ? (setSelectedZone(localStorage.getItem("selectedZone") as string),
-        router.push(`/admin/publish?zone=${selectedZone}`))
-      : (localStorage.setItem("selectedZone", props.zones[0].name as string),
-        setSelectedZone(localStorage.getItem("selectedZone") as string),
-        router.push(`/admin/publish?zone=${selectedZone}`));
-  }, [selectedZone]);
+  //   localStorage.getItem("selectedZone")
+  //     ? (setSelectedZone(localStorage.getItem("selectedZone") as string),
+  //       router.push(`/admin/publish?zone=${selectedZone}`))
+  //     : (localStorage.setItem("selectedZone", props.zones[0].name as string),
+  //       setSelectedZone(localStorage.getItem("selectedZone") as string),
+  //       router.push(`/admin/publish?zone=${selectedZone}`));
+  // }, [selectedZone]);
 
   const handlePublish = async () => {
     console.log(selectedPrograms);
@@ -161,39 +157,36 @@ export default function Publish(props: Props) {
     let downloadData: ToDownLoadData[] = [];
 
     props.programs?.forEach((programme, index) => {
+
       // if (programme.resultPublished) {
       //   return;
       // }
       programme.candidateProgramme?.sort(
-        (a, b) => (b.zonalpoint as number) - (a.zonalpoint as number)
+        (a, b) => (b.finalpoint as number) - (a.finalpoint as number)
       );
 
       if(programme.type != Types.House){
         programme.candidateProgramme
-        ?.filter(
-          (cp: CandidateProgramme) =>
-            cp.candidate?.team?.zone?.name === props.zone
-        )
-        .forEach((candidate, i) => {
+        ?.forEach((candidate, i) => {
           let sl = i == 0 ? index + 1 : "";
           let programName = i == 0 ? programme.name : "";
           let programCode = i == 0 ? programme.programCode : "";
           let category = i == 0 ? programme.category?.name : "";
           let gradePoint =
             programme.type == Types.Single
-              ? candidate.zonalgrade?.pointSingle
+              ? candidate.finalgrade?.pointSingle
               : programme.type == Types.Group
-              ? candidate.zonalgrade?.pointGroup
+              ? candidate.finalgrade?.pointGroup
               : programme.type == Types.House
-              ? candidate.zonalgrade?.pointHouse
+              ? candidate.finalgrade?.pointHouse
               : 0;
           let positionPoint =
             programme.type == Types.Single
-              ? candidate.zonalposition?.pointSingle
+              ? candidate.finalposition?.pointSingle
               : programme.type == Types.Group
-              ? candidate.zonalposition?.pointGroup
+              ? candidate.finalposition?.pointGroup
               : programme.type == Types.House
-              ? candidate.zonalposition?.pointHouse
+              ? candidate.finalposition?.pointHouse
               : 0;
 
           let chestNo =
@@ -211,17 +204,17 @@ export default function Publish(props: Props) {
 
           // if there no position or grade then not push
 
-          if (candidate.zonalposition || candidate.zonalgrade) {
+          if (candidate.finalposition || candidate.finalgrade) {
             downloadData.push({
               sl: sl,
               programCode: programCode as string,
               programmeName: programName as string,
               category: category as string,
-              position: candidate.zonalposition?.value
-                ? candidate.zonalposition?.value
+              position: candidate.finalposition?.value
+                ? candidate.finalposition?.value
                 : ("" as any),
-              grade: candidate.zonalgrade?.name
-                ? candidate.zonalgrade?.name
+              grade: candidate.finalgrade?.name
+                ? candidate.finalgrade?.name
                 : ("" as string),
               candidateChestNo: chestNo as string,
               candidateName: candidateName as string,
@@ -229,7 +222,7 @@ export default function Publish(props: Props) {
 
               gradePoint: gradePoint ? gradePoint : ("" as any),
               positionPoint: positionPoint ? positionPoint : ("" as any),
-              totalPoint: candidate.zonalpoint as number,
+              totalPoint: candidate.finalpoint as number,
               checkCode: programme.programCode as string,
             });
           }
@@ -237,11 +230,7 @@ export default function Publish(props: Props) {
 
       }else{
         programme.candidateProgramme
-        ?.filter(
-          (cp: CandidateProgramme) =>
-            cp.candidate?.team?.zone?.name === props.zone
-        )
-        .forEach((candidate, i) => {
+        ?.forEach((candidate, i) => {
           
           candidate?.candidatesOfGroup?.forEach((cgp ,ind) => {
 
@@ -251,19 +240,19 @@ export default function Publish(props: Props) {
           let category = i == 0 && ind == 0 ? programme.category?.name : "";
           let gradePoint =
             programme.type == Types.Single
-              ? candidate.zonalgrade?.pointSingle
+              ? candidate.finalgrade?.pointSingle
               : programme.type == Types.Group
-              ? candidate.zonalgrade?.pointGroup
+              ? candidate.finalgrade?.pointGroup
               : programme.type == Types.House
-              ? candidate.zonalgrade?.pointHouse
+              ? candidate.finalgrade?.pointHouse
               : 0;
           let positionPoint =
             programme.type == Types.Single
-              ? candidate.zonalposition?.pointSingle
+              ? candidate.finalposition?.pointSingle
               : programme.type == Types.Group
-              ? candidate.zonalposition?.pointGroup
+              ? candidate.finalposition?.pointGroup
               : programme.type == Types.House
-              ? candidate.zonalposition?.pointHouse
+              ? candidate.finalposition?.pointHouse
               : 0;
 
           let chestNo = cgp?.chestNO;
@@ -271,17 +260,17 @@ export default function Publish(props: Props) {
 
           // if there no position or grade then not push
 
-          if (candidate.zonalposition || candidate.zonalgrade) {
+          if (candidate.finalposition || candidate.finalgrade) {
             downloadData.push({
               sl: sl,
               programCode: programCode as string,
               programmeName: programName as string,
               category: category as string,
-              position: candidate.zonalposition?.value
-                ? candidate.zonalposition?.value
+              position: candidate.finalposition?.value
+                ? candidate.finalposition?.value
                 : ("" as any),
-              grade: candidate.zonalgrade?.name
-                ? candidate.zonalgrade?.name
+              grade: candidate.finalgrade?.name
+                ? candidate.finalgrade?.name
                 : ("" as string),
               candidateChestNo: chestNo as string,
               candidateName: candidateName as string,
@@ -289,7 +278,7 @@ export default function Publish(props: Props) {
 
               gradePoint: gradePoint ? gradePoint : ("" as any),
               positionPoint: positionPoint ? positionPoint : ("" as any),
-              totalPoint: candidate.zonalpoint as number,
+              totalPoint: candidate.finalpoint as number,
               checkCode: programme.programCode as string,
             });
           }
@@ -304,6 +293,9 @@ export default function Publish(props: Props) {
        
 
     });
+
+    console.log(props.programs);
+    
 
     setToDownLoadData(downloadData as ToDownLoadData[]);
   }, []);
@@ -336,7 +328,7 @@ export default function Publish(props: Props) {
         // Create a download link and trigger the download
         const a = document.createElement("a");
         a.href = url;
-        a.download = "data.xlsx";
+        a.download = "results.xlsx";
         a.click();
 
         // Clean up by revoking the URL
@@ -516,19 +508,19 @@ export default function Publish(props: Props) {
   return (
     <div className="py-5">
       <div className="flex w-full justify-center gap-4">
-        {props.zones?.map((zone) => (
-          <button
-            onClick={() => {
-              setSelectedZone(zone?.name as string);
-              localStorage.setItem("selectedZone", zone?.name as string);
-            }}
-            className={`hover:bg-oranger transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
-              selectedZone === zone?.name ? `bg-oranger` : `bg-orange`
-            }`}
-          >
-            {zone?.name}
-          </button>
-        ))}
+        {/* {props.zones?.map((zone) => (
+          // <button
+          //   onClick={() => {
+          //     setSelectedZone(zone?.name as string);
+          //     localStorage.setItem("selectedZone", zone?.name as string);
+          //   }}
+          //   className={`hover:bg-oranger transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
+          //     selectedZone === zone?.name ? `bg-oranger` : `bg-orange`
+          //   }`}
+          // >
+          //   {zone?.name}
+          // </button>
+        ))} */}
       </div>
       <div className="flex justify-center items-center mt-5">
         <p className="text-xl font-semibold ">
@@ -555,8 +547,8 @@ export default function Publish(props: Props) {
         {props.programs
           ?.filter(
             (prg) =>
-              // (prg as any)[`published${selectedZone}`] != true &&
-              (prg as any)[`entered${selectedZone}`] == true
+              (prg as any)[`publishedFinal`] != true &&
+              (prg as any)[`enteredFinal`] == true 
             // prg.publishedD != true &&
             // prg.enteredA == true
           )
