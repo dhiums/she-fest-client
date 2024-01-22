@@ -1,5 +1,5 @@
-mutation addManualUpload($input: [AddManual!]!, $programmeCode: String! , $zone: String!) {
-  uploadResultManually(addManual: $input, programmeCode: $programmeCode zone:$zone ) {
+mutation addManualUpload($input: [AddManual!]!, $programmeCode: String! ) {
+  uploadResultManually(addManual: $input, programmeCode: $programmeCode ) {
     id
     anyIssue
   }

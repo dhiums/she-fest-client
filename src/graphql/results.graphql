@@ -1,12 +1,12 @@
-mutation PublishResults($programCodes: [String!]! $zone : String!) {
-  publishResults(programmeCode: $programCodes zone:$zone){
+mutation PublishResults($programCodes: [String!]!) {
+  publishResults(programmeCode: $programCodes){
     id
     resultPublished
     programCode
   }
 }
 
-mutation PublishResult($programCodes: String! $zone : String!) {
-  publishResult(programmeCode: $programCodes zone:$zone)
+mutation PublishResult($programCodes: String!) {
+  publishResult(programmeCode: $programCodes)
 }
 

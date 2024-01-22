@@ -5,6 +5,7 @@ import {
   GetFinalSearchCandidatesDocument,
   GetFinalSearchCandidatesQuery,
   GetFinalSearchCandidatesQueryVariables,
+  Modes,
   Roles,
   Team,
 } from "@/gql/graphql";
@@ -67,11 +68,15 @@ function Candidates(props: Props) {
       limit: 100,
       teamName: teamName,
     },
-    pause: searchTerm == "",
+    pause:  searchTerm == null ,
   });
 
   useEffect(() => {
     if (user?.searchFinalCandidates) {
+
+      console.log(user.searchFinalCandidates.candidates);
+      
+      
       setCandidates(user.searchFinalCandidates.candidates as Candidate[]);
       setTotalCandidates(user.searchFinalCandidates.totalCandidates);
       // console.log(user.searchCandidates.candidates);

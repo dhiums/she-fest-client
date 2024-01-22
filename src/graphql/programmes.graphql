@@ -9,12 +9,14 @@ query GetAllProgrammes($api_key: String!) {
     enteredB
     enteredC
     enteredD
-    enteredE
+    enteredE 
+    enteredFinal
     publishedA
     publishedB
     publishedC
     publishedD
     publishedE
+    publishedFinal
     candidateCount
     groupCount
     category {
@@ -307,7 +309,7 @@ query GetPublishedProgrammes($zone: String!) {
   }
 }
 
-query GetEnteredProgrammes($zone: String!) {
+query GetEnteredProgrammes ($zone: String!){
   findResultEnteredProgrammesByZone(zone: $zone) {
     programmes {
       id
@@ -369,6 +371,154 @@ query GetEnteredProgrammes($zone: String!) {
       zoneName
       totalPoint
       categoryName
+    }
+  }
+}
+
+query GetFinalPublishedProgrammes{
+  findResultPublishedProgrammesByFinal {
+    programmes {
+      id
+      name
+      type
+      programCode
+      category {
+        name
+      }
+      candidateProgramme {
+        id
+        zonalpoint
+        finalpoint
+        finalgrade {
+          id
+          name
+        }
+        finalposition {
+          id
+          name
+        }
+        zonalgrade {
+          id
+          name
+        }
+        zonalposition {
+          id
+          name
+        }
+        candidate {
+          name
+          chestNO
+          team {
+            name
+            id
+            zone {
+              name
+              id
+            }
+          }
+        }
+      }
+    }
+
+    topTeams {
+      teamName
+      zoneName
+      totalPoint
+      totalPercentage
+      categoryWisePoint {
+        categoryName
+        categoryPoint
+      }
+    }
+    topCandidates {
+      candidateName
+      chestNo
+      teamName
+      zoneName
+      totalPoint
+      categoryName
+    }
+    zonesWithPoint {
+      name
+      totalPoint
+      categoryWisePoint {
+        categoryName
+        categoryPoint
+      }
+    }
+  }
+}
+
+query GetFinalEnteredProgrammes {
+  findResultEnteredProgrammesByFinal {
+    programmes {
+      id
+      name
+      type
+      programCode
+      category {
+        name
+      }
+      candidateProgramme {
+        id
+        zonalpoint
+        finalpoint
+        finalgrade {
+          id
+          name
+        }
+        finalposition {
+          id
+          name
+        }
+        zonalgrade {
+          id
+          name
+        }
+        zonalposition {
+          id
+          name
+        }
+        candidate {
+          name
+          chestNO
+          team {
+            name
+            id
+            zone {
+              name
+              id
+            }
+          }
+        }
+      }
+    }
+
+    topTeams {
+      teamName
+      zoneName
+      totalPoint
+      totalPercentage
+      categoryWisePoint {
+        categoryName
+        categoryPoint
+      }
+    }
+    topCandidates {
+      candidateName
+      chestNo
+      teamName
+      zoneName
+      totalPoint
+      categoryName
+    }
+    zonesWithPoint {
+      name
+      totalPoint
+      categoryWisePoint {
+        categoryName
+        categoryPoint
+      }
     }
   }
 }

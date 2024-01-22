@@ -75,6 +75,8 @@ function Programs(props: Props) {
             publishedC
             publishedD
             publishedE
+            enteredFinal
+            publishedFinal
             candidateCount
             groupCount
             category {
@@ -539,14 +541,14 @@ function Programs(props: Props) {
                       <div className="flex gap-3">
                         <div
                           className={`w-4 h-4 rounded-full ${
-                            (program as any)[`entered${zone}`]
+                            program.enteredFinal
                               ? "bg-green-500"
                               : "bg-red-500"
                           }`}
                         ></div>
                         <div
                           className={`w-4 h-4 rounded-full ${
-                            (program as any)[`published${zone}`]
+                            program.publishedFinal
                               ? "bg-green-500"
                               : "bg-red-500"
                           }`}

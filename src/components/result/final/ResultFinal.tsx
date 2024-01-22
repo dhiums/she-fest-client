@@ -5,79 +5,66 @@ import {
   Programme,
   TeamWithPoint,
   Zone,
+  ZonesWithPoint,
 } from "@/gql/graphql";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
-import ViewResult from "./ViewResult";
-import Header from "../Headers/NavHeader";
+import ViewResult from "./ViewResultFinal";
+import Header from "../../Headers/NavHeader";
 
 interface Props {
-  zones: Zone[];
   results: Programme[];
-  zone: string;
+  zonesWithPoint:ZonesWithPoint[];
   topTeams: TeamWithPoint[];
   topCandidates: CandidateWithPoint[];
 }
-export default function Result(props: Props) {
+export default function ResultFinal(props: Props) {
   const router = useRouter();
-  const [selectedZone, setSelectedZone] = useState<string>(
-    props.zones[0]?.name as string
-  );
   const [selectedProgram, setSelectedProgram] = useState<Programme>();
   const [resultView, setResultView] = useState<boolean>(false);
+  const [isZone, setIsZone] = useState<boolean>(false);
 
-  useEffect(() => {
-    // console.log(props.results);
-
-    // console.log(props.zone);
-
-    localStorage.getItem("selectedZone")
-      ? (setSelectedZone(localStorage.getItem("selectedZone") as string),
-        router.push(`/result?zone=${selectedZone}`))
-      : (localStorage.setItem("selectedZone", props.zones[0].name as string),
-        setSelectedZone(localStorage.getItem("selectedZone") as string),
-        router.push(`/result?zone=${selectedZone}`));
-  }, [selectedZone]);
+  
 
   const downloadToppersList = async () => {
     console.log(props?.topTeams);
     console.log(props?.topCandidates);
 
-    try {
-      const postData = {
-        zone: selectedZone,
-        topTeams: props?.topTeams,
-        topCandidates: props?.topCandidates,
-      };
-      // Make a POST request to the Excel API route
-      const response = await fetch("/api/excel/topperList", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type if sending JSON data
-        },
-        body: JSON.stringify(postData),
-      });
+    // try {
+    //   const postData = {
+    //     zone: selectedZone,
+    //     topTeams: props?.topTeams,
+    //     topCandidates: props?.topCandidates,
+    //   };
+    //   // Make a POST request to the Excel API route
+    //   const response = await fetch("/api/excel/topperList", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json", // Specify the content type if sending JSON data
+    //     },
+    //     body: JSON.stringify(postData),
+    //   });
 
-      if (response.ok) {
-        // Convert the response to a Blob and create a URL for downloading
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
+    //   if (response.ok) {
+    //     // Convert the response to a Blob and create a URL for downloading
+    //     const blob = await response.blob();
+    //     const url = window.URL.createObjectURL(blob);
 
-        // Create a download link and trigger the download
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "data.xlsx";
-        a.click();
+    //     // Create a download link and trigger the download
+    //     const a = document.createElement("a");
+    //     a.href = url;
+    //     a.download = "data.xlsx";
+    //     a.click();
 
-        // Clean up by revoking the URL
+    //     // Clean up by revoking the URL
 
-        window.URL.revokeObjectURL(url);
-      } else {
-        console.error("Failed to generate Excel file.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    //     window.URL.revokeObjectURL(url);
+    //   } else {
+    //     console.error("Failed to generate Excel file.");
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error);
+    // }
   };
 
   return (
@@ -108,57 +95,89 @@ export default function Result(props: Props) {
         </div>
 
         <div className="flex flex-col h-[90vh] min-w-[300px] rounded-3xl gap-4 p-3 ">
-          <div className="flex justify-center mt-4">
-            <p className=" text-4xl font-semibold">Zones</p>
+          <div className="flex items-center justify-center gap-5 cursor-pointer">
+          <div onClick={()=>{
+            setIsZone(true)
+          }} className={`hover:bg-yellower transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
+                  isZone ? `bg-yellower` : `bg-yellow`
+                }`}>
+                  Zone
           </div>
-          <div className="flex w-full justify-center gap-4">
-            {props.zones?.map((zone) => (
-              <button
-                onClick={() => {
-                  setSelectedZone(zone?.name as string);
-                  localStorage.setItem("selectedZone", zone?.name as string);
-                }}
-                className={`hover:bg-yellower transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
-                  selectedZone === zone?.name ? `bg-yellower` : `bg-yellow`
-                }`}
-              >
-                {zone?.name}
-              </button>
-            ))}
+          <div onClick={()=>{
+            setIsZone(false)
+          }} className={`hover:bg-yellower transition-all duration-300  flex items-center gap-3 text-full px-3 py-1 border-black shadow-md border-2 rounded-xl font-semibold hover:scale-[1.02] ${
+                 ( !isZone) ? `bg-yellower` : `bg-yellow`
+                }`}>
+                  Institution
           </div>
+          </div>
+         {
+          (!isZone) ? 
           <div className="flex flex-col gap-2  items-center overflow-y-auto">
-            {props.topTeams?.length > 0 ? (
-              props.topTeams.map((item, index) => (
-                <div className="flex border hover:bg-ysmoke w-full p-4 transition-colors duration-300 rounded-lg">
-                  <div className="flex flex-col w-3/6 gap-1">
-                    <p className="font-bold text-lg">#{index + 1}</p>
-                    <div className="flex items-end">
-                      <span className="font-bold text-4xl text-browner">
-                        {item.totalPoint}
-                      </span>
-                      <span className="font-bold text-md">
-                        ({(item.totalPercentage * 10000).toFixed(2)}%)
-                      </span>
-                    </div>
-                    <p className="font-semibold text-xs">{item.teamName}</p>
+          {props.topTeams?.length > 0 ? (
+            props.topTeams.map((item, index) => (
+              <div className="flex border hover:bg-ysmoke w-full p-4 transition-colors duration-300 rounded-lg">
+                <div className="flex flex-col w-3/6 gap-1">
+                  <p className="font-bold text-lg">#{index + 1}</p>
+                  <div className="flex items-end">
+                    <span className="font-bold text-4xl text-browner">
+                      {item.totalPoint}
+                    </span>
+                    <span className="font-bold text-md">
+                      ({(item.totalPercentage * 10000).toFixed(2)}%)
+                    </span>
                   </div>
-                  <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
-                    {item.categoryWisePoint.map((cw) => (
-                      <p>
-                        <span className="bg-yellow px-2 rounded-full">
-                          {cw.categoryName} : {cw.categoryPoint}
-                        </span>
-                      </p>
-                    ))}
-                  </div>
+                  <p className="font-semibold text-xs">{item.teamName}</p>
                 </div>
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full">
-                <p className="text-2xl font-bold ">No Results Published.</p>
+                <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
+                  {item.categoryWisePoint.map((cw) => (
+                    <p>
+                      <span className="bg-yellow px-2 rounded-full">
+                        {cw.categoryName} : {cw.categoryPoint}
+                      </span>
+                    </p>
+                  ))}
+                </div>
               </div>
-            )}
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full">
+              <p className="text-2xl font-bold ">No Results Published.</p>
+            </div>
+          )}
+        </div>
+        : 
+        <div className="flex flex-col gap-2  items-center overflow-y-auto">
+        {props.zonesWithPoint?.length > 0 ? (
+          props.zonesWithPoint.map((item, index) => (
+            <div className="flex border hover:bg-ysmoke w-full p-4 transition-colors duration-300 rounded-lg">
+              <div className="flex flex-col w-3/6 gap-1">
+                <p className="font-bold text-lg">#{index + 1}</p>
+                <div className="flex items-end">
+                  <span className="font-bold text-4xl text-browner">
+                    {item.totalPoint}
+                  </span>
+                </div>
+                <p className="font-semibold text-xs">{item.name}</p>
+              </div>
+              <div className="flex flex-col justify-center w-3/6 text-xs font-semibold whitespace-nowrap gap-1">
+                {item.categoryWisePoint.map((cw) => (
+                  <p>
+                    <span className="bg-yellow px-2 rounded-full">
+                      {cw.categoryName} : {cw.categoryPoint}
+                    </span>
+                    </p>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-2xl font-bold ">No Results Published.</p>
           </div>
+        )}
+      </div>
+         }
         </div>
 
         <div className="flex flex-col w-3/4 h-[90vh] overflow-y-auto p-3">
