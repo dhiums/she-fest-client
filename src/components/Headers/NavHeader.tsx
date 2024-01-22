@@ -77,11 +77,11 @@ function Header() {
                 <>
                   <Link
                     className={`${
-                      path != "/result" ? "text-secondary" : "text-brown"
+                      path != "/result/final" ? "text-secondary" : "text-brown"
                     }`}
                     href="/"
                   >
-                    Results
+                    result
                   </Link>
                   &#x2022;
                   <Link
@@ -204,7 +204,7 @@ function Header() {
             <>
               <Link
                 className=" bg-white text-brown p-2 hover:bg-secondary text-xs rounded-2xl mx-1 flex flex-col items-center justify-center"
-                href="/result/"
+                href="/result/final/"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +220,7 @@ function Header() {
                     d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
                   />
                 </svg>
-                Results
+                result
               </Link>
 
               <Link

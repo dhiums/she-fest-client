@@ -25,6 +25,8 @@ export default function ResultFinal(props: Props) {
   const [isZone, setIsZone] = useState<boolean>(false);
 
   
+  console.log(props?.results);
+  
 
   const downloadToppersList = async () => {
     console.log(props?.topTeams);

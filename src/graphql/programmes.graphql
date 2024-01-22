@@ -257,7 +257,7 @@ query totalProgramsCount($api_key: String!) {
 }
 
 query GetPublishedProgrammes($zone: String!) {
-  findResultPublishedProgrammesByZone(zone: $zone) {
+  findResultEnteredProgrammesByZone(zone: $zone) {
     programmes {
       id
       name
@@ -402,6 +402,7 @@ query GetFinalPublishedProgrammes{
         id
         zonalpoint
         finalpoint
+        
         finalgrade {
           id
           name
@@ -421,6 +422,7 @@ query GetFinalPublishedProgrammes{
         candidate {
           name
           chestNO
+          avatar
           team {
             name
             id
