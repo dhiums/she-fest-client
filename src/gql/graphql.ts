@@ -1226,7 +1226,7 @@ export type CandidateWithPoint = {
   zoneName: Scalars['String']['output'];
 };
 
-export type CreateInput = {
+export type CreEateInput = {
   inputs: Array<CreateProgrammeInput>;
 };
 
