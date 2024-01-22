@@ -153,6 +153,7 @@ query GetCandidateByChestNo($api_key: String!, $chestNO: String!) {
         type
         programCode
         date
+        mode
         name
       }
       finalgrade {

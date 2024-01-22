@@ -3,6 +3,7 @@ import {
   Candidate,
   CandidateProgramme,
   GetCandidateByChestNoQuery,
+  Modes,
   Programme,
   Types,
 } from "@/gql/graphql";
@@ -46,7 +47,7 @@ export default function Profile(props: Props) {
               Total Points :{" "}
               {props?.candidate?.candidateProgrammes?.reduce((a, b) => {
                 if (b?.programme?.type == Types.Single) {
-                  return a + (b?.zonalpoint as unknown as number);
+                  return a + (b?.finalpoint as unknown as number);
                 } else {
                   return a + 0;
                 }
@@ -57,7 +58,15 @@ export default function Profile(props: Props) {
             <>
               <p className="font-semibold text-2xl mt-5">Programs</p>
               <div className="flex flex-col items-center mt-3 rounded-xl gap-2">
-                {props.candidate.candidateProgrammes?.map(
+                {props.candidate.candidateProgrammes?.filter((prg , ind)=>{
+                  if(prg?.programme?.mode == Modes.Stage && prg.zonalposition?.id as number <= 2){
+                    return true
+                  }else if(prg?.programme?.mode == Modes.NonStage && prg.zonalposition?.id as number == 1){
+                    return true
+                  }else{
+                    return false
+                  }
+                })?.map(
                   (candidateProgramme) => (
                     <p
                       onClick={() => {

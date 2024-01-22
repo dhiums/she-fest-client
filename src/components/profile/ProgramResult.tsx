@@ -16,12 +16,12 @@ export default function ProgramResult(props: Props) {
     >
       <div className="bg-white p-3 rounded-xl flex flex-col items-center min-w-[400px]  max-w-[400px] max-h-[95vh] text-center ">
         <p className="font-semibold text-2xl">{props.selectedCP?.programme?.name}</p>
-        {props?.selectedCP && (props.selectedCP?.zonalpoint as number) > 0  ? (            <>
-              <p>Position : <span className="font-bold">{props?.selectedCP?.zonalposition?.name || 'NIL'}</span></p>
-              <p>Grade : <span className="font-bold">{props?.selectedCP?.zonalgrade?.name  || 'NIL'}</span></p>
-              <p>Points : <span className="font-bold">{props?.selectedCP?.zonalpoint  || 'NIL'}</span></p>
+        {props?.selectedCP && (props.selectedCP?.finalpoint as number) > 0  ? (            <>
+              <p>Position : <span className="font-bold">{props?.selectedCP?.finalposition?.name || 'NIL'}</span></p>
+              <p>Grade : <span className="font-bold">{props?.selectedCP?.finalgrade?.name  || 'NIL'}</span></p>
+              <p>Points : <span className="font-bold">{props?.selectedCP?.finalpoint  || 'NIL'}</span></p>
             </>
-        ) : props.selectedCP?.zonalpoint as number == 0 ? (
+        ) : props.selectedCP?.finalpoint as number == 0 ? (
           <>
           <p> Position : <span className="font-bold">NIL</span> </p>
           <p>Grade : <span className="font-bold">NIL</span></p>
